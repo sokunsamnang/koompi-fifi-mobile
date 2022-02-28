@@ -174,9 +174,8 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
                 gap: 8,
                 activeColor: Colors.white,
                 iconSize: 24,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                duration: const Duration(milliseconds: 800),
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                duration: const Duration(milliseconds: 500),
                 tabBackgroundColor: primaryColor,
                 tabs: [
                   GButton(

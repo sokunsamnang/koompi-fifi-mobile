@@ -614,15 +614,21 @@ Widget _myWalletButton(context) {
                                                       fontWeight:
                                                           FontWeight.w700)),
                                             )
-                                          : Text(
-                                              balance.balanceList[0].token!,
-                                              style: GoogleFonts.nunito(
-                                                  textStyle: const TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.w700)),
-                                            )
+                                          : Flexible(
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(left: 50.0),
+                                              child: Text(
+                                                  balance.balanceList[0].token!,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  style: GoogleFonts.nunito(
+                                                      textStyle: const TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 18,
+                                                          fontWeight:
+                                                              FontWeight.w700)),
+                                                ),
+                                            ),
+                                          )
                                     ],
                                   ),
                                 ),
@@ -664,15 +670,21 @@ Widget _myWalletButton(context) {
                                                       fontWeight:
                                                           FontWeight.w700)),
                                             )
-                                          : Text(
-                                              balance.balanceList[1].token!,
-                                              style: GoogleFonts.nunito(
-                                                  textStyle: const TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.w700)),
-                                            )
+                                          : Flexible(
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(left: 50.0),
+                                              child: Text(
+                                                  balance.balanceList[1].token!,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  style: GoogleFonts.nunito(
+                                                      textStyle: const TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 18,
+                                                          fontWeight:
+                                                              FontWeight.w700)),
+                                                ),
+                                            ),
+                                          )
                                     ],
                                   ),
                                 ),

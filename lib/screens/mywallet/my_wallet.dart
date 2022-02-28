@@ -2,9 +2,9 @@ import 'package:koompi_hotspot/all_export.dart';
 
 class MyWallet extends StatefulWidget {
   final Function? resetState;
-  final String? walletKey;
+  final String walletKey;
 
-  const MyWallet({Key? key, this.resetState, this.walletKey}) : super(key: key);
+  const MyWallet({Key? key, this.resetState, required this.walletKey}) : super(key: key);
 
   @override
   _MyWalletState createState() => _MyWalletState();
@@ -123,7 +123,7 @@ class _MyWalletState extends State<MyWallet> {
                             ),
                             onPressed: () {
                               _sendWalletBottomSheet(
-                                  context, widget.walletKey!);
+                                  context, widget.walletKey);
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(5.0),
@@ -232,7 +232,7 @@ class _MyWalletState extends State<MyWallet> {
     var balance = Provider.of<BalanceProvider>(context);
     var _lang = AppLocalizeService.of(context);
     return Container(
-      padding: const EdgeInsets.only(left: 20, top: 22, bottom: 22),
+      padding: const EdgeInsets.only(right: 20, left: 20, top: 22, bottom: 22),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
           // color: Colors.grey[900],
@@ -263,14 +263,17 @@ class _MyWalletState extends State<MyWallet> {
                           textStyle: const TextStyle(
                               color: Colors.red, fontWeight: FontWeight.w700)),
                     )
-                  : Text(
-                      balance.balanceList[0].token!,
-                      style: GoogleFonts.nunito(
-                          fontSize: 18.0,
-                          textStyle: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700)),
-                    ),
+                  : Flexible(
+                    child: Text(
+                        balance.balanceList[0].token!,
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.nunito(
+                            fontSize: 18.0,
+                            textStyle: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700)),
+                      ),
+                  ),
               Text(
                 ' ${balance.balanceList[0].symbol}',
                 style: GoogleFonts.nunito(
@@ -289,21 +292,26 @@ class _MyWalletState extends State<MyWallet> {
                       balance.balanceList[1].token!.isEmpty
                   ? Text(
                       balance.balanceList[1].token!,
+                      overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.nunito(
                           fontSize: 18.0,
                           textStyle: const TextStyle(
                               color: Colors.red, fontWeight: FontWeight.w700)),
                     )
-                  : Text(
-                      balance.balanceList[1].token!,
-                      style: GoogleFonts.nunito(
-                          fontSize: 18.0,
-                          textStyle: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700)),
-                    ),
+                  : Flexible(
+                    child: Text(
+                        balance.balanceList[1].token!,
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.nunito(
+                            fontSize: 18.0,
+                            textStyle: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700)),
+                      ),
+                  ),
               Text(
                 ' ${balance.balanceList[1].symbol}',
+                overflow: TextOverflow.ellipsis,
                 style: GoogleFonts.nunito(
                     fontSize: 18.0,
                     textStyle: const TextStyle(
@@ -317,7 +325,7 @@ class _MyWalletState extends State<MyWallet> {
   }
 }
 
-void _sendWalletBottomSheet(context, String walletKey) {
+void _sendWalletBottomSheet(BuildContext context, String walletKey) {
   showModalBottomSheet(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -354,7 +362,7 @@ void _sendWalletBottomSheet(context, String walletKey) {
                             context,
                             PageTransition(
                                 type: PageTransitionType.bottomToTop,
-                                child: const QrScanner(portList: [])));
+                                child: const QrScanner()));
                       },
                       child: Column(
                         children: [

@@ -19,10 +19,9 @@ class _CompleteInfoState extends State<CompleteInfo> {
 
   @override
   void initState() {
-    _address = 'Phnom Penh';
+    super.initState();
     _birthdate = DateFormat('dd-MMM-yyyy').format(DateTime.now());
     _phoneController = TextEditingController(text: widget.phone);
-    super.initState();
   }
 
   @override
@@ -31,7 +30,7 @@ class _CompleteInfoState extends State<CompleteInfo> {
   }
 
   //Location
-  String? _address;
+  late final String _address;
   var locationModel = LocationList();
 
   //Image Profile
@@ -40,8 +39,7 @@ class _CompleteInfoState extends State<CompleteInfo> {
   //Gender
 
   List<String> lst = ['Male', 'Female'];
-  String? selectedIndex;
-  String? _gender;
+  late final String _gender;
   void changeIndex(String index) {
     setState(() {
       _gender = index;
@@ -107,9 +105,9 @@ class _CompleteInfoState extends State<CompleteInfo> {
         var response = await PostRequest().completeInfoUser(
             _usernameController.text,
             widget.phone,
-            _gender!,
+            _gender,
             _birthdate!,
-            _address!);
+            _address);
 
         if (response.statusCode == 200) {
           Future.delayed(const Duration(seconds: 2), () {
@@ -179,7 +177,7 @@ class _CompleteInfoState extends State<CompleteInfo> {
           height: MediaQuery.of(context).size.height * 2,
           child: FormBuilder(
             key: formKey,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
+            autovalidateMode: AutovalidateMode.always,
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Padding(
@@ -268,6 +266,9 @@ class _CompleteInfoState extends State<CompleteInfo> {
                     locationPicker(context),
                     const SizedBox(height: 10.0),
                     FormBuilderChoiceChip(
+                      validator: (value) => value == null
+                      ? 'Please select your gender'
+                      : null,
                       onSaved: (newValue) => _gender = newValue.toString(),
                       decoration: InputDecoration(
                           border: InputBorder.none,
@@ -327,7 +328,7 @@ class _CompleteInfoState extends State<CompleteInfo> {
         selectedItem: locationModel.selectedKhLocation,
         onChanged: (value) =>
             setState(() => locationModel.selectedKhLocation = value.toString()),
-        onCancelled: () => Navigator.pop(context),
+        onCancelled: () => Navigator.canPop(context),
         onConfirmed: () => _address = locationModel.selectedKhLocation,
       ),
     );

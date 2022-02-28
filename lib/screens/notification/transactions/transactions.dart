@@ -151,6 +151,7 @@ Widget transaction(BuildContext context) {
             child: Container(
               margin: const EdgeInsets.symmetric(vertical: 50.0),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Align(
                     alignment: Alignment.center,

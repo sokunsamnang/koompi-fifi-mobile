@@ -113,7 +113,15 @@ class _SendRequestState extends State<SendRequest> {
                       ModalRoute.withName('/navbar'),
                     ));
           });
-        } else {
+        } 
+        else if(_backend.response!.statusCode == 500){
+          await Components.dialog(
+              context,
+              textAlignCenter(text:'Something went wrong. Please try again.'),
+              warningTitleDialog());
+          Navigator.of(context).pop();
+          _passwordController.clear();
+        }else {
           await Components.dialog(
               context,
               textAlignCenter(text: responseJson['message']),
@@ -371,7 +379,7 @@ class _SendRequestState extends State<SendRequest> {
                             ? FilteringTextInputFormatter.allow(
                                 RegExp(r'^\d+\.?\d{0,3}'))
                             : FilteringTextInputFormatter.allow(
-                                RegExp(r'^\d+\.?\d{0,5}'))
+                                RegExp(r'^\d+\.?\d{0,4}'))
                       ],
                       controller: amount,
                       decoration: InputDecoration(

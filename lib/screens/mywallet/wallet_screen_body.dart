@@ -35,6 +35,6 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     return mData.wallet == null
         ? const WalletChoice()
-        : MyWallet(resetState: resetState);
+        : MyWallet(resetState: resetState, walletKey: '',);
   }
 }

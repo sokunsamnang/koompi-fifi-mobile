@@ -451,7 +451,7 @@ class _MyAccountState extends State<MyAccount>
         selectedItem: address,
         onChanged: (value) =>
             setState(() => locationModel.selectedKhLocation = value.toString()),
-        onCancelled: () => Navigator.pop(context),
+        onCancelled: () => Navigator.canPop(context),
         onConfirmed: () => address = locationModel.selectedKhLocation,
       ),
     );

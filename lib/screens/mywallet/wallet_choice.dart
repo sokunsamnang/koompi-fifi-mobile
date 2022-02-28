@@ -40,16 +40,30 @@ class _WalletChoiceState extends State<WalletChoice> {
         child: Column(
           children: <Widget>[
             Expanded(
-              child: SvgPicture.asset(
-                'assets/images/undraw_wallet.svg',
-                height: MediaQuery.of(context).size.height * 0.2,
-                width: MediaQuery.of(context).size.height * 0.2,
-                placeholderBuilder: (context) => const Center(),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    'assets/images/wallet.svg',
+                    height: MediaQuery.of(context).size.height * 0.2,
+                    width: MediaQuery.of(context).size.height * 0.2,
+                    placeholderBuilder: (context) => const Center(),
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    "Generate new address wallet.",
+                    style: GoogleFonts.nunito(
+                      textStyle: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.1,
-            ),
+            
             Center(
               child: InkWell(
                 child: Container(
@@ -97,7 +111,7 @@ class _WalletChoiceState extends State<WalletChoice> {
                             context,
                             PageTransition(
                               type: PageTransitionType.rightToLeft,
-                              child: const MyWallet(),
+                              child: const MyWallet(walletKey: '',),
                             ),
                           );
                         } else {
