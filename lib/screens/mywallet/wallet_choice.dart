@@ -107,13 +107,17 @@ class _WalletChoiceState extends State<WalletChoice> {
                             String _token = value!;
                             await GetRequest().getUserProfile(_token);
                           });
-                          Navigator.pushReplacement(
-                            context,
-                            PageTransition(
-                              type: PageTransitionType.rightToLeft,
-                              child: const MyWallet(walletKey: '',),
-                            ),
-                          );
+                          Timer(
+                            const Duration(milliseconds: 500),
+                            () => Navigator.pushAndRemoveUntil(
+                                  context,
+                                  PageTransition(
+                                    type: PageTransitionType
+                                        .bottomToTop,
+                                    child: const Navbar(0),
+                                  ),
+                                  ModalRoute.withName('/navbar'),
+                                ));
                         } else {
                           await Components.dialog(
                               context,

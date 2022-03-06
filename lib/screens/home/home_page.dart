@@ -1,3 +1,4 @@
+import 'package:in_app_update/in_app_update.dart';
 import 'package:koompi_hotspot/all_export.dart';
 
 class HomePage extends StatefulWidget {
@@ -10,10 +11,31 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
 
+  AppUpdateInfo? updateInfo;
+
+  // Platform messages are asynchronous, so we initialize in an async method.
+  // Future<void> checkForUpdate() async {
+  //   InAppUpdate.checkForUpdate().then((info) {
+  //     setState(() {
+  //       updateInfo = info;
+  //     });
+  //   }).catchError((e) {
+  //     showSnack(e.toString());
+  //   });
+  // }
+
+  // void showSnack(String text) {
+  //   if (globalKey.currentContext != null) {
+  //     ScaffoldMessenger.of(globalKey.currentContext!)
+  //         .showSnackBar(SnackBar(content: Text(text)));
+  //   }
+  // }
+
   @override
   void initState() {
     super.initState();
     // configOneSignal();
+    // checkForUpdate();
     AppServices.noInternetConnection(globalKey);
     versionCheck(context);
   }

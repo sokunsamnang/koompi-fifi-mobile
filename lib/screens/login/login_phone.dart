@@ -1,3 +1,4 @@
+import 'package:in_app_update/in_app_update.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
@@ -23,10 +24,31 @@ class _LoginPhoneState extends State<LoginPhone> {
   String messageAlert = '';
   bool isLoading = false;
 
+  AppUpdateInfo? updateInfo;
+
+  // Platform messages are asynchronous, so we initialize in an async method.
+  // Future<void> checkForUpdate() async {
+  //   InAppUpdate.checkForUpdate().then((info) {
+  //     setState(() {
+  //       updateInfo = info;
+  //     });
+  //   }).catchError((e) {
+  //     showSnack(e.toString());
+  //   });
+  // }
+
+  // void showSnack(String text) {
+  //   if (globalKey.currentContext != null) {
+  //     ScaffoldMessenger.of(globalKey.currentContext!)
+  //         .showSnackBar(SnackBar(content: Text(text)));
+  //   }
+  // }
+
   @override
   void initState() {
     super.initState();
     AppServices.noInternetConnection(globalKey);
+    // checkForUpdate();
     try {
       if (kDebugMode) {
         print('run version check');

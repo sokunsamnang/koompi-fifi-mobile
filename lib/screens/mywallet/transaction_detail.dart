@@ -266,7 +266,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                               ),
                               Text(
                                 history[i].sender! +
-                                    (history[i].from!.isNotEmpty
+                                    (history[i].from != null
                                         ? ' (${history[i].from})'
                                         : ''),
                                 style: GoogleFonts.nunito(
@@ -295,7 +295,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                               ),
                               Text(
                                 history[i].destination! +
-                                    (history[i].to!.isNotEmpty
+                                    (history[i].to != null
                                         ? ' (${history[i].to})'
                                         : ''),
                                 style: GoogleFonts.nunito(
