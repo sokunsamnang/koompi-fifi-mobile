@@ -97,31 +97,24 @@ class _SendRequestState extends State<SendRequest> {
             memo.text);
         var responseJson = json.decode(_backend.response!.body);
         if (_backend.response!.statusCode == 200) {
-          Future.delayed(const Duration(seconds: 2), () async {
-            await Provider.of<BalanceProvider>(context, listen: false)
-                .fetchPortfolio();
-            await Provider.of<TrxHistoryProvider>(context, listen: false)
-                .fetchTrxHistory();
-            Timer(
-                const Duration(milliseconds: 500),
-                () => Navigator.pushAndRemoveUntil(
-                      context,
-                      PageTransition(
-                        type: PageTransitionType.bottomToTop,
-                        child: const CompletePayment(),
-                      ),
-                      ModalRoute.withName('/navbar'),
-                    ));
-          });
-        } 
-        else if(_backend.response!.statusCode == 500){
+          await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
+          await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+          Navigator.pushAndRemoveUntil(
+            context,
+            PageTransition(
+              type: PageTransitionType.bottomToTop,
+              child: const CompletePayment(),
+            ),
+            ModalRoute.withName('/navbar'),
+          );
+        } else if (_backend.response!.statusCode == 500) {
           await Components.dialog(
               context,
-              textAlignCenter(text:'Something went wrong. Please try again.'),
+              textAlignCenter(text: 'Something went wrong. Please try again.'),
               warningTitleDialog());
           Navigator.of(context).pop();
           _passwordController.clear();
-        }else {
+        } else {
           await Components.dialog(
               context,
               textAlignCenter(text: responseJson['message']),

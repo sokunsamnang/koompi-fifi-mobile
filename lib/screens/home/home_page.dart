@@ -11,7 +11,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
 
-  AppUpdateInfo? updateInfo;
+  // AppUpdateInfo? updateInfo;
 
   // Platform messages are asynchronous, so we initialize in an async method.
   // Future<void> checkForUpdate() async {

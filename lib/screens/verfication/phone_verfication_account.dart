@@ -317,13 +317,6 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                         });
                       } else {
                         await _submitOtp(currentText);
-                        // setState(() {
-                        //   hasError = false;
-                        //   scaffoldKey.currentState.showSnackBar(SnackBar(
-                        //     content: Text("Aye!!"),
-                        //     duration: Duration(seconds: 2),
-                        //   ));
-                        // });
                       }
                     },
                     child: Center(

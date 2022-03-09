@@ -85,29 +85,26 @@ class _CompletePaymentState extends State<CompletePayment> {
                               ),
                               onTap: () async {
                                 dialogLoading(context);
-                                Future.delayed(const Duration(seconds: 2),
-                                    () async {
-                                  await Provider.of<BalanceProvider>(context,
+                                await Provider.of<BalanceProvider>(context,
                                           listen: false)
                                       .fetchPortfolio();
-                                  await Provider.of<TrxHistoryProvider>(context,
-                                          listen: false)
-                                      .fetchTrxHistory();
-                                  await Provider.of<TrxHistoryProvider>(context,
-                                          listen: false)
-                                      .fetchTrxHistory();
-                                  Timer(
-                                      const Duration(milliseconds: 500),
-                                      () => Navigator.pushAndRemoveUntil(
-                                            context,
-                                            PageTransition(
-                                              type: PageTransitionType
-                                                  .bottomToTop,
-                                              child: const Navbar(0),
-                                            ),
-                                            ModalRoute.withName('/navbar'),
-                                          ));
-                                });
+                                await Provider.of<TrxHistoryProvider>(context,
+                                        listen: false)
+                                    .fetchTrxHistory();
+                                await Provider.of<TrxHistoryProvider>(context,
+                                        listen: false)
+                                    .fetchTrxHistory();
+                                Timer(
+                                    const Duration(milliseconds: 500),
+                                    () => Navigator.pushAndRemoveUntil(
+                                          context,
+                                          PageTransition(
+                                            type: PageTransitionType
+                                                .bottomToTop,
+                                            child: const Navbar(0),
+                                          ),
+                                          ModalRoute.withName('/navbar'),
+                                        ));
                               },
                               child: Center(
                                 child: Text(_lang.translate('home'),

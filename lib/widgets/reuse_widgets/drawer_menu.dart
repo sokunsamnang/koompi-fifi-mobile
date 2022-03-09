@@ -159,19 +159,6 @@ class DrawerListTile extends StatelessWidget {
     );
   }
 }
-
-class UserProfileData {
-  final ImageProvider? image;
-  final String? name;
-  final String? phone;
-
-  const UserProfileData({
-    @required this.image,
-    @required this.name,
-    @required this.phone,
-  });
-}
-
 class UserProfile extends StatelessWidget {
   const UserProfile({
     @required this.onPressed,
@@ -219,7 +206,9 @@ class UserProfile extends StatelessWidget {
   Widget _buildImage() {
     return CircleAvatar(
       radius: 25,
-      backgroundImage: NetworkImage("${ApiService.getAvatar}/${mData.image}"),
+      backgroundImage: mData.image == null
+                      ? const AssetImage('assets/images/avatar.png')
+                      : NetworkImage("${ApiService.getAvatar}/${mData.image}") as ImageProvider<Object>,
     );
   }
 

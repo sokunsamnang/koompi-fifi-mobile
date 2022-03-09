@@ -150,6 +150,7 @@ class _AnnouncementsDetailState extends State<AnnouncementsDetail> {
     var _notification = Provider.of<NotificationProvider>(context);
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(_lang.translate('announcements'),

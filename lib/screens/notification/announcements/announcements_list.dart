@@ -40,7 +40,7 @@ Widget announcementsList(BuildContext context) {
               )
             // Display notification list
             : ListView.builder(
-                shrinkWrap: true,
+                // shrinkWrap: true,
                 itemCount: notification.notificationList.length,
                 itemBuilder: (context, index) {
                   return Container(

@@ -110,7 +110,6 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-
     if (widget.selectedIndex == 0) {
       _selectedIndex = 0;
     }

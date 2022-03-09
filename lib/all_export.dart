@@ -52,7 +52,6 @@ export 'package:intl_phone_number_input/intl_phone_number_input.dart';
 // Image and File
 export 'package:flutter_svg/flutter_svg.dart';
 export 'package:flutter_image_compress/flutter_image_compress.dart';
-export 'package:multi_image_picker2/multi_image_picker2.dart';
 
 // Animation
 export 'package:flare_flutter/flare_actor.dart';

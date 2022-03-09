@@ -94,20 +94,14 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
           print('Internet connected');
         }
         if (response.statusCode == 200) {
-          Future.delayed(const Duration(seconds: 2), () async {
-            await Provider.of<GetPlanProvider>(context, listen: false)
-                .fetchHotspotPlan();
-            Timer(
-                const Duration(milliseconds: 500),
-                () => Navigator.pushAndRemoveUntil(
-                      context,
-                      PageTransition(
-                        type: PageTransitionType.rightToLeft,
-                        child: const CompletePlan(),
-                      ),
-                      ModalRoute.withName('/navbar'),
-                    ));
-          });
+          Navigator.pushAndRemoveUntil(
+            context,
+            PageTransition(
+              type: PageTransitionType.rightToLeft,
+              child: const CompletePlan(),
+            ),
+            ModalRoute.withName('/navbar'),
+          );
         } else {
           _passwordController.clear();
           await Components.dialog(
@@ -199,14 +193,6 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  // Center(
-                  //   child: Text(
-                  //     _lang.translate('choose_plan'),
-                  //     style: GoogleFonts.nunito(
-                  //     textStyle: TextStyle(color: primaryColor, fontSize: 30, fontWeight: FontWeight.w700)
-                  //     ),
-                  //   ),
-                  // ),
                   const SizedBox(height: 25.0),
                   plan30DaysButton(context),
                   const SizedBox(height: 50.0),

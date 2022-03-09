@@ -59,6 +59,7 @@ dependencies:
   google_nav_bar: ^5.0.5
   groovin_widgets: ^3.0.2
   http: ^0.13.3
+  image_picker: ^0.8.4+10
   in_app_update: ^3.0.0
   internet_speed_test: ^1.5.0
   intl_phone_number_input: ^0.7.0+2
@@ -69,10 +70,10 @@ dependencies:
   line_icons: ^2.0.1
   linkable: ^3.0.1
   location: ^4.3.0
-  multi_image_picker2: ^5.0.2
   onesignal_flutter: ^3.2.8
   package_info: ^2.0.2
   page_transition: ^2.0.2
+  path: ^1.8.0
   path_provider: ^2.0.2
   percent_indicator: ^4.0.0
   permission_handler: ^9.0.1
@@ -87,7 +88,6 @@ dependencies:
   shared_preferences: ^2.0.6
   shimmer: ^2.0.0
   sliding_sheet: ^0.5.2
-  sliding_up_panel: ^2.0.0+1
   syncfusion_flutter_gauges: ^19.1.69
   url_launcher: ^6.0.6
   wifi_connector: ^2.0.0

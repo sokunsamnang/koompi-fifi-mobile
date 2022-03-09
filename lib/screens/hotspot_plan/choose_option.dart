@@ -50,17 +50,15 @@ class _ChooseOptionState extends State<ChooseOption>
           print('Internet connected');
         }
         if (response.statusCode == 200) {
-          Future.delayed(const Duration(seconds: 2), () async {
-            Timer(
-                const Duration(milliseconds: 500),
-                () => Navigator.pushAndRemoveUntil(
-                      context,
-                      PageTransition(
-                          type: PageTransitionType.rightToLeft,
-                          child: const CompletePlan()),
-                      ModalRoute.withName('/navbar'),
-                    ));
-          });
+          Timer(
+            const Duration(milliseconds: 500),
+            () => Navigator.pushAndRemoveUntil(
+                  context,
+                  PageTransition(
+                      type: PageTransitionType.rightToLeft,
+                      child: const CompletePlan()),
+                  ModalRoute.withName('/navbar'),
+                ));
         } else {
           await Components.dialog(
               context,

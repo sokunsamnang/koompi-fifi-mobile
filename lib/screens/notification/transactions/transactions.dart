@@ -192,7 +192,7 @@ Widget transaction(BuildContext context) {
                         .fetchTrxHistory();
                   },
                   child: CustomScrollView(
-                    shrinkWrap: true,
+                    // shrinkWrap: true,
                     slivers: [
                       SliverList(
                         delegate: SliverChildListDelegate(

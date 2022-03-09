@@ -110,18 +110,14 @@ class _CompleteInfoState extends State<CompleteInfo> {
             _address);
 
         if (response.statusCode == 200) {
-          Future.delayed(const Duration(seconds: 2), () {
-            Timer(
-                const Duration(milliseconds: 500),
-                () => Navigator.pushAndRemoveUntil(
-                      context,
-                      PageTransition(
-                        type: PageTransitionType.rightToLeft,
-                        child: const LoginPhone(),
-                      ),
-                      ModalRoute.withName('/loginPhone'),
-                    ));
-          });
+          Navigator.pushAndRemoveUntil(
+            context,
+            PageTransition(
+              type: PageTransitionType.rightToLeft,
+              child: const LoginPhone(),
+            ),
+            ModalRoute.withName('/loginPhone'),
+          );
         } else {
           if (kDebugMode) {
             print('register not Successful');
@@ -266,9 +262,8 @@ class _CompleteInfoState extends State<CompleteInfo> {
                     locationPicker(context),
                     const SizedBox(height: 10.0),
                     FormBuilderChoiceChip(
-                      validator: (value) => value == null
-                      ? 'Please select your gender'
-                      : null,
+                      validator: (value) =>
+                          value == null ? 'Please select your gender' : null,
                       onSaved: (newValue) => _gender = newValue.toString(),
                       decoration: InputDecoration(
                           border: InputBorder.none,

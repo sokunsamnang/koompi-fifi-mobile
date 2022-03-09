@@ -82,20 +82,17 @@ class _CompletePlanState extends State<CompletePlan> {
                                   await Provider.of<GetPlanProvider>(context,
                                           listen: false)
                                       .fetchHotspotPlan();
-                                  Future.delayed(const Duration(seconds: 3),
-                                      () async {
-                                    Timer(
-                                        const Duration(milliseconds: 500),
-                                        () => Navigator.pushAndRemoveUntil(
-                                              context,
-                                              PageTransition(
-                                                type: PageTransitionType
-                                                    .bottomToTop,
-                                                child: const Navbar(0),
-                                              ),
-                                              ModalRoute.withName('/navbar'),
-                                            ));
-                                  });
+                                  Timer(
+                                    const Duration(milliseconds: 500),
+                                    () => Navigator.pushAndRemoveUntil(
+                                          context,
+                                          PageTransition(
+                                            type: PageTransitionType
+                                                .bottomToTop,
+                                            child: const Navbar(0),
+                                          ),
+                                          ModalRoute.withName('/navbar'),
+                                        ));
                                 },
                                 child: Center(
                                   child: Text(_lang.translate('home'),
