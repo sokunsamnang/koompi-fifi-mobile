@@ -3,11 +3,9 @@ import 'dart:developer';
 import 'package:koompi_hotspot/all_export.dart';
 
 class QrScanner extends StatefulWidget {
-  const QrScanner({Key? key}) : super(key: key);
 
-  // final List? portList;
-
-  // const QrScanner({Key? key, this.portList}) : super(key: key);
+  final bool? navigator;
+  const QrScanner({Key? key, this.navigator}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -90,14 +88,21 @@ class QrScannerState extends State<QrScanner> {
       });
 
       controller.pauseCamera();
-      
-      Navigator.pushReplacement(
-        context,
-        PageTransition(
-          type: PageTransitionType.bottomToTop,
-          child: SendRequest(result!.code!, "", ""),
-        ),
-      );
+
+      if (widget.navigator == true) {
+        Navigator.pushReplacement(
+          context,
+          PageTransition(
+            type: PageTransitionType.bottomToTop,
+            child: SendRequest(result!.code!, "", ""),
+          ),
+        );
+        
+      }
+      else{
+        Navigator.pop(context, result!.code!);
+      }
+
     });
   }
 
@@ -116,4 +121,3 @@ class QrScannerState extends State<QrScanner> {
     super.dispose();
   }
 }
-

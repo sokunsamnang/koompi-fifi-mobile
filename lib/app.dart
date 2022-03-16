@@ -1,5 +1,6 @@
 import 'package:data_connection_checker_tv/data_connection_checker.dart';
 import 'package:koompi_hotspot/all_export.dart';
+import 'package:koompi_hotspot/providers/contact_list_provider.dart';
 import 'package:koompi_hotspot/utils/auto_login_hotspot_constants.dart'
     as global;
 import 'package:koompi_hotspot/utils/globals.dart' as globals;
@@ -37,6 +38,9 @@ class _AppState extends State<App> {
         ),
         ChangeNotifierProvider<VoteResultProvider>(
           create: (context) => VoteResultProvider(),
+        ),
+        ChangeNotifierProvider<ContactListProvider>(
+          create: (context) => ContactListProvider(),
         ),
       ],
       child: Consumer<LangProvider>(

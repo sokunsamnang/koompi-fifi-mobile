@@ -58,4 +58,17 @@ class GetRequest with ChangeNotifier {
             "authorization", "Bearer ${_backend.token['token']}"));
     return _backend.response!;
   }
+
+  Future<http.Response> getContactList() async {
+    /* Expired Token In Welcome Screen */
+    await _prefService.read('token').then((value) {
+      _backend.token = Map<String, dynamic>.from({"token": value});
+    });
+    _backend.response = await http.get(
+        Uri.parse("${ApiService.url}/contactlist"),
+        headers: _backend.conceteHeader(
+            "authorization", "Bearer ${_backend.token['token']}"));
+    return _backend.response!;
+  }
+
 }

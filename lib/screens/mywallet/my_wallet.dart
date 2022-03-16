@@ -1,4 +1,6 @@
 import 'package:koompi_hotspot/all_export.dart';
+import 'package:koompi_hotspot/providers/contact_list_provider.dart';
+import 'package:koompi_hotspot/screens/mywallet/quick_payment/contact_list.dart';
 
 class MyWallet extends StatefulWidget {
   final Function? resetState;
@@ -79,10 +81,9 @@ class _MyWalletState extends State<MyWallet> {
         key: _scaffoldKey,
         body: RefreshIndicator(
           onRefresh: () async {
-            await Provider.of<BalanceProvider>(context, listen: false)
-                .fetchPortfolio();
-            await Provider.of<TrxHistoryProvider>(context, listen: false)
-                .fetchTrxHistory();
+            await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
+            await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+            await Provider.of<ContactListProvider>(context, listen: false).fetchContactList();
           },
           child: CustomScrollView(slivers: [
             SliverFillRemaining(
@@ -114,7 +115,7 @@ class _MyWalletState extends State<MyWallet> {
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               onPrimary: Colors.black87,
-                              primary: HexColor('94FAD5'),
+                              primary: HexColor('083C5A'),
                               elevation: 5,
                               shape: const RoundedRectangleBorder(
                                 borderRadius:
@@ -134,7 +135,9 @@ class _MyWalletState extends State<MyWallet> {
                                   Text(
                                     _lang.translate('send_money'),
                                     style: const TextStyle(
-                                        fontWeight: FontWeight.w700),
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.white,
+                                    ),
                                   )
                                 ],
                               ),
@@ -146,7 +149,7 @@ class _MyWalletState extends State<MyWallet> {
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               onPrimary: Colors.black87,
-                              primary: HexColor('7CDBFA'),
+                              primary: HexColor('083C5A'),
                               elevation: 5,
                               shape: const RoundedRectangleBorder(
                                 borderRadius:
@@ -169,7 +172,9 @@ class _MyWalletState extends State<MyWallet> {
                                   Text(
                                     _lang.translate('receive_money'),
                                     style: const TextStyle(
-                                        fontWeight: FontWeight.w700),
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.white,
+                                    ),
                                   )
                                 ],
                               ),
@@ -179,46 +184,91 @@ class _MyWalletState extends State<MyWallet> {
                       ],
                     ),
                   ),
-                  const Divider(
-                    thickness: 0.5,
-                    color: Colors.black,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          right: 10,
-                          left: 10,
-                        ),
-                        child: Text(
-                          _lang.translate('transaction_history'),
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 17,
-                            // color: AllCoustomTheme.getsecoundTextThemeColor(),
-                            fontWeight: FontWeight.bold,
+                  Container(
+                    height: 85.0,
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 10.0, vertical: 15.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              onPrimary: Colors.black87,
+                              primary: HexColor('083C5A'),
+                              elevation: 5,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12)),
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.rightToLeft,
+                                  child: const TrxHistory(),
+                                ),
+                              );
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Column(
+                                children: <Widget>[
+                                  Image.asset('assets/images/payment_history.png',
+                                      scale: 2),
+                                  const Text(
+                                    'Transcation History',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              PageTransition(
-                                type: PageTransitionType.rightToLeft,
-                                child: const TrxHistory(),
-                              ));
-                        },
-                        child: Text(
-                          'View All',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: primaryColor),
-                        ),
-                      ),
-                    ],
+                        const SizedBox(width: 20),
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              onPrimary: Colors.black87,
+                              primary: HexColor('083C5A'),
+                              elevation: 5,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12)),
+                              ),
+                            ),
+                            onPressed: () async {
+                              Navigator.push(
+                                  context,
+                                  PageTransition(
+                                      type: PageTransitionType.rightToLeft,
+                                      child: const ContactListScreen()));
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Column(
+                                children: <Widget>[
+                                  Image.asset('assets/images/contact.png',
+                                      scale: 2),
+                                  const Text(
+                                    'Quick Transfer',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w700, 
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                  Expanded(child: shortTrxHistory(context)),
                 ],
               ),
             )
@@ -359,10 +409,10 @@ void _sendWalletBottomSheet(BuildContext context, String walletKey) {
                     child: GestureDetector(
                       onTap: () async {
                         await Navigator.push(
-                            context,
-                            PageTransition(
-                                type: PageTransitionType.bottomToTop,
-                                child: const QrScanner()));
+                                context,
+                                PageTransition(
+                                    type: PageTransitionType.bottomToTop,
+                                    child: const QrScanner(navigator: true)));
                       },
                       child: Column(
                         children: [

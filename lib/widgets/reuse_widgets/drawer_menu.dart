@@ -25,31 +25,6 @@ class SideMenu extends StatelessWidget {
             }),
           ),
           buildDivider(),
-          // DrawerHeader(
-          //   margin: EdgeInsets.zero,
-          //   padding: EdgeInsets.zero,
-          //   child: Column(
-          //     crossAxisAlignment: CrossAxisAlignment.center,
-          //     mainAxisAlignment: MainAxisAlignment.center,
-          //     children: [
-          //       CircleAvatar(
-          //         radius: 40.0,
-          //         backgroundImage: mData.image == null
-          //             ? AssetImage('assets/images/avatar.png')
-          //             : NetworkImage("${ApiService.getAvatar}/${mData.image}"),
-          //       ),
-          //       Text(
-          //         mData.fullname ?? 'KOOMPI',
-          //         style: TextStyle(
-          //             color: Colors.black, fontFamily: "Poppins-Bold"),
-          //       ),
-          //       Text(
-          //         mData.phone ?? 'KOOMPI',
-          //         style: TextStyle(color: Colors.black),
-          //       ),
-          //     ],
-          //   ),
-          // ),
           DrawerListTile(
             title: "Home",
             iconSrc: LineIcons.home,
