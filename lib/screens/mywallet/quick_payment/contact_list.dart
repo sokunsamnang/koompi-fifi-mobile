@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:koompi_hotspot/all_export.dart';
+import 'package:koompi_hotspot/models/contact_list_model.dart';
 import 'package:koompi_hotspot/providers/contact_list_provider.dart';
 import 'package:koompi_hotspot/screens/mywallet/quick_payment/edit_contact.dart';
 import 'package:koompi_hotspot/screens/mywallet/quick_payment/save_contact.dart';
@@ -13,6 +14,8 @@ class ContactListScreen extends StatefulWidget {
 
 class _ContactListScreenState extends State<ContactListScreen> {
 
+  bool _showFab = true;
+
   @override
   void initState() {
     super.initState();
@@ -25,7 +28,25 @@ class _ContactListScreenState extends State<ContactListScreen> {
 
   @override
   Widget build(BuildContext context) {
+  // var contact = [ 
+  //   ContactListModel({'id': 1, "contact_name": "user1", "contact_wallet": "s1"}),
+  //   ContactListModel({'id': 1, "contact_name": "user1", "contact_wallet": "s1"}),
+  //   ContactListModel({'id': 1, "contact_name": "user1", "contact_wallet": "s1"}),
+  //   ContactListModel({'id': 1, "contact_name": "user1", "contact_wallet": "s1"}),
+  //   ContactListModel({'id': 1, "contact_name": "user1", "contact_wallet": "s1"}),
+  //   ContactListModel({'id': 1, "contact_name": "user1", "contact_wallet": "s1"}),
+  //   ContactListModel({'id': 1, "contact_name": "user1", "contact_wallet": "s1"}),
+  //   ContactListModel({'id': 1, "contact_name": "user1", "contact_wallet": "s1"}),
+  //   ContactListModel({'id': 1, "contact_name": "user1", "contact_wallet": "s1"}),
+  //   ContactListModel({'id': 1, "contact_name": "user1", "contact_wallet": "s1"}),
+  //   ContactListModel({'id': 1, "contact_name": "user1", "contact_wallet": "s1"}),
+  //   ContactListModel({'id': 1, "contact_name": "user1", "contact_wallet": "s1"}),
+  //   ContactListModel({'id': 1, "contact_name": "user1", "contact_wallet": "s1"}),
+  //   ContactListModel({'id': 1, "contact_name": "user1", "contact_wallet": "s1"}),
+  // ]; 
   var contact = Provider.of<ContactListProvider>(context);
+  const duration = Duration(milliseconds: 300);
+
   return Scaffold(
     appBar: AppBar(
       leading: IconButton(
@@ -43,7 +64,9 @@ class _ContactListScreenState extends State<ContactListScreen> {
             color: Colors.black, fontFamily: 'Medium', fontSize: 22.0),
       ),
     ),
-    body: contact.contactList.isEmpty
+    body: 
+    // contact.isEmpty
+    contact.contactList.isEmpty
         ? Column(
             children: [
               Expanded(
@@ -62,6 +85,7 @@ class _ContactListScreenState extends State<ContactListScreen> {
 
         // Display Loading
         :contact.contactList.isEmpty
+        // :contact.isEmpty
             ? Column(
                 children: [
                   Expanded(
@@ -77,10 +101,24 @@ class _ContactListScreenState extends State<ContactListScreen> {
                   ),
                 ],
               )
-            // Display notification list
-            : ListView.builder(
-                // shrinkWrap: true,
+            // Display contact list
+            : NotificationListener<UserScrollNotification>(
+              onNotification: (notification) {
+                final ScrollDirection direction = notification.direction;
+                setState(() {
+                  if (direction == ScrollDirection.reverse) {
+                    _showFab = false;
+                  } else if (direction == ScrollDirection.forward) {
+                    _showFab = true;
+                  }
+                });
+                return true;
+              },
+              child: SingleChildScrollView(
+              child:ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: contact.contactList.length,
+                shrinkWrap: true,
                 itemBuilder: (context, index) {
                   return Container(
                     margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
@@ -103,6 +141,7 @@ class _ContactListScreenState extends State<ContactListScreen> {
                           context,
                           PageTransition(
                             type: PageTransitionType.bottomToTop,
+                            // child: SendRequest(contact[index].address!, "", "")
                             child: SendRequest(contact.contactList[index].address!, "", "")
                           )
                         );
@@ -138,6 +177,7 @@ class _ContactListScreenState extends State<ContactListScreen> {
                         ),
                       ),
                       title: Text(
+                        // contact[index].username!,
                         contact.contactList[index].username!,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
@@ -148,6 +188,8 @@ class _ContactListScreenState extends State<ContactListScreen> {
                         ),
                       ),
                       subtitle: Text(
+                        
+                        // contact[index].address!,
                         contact.contactList[index].address!,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
@@ -159,18 +201,29 @@ class _ContactListScreenState extends State<ContactListScreen> {
                       ),
                     ),
                   );
-                }),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () => {
-          Navigator.push(
-            context,
-            PageTransition(
-              type: PageTransitionType.rightToLeft,
-              child: const SaveContact()
-            )
+                }
+              )
+            ),
           ),
-        }
+      floatingActionButton: AnimatedSlide(
+        duration: duration,
+        offset: _showFab ? Offset.zero : const Offset(0, 2),
+        child: AnimatedOpacity(
+          duration: duration,
+          opacity: _showFab ? 1 : 0,
+          child: FloatingActionButton(
+            child: const Icon(Icons.add),
+            onPressed: () => {
+              Navigator.push(
+                context,
+                PageTransition(
+                  type: PageTransitionType.rightToLeft,
+                  child: const SaveContact()
+                )
+              ),
+            }
+          ),
+        ),
       ),
     );
   }
