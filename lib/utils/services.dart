@@ -49,15 +49,17 @@ class StorageServices {
           await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
           await Provider.of<ContactListProvider>(context, listen: false).fetchContactList();
         });
-      } on SocketException catch (_) {
-        if (kDebugMode) {
-          print('No network socket exception');
-        }
-        await Components.dialogNoOption(
-            context,
-            textAlignCenter(text: _lang.translate('no_internet_message')),
-            warningTitleDialog());
-      } on TimeoutException catch (_) {
+      }
+      //  on SocketException catch (_) {
+      //   if (kDebugMode) {
+      //     print('No network socket exception');
+      //   }
+      //   await Components.dialogNoOption(
+      //       context,
+      //       textAlignCenter(text: _lang.translate('no_internet_message')),
+      //       warningTitleDialog());
+      // }
+       on TimeoutException catch (_) {
         if (kDebugMode) {
           print('Time out exception');
         }

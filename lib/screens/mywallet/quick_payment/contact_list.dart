@@ -212,6 +212,7 @@ class _ContactListScreenState extends State<ContactListScreen> {
           duration: duration,
           opacity: _showFab ? 1 : 0,
           child: FloatingActionButton(
+            backgroundColor: primaryColor,
             child: const Icon(Icons.add),
             onPressed: () => {
               Navigator.push(

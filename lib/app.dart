@@ -1,10 +1,10 @@
-import 'package:data_connection_checker_tv/data_connection_checker.dart';
+import 'package:dio/dio.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/providers/contact_list_provider.dart';
-import 'package:koompi_hotspot/utils/auto_login_hotspot_constants.dart'
-    as global;
+import 'package:koompi_hotspot/utils/auto_login_hotspot_constants.dart' as global;
 import 'package:koompi_hotspot/utils/globals.dart' as globals;
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:http/http.dart' as http;
 
 class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);
@@ -153,12 +153,44 @@ class _SplashState extends State<Splash> {
     }
   }
 
+  bool hasConnection = false;
+
+  Future<bool> hasInternetInternetConnection() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    //Check if device is just connect with mobile network or wifi
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      //Check there is actual internet connection with a mobile network or wifi
+      if (await InternetConnectionChecker().hasConnection) {
+        print('Network data detected & internet connection confirmed.');
+        hasConnection = true;
+      } else {
+        print('Network data detected but no internet connection found.');
+        Navigator.push(
+          context,
+          PageTransition(
+            type: PageTransitionType.bottomToTop,
+            child: const CaptivePortalWeb(),
+          ),
+        );
+        hasConnection = false;
+      }
+    }
+    // device has no mobile network and wifi connection at all
+    else {
+      hasConnection = false;
+    }
+    return hasConnection;
+  }
+
+
   @override
   void initState() {
     super.initState();
     configOneSignal();
     setState(() {
-      isInternet();
+      // hasInternetInternetConnection();
+      isWifiAccess();
       getValue();
       startTime();
     });
@@ -203,41 +235,15 @@ class _SplashState extends State<Splash> {
         .promptUserForPushNotificationPermission(fallbackToSettings: true);
   }
 
-  Future<bool> isInternet() async {
+  Future<void> isWifiAccess() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.mobile) {
-      // I am connected to a mobile network, make sure there is actually a net connection.
-      if (await DataConnectionChecker().hasConnection) {
-        // Mobile data detected & internet connection confirmed.
-        if (kDebugMode) {
-          print('Mobile data detected & internet connection confirmed.');
-        }
-        return true;
-      } else {
-        // Mobile data detected but no internet connection found.
-        if (kDebugMode) {
-          print('Mobile data detected but no internet connection found.');
-        }
-        return false;
-      }
-    } else if (connectivityResult == ConnectivityResult.wifi) {
-      // I am connected to a WIFI network, make sure there is actually a net connection.
-      if (kDebugMode) {
-        print(
-            'I am connected to a WIFI network, make sure there is actually a net connection.');
-      }
-      if (await DataConnectionChecker().hasConnection) {
-        // Wifi detected & internet connection confirmed.
-        if (kDebugMode) {
-          print('Wifi detected & internet connection confirmed.');
-        }
-        return true;
-      } else {
-        // Wifi detected but no internet connection found.
-        if (kDebugMode) {
-          print('Wifi detected but no internet connection found.');
-        }
-
+    
+    if (connectivityResult == ConnectivityResult.wifi) {
+      try {
+        var response = await Dio().post('http://www.google.com').timeout(const Duration(seconds: 3));
+        print("response: $response");
+      } catch (e) {
+        Dio().close();
         Navigator.push(
           context,
           PageTransition(
@@ -245,15 +251,13 @@ class _SplashState extends State<Splash> {
             child: const CaptivePortalWeb(),
           ),
         );
-        return false;
+        // try{
+        //   await Dio().post('http://www.google.com').then((value) => Navigator.pop(context));
+        // }
+        // catch(e){
+        //   print(e);
+        // }
       }
-    } else {
-      // Neither mobile data or WIFI detected, not internet connection found.
-      if (kDebugMode) {
-        print(
-            'Neither mobile data or WIFI detected, not internet connection found.');
-      }
-      return false;
     }
   }
 
