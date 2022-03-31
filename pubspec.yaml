@@ -31,6 +31,7 @@ dependencies:
   badges: ^2.0.1
   connectivity_plus: ^2.2.1
   cupertino_icons: ^1.0.3
+  dart_ping: ^6.1.2
   date_format: ^2.0.2
   dio: ^4.0.4
   dropdown_button2: ^1.2.2
@@ -56,7 +57,7 @@ dependencies:
   fluttertoast: ^8.0.7
   font_awesome_flutter: ^9.1.0
   geolocator: ^8.2.0
-  google_fonts: ^2.1.0
+  google_fonts: ^2.3.1
   google_nav_bar: ^5.0.5
   groovin_widgets: ^3.0.2
   http: ^0.13.3

@@ -28,7 +28,15 @@ class _CompletePaymentState extends State<CompletePayment> {
         backgroundColor: Colors.white,
         centerTitle: true,
         title: Text(_lang.translate('complete'),
-            style: const TextStyle(fontFamily: 'Medium', color: Colors.black)),
+          style: GoogleFonts.robotoCondensed(
+            textStyle: const TextStyle(
+              color: Colors.black,
+              fontStyle: FontStyle.italic,
+              fontSize: 24,
+              fontWeight: FontWeight.w700,
+            )
+          ),
+        ),
       ),
       backgroundColor: Colors.white,
       body: WillPopScope(

@@ -181,7 +181,7 @@ Widget noPlanView(BuildContext context) {
             borderRadius: const BorderRadius.all(
               Radius.circular(12.0),
             ),
-            color: HexColor('083C5A'),
+            border: Border.all(color: primaryColor.withOpacity(0.8), width: 1.5),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -189,10 +189,12 @@ Widget noPlanView(BuildContext context) {
             children: [
               Text(
                 _lang.translate('buy_hotspot_plan'),
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
+                style: GoogleFonts.roboto(
+                  textStyle: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                  )
                 ),
               ),
               const SizedBox(height: 20),
@@ -200,8 +202,18 @@ Widget noPlanView(BuildContext context) {
                 width: 200,
                 padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 1),
                 decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(12)),
-                    border: Border.all(color: Colors.white, width: 1)),
+                  gradient: const LinearGradient(
+                      colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(12),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                        color: const Color(0xFF6078ea).withOpacity(.3),
+                        offset: const Offset(0.0, 8.0),
+                        blurRadius: 8.0)
+                  ]
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -224,8 +236,13 @@ Widget noPlanView(BuildContext context) {
                           const SizedBox(width: 5),
                           Text(
                             _lang.translate('buy_plan'),
-                            style: const TextStyle(
-                                fontFamily: "Medium", color: Colors.white),
+                            style: GoogleFonts.roboto(
+                              textStyle: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                              )
+                            ),
                           ),
                         ],
                       ),
@@ -252,7 +269,7 @@ Widget _planViewButton(context) {
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12.0),
-                color: HexColor('083C5A'),
+                border: Border.all(color: primaryColor.withOpacity(0.8), width: 1.5)
               ),
               child: Material(
                 color: Colors.transparent,
@@ -286,7 +303,7 @@ Widget _planViewButton(context) {
                                     const SizedBox(width: 10),
                                     Text(
                                       _lang.translate('hotspot'),
-                                      style: GoogleFonts.nunito(
+                                      style: GoogleFonts.roboto(
                                           textStyle: TextStyle(
                                               color: HexColor('0CACDA'),
                                               fontSize: 25,
@@ -323,17 +340,23 @@ Widget _planViewButton(context) {
                                     children: [
                                       Text(
                                         '${_lang.translate('device')}:',
-                                        style: GoogleFonts.nunito(
-                                            textStyle: const TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w700)),
+                                        style: GoogleFonts.roboto(
+                                          textStyle: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.w700
+                                          )
+                                        ),
                                       ),
                                       Text(
                                         '${mPlan.device} ${_lang.translate('devices')}',
-                                        style: GoogleFonts.nunito(
-                                            textStyle: const TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w700)),
+                                        style: GoogleFonts.robotoCondensed(
+                                          textStyle: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 17,
+                                            fontStyle: FontStyle.italic,
+                                          )
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -348,17 +371,23 @@ Widget _planViewButton(context) {
                                     children: [
                                       Text(
                                         '${_lang.translate('speed')}:',
-                                        style: GoogleFonts.nunito(
-                                            textStyle: const TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w700)),
+                                        style: GoogleFonts.roboto(
+                                          textStyle: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.w700
+                                          )
+                                        ),
                                       ),
                                       Text(
                                         '5 ${_lang.translate('mb')}',
-                                        style: GoogleFonts.nunito(
-                                            textStyle: const TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w700)),
+                                        style: GoogleFonts.robotoCondensed(
+                                          textStyle: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 17,
+                                            fontStyle: FontStyle.italic,
+                                          )
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -373,17 +402,23 @@ Widget _planViewButton(context) {
                                     children: [
                                       Text(
                                         '${_lang.translate('plan')}:',
-                                        style: GoogleFonts.nunito(
-                                            textStyle: const TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w700)),
+                                        style: GoogleFonts.roboto(
+                                          textStyle: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.w700
+                                          )
+                                        ),
                                       ),
                                       Text(
                                         '${mPlan.plan} ${_lang.translate('day')}',
-                                        style: GoogleFonts.nunito(
-                                            textStyle: const TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w700)),
+                                        style: GoogleFonts.robotoCondensed(
+                                          textStyle: const TextStyle(
+                                            color: Colors.black,
+                                            fontStyle: FontStyle.italic,
+                                            fontSize: 17,
+                                          )
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -398,20 +433,26 @@ Widget _planViewButton(context) {
                                     children: [
                                       Text(
                                         '${_lang.translate('valid_until')}:',
-                                        style: GoogleFonts.nunito(
-                                            textStyle: const TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w700)),
+                                        style: GoogleFonts.roboto(
+                                          textStyle: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.w700
+                                          )
+                                        ),
                                       ),
                                       Text(
                                         mPlan.timeLeft!
                                             .split(' ')
                                             .reversed
                                             .join(' '),
-                                        style: GoogleFonts.nunito(
-                                            textStyle: const TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w700)),
+                                        style: GoogleFonts.robotoCondensed(
+                                          textStyle: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 17,
+                                            fontStyle: FontStyle.italic,
+                                          )
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -440,7 +481,7 @@ Widget _planExpire(context) {
         height: MediaQuery.of(context).size.height * .22,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
-          color: HexColor('083C5A'),
+          border: Border.all(color: primaryColor.withOpacity(0.8), width: 1.5)
         ),
         child: Material(
           color: Colors.transparent,
@@ -452,11 +493,12 @@ Widget _planExpire(context) {
             // splashColor: Colors.transparent,
             onTap: () async {
               Navigator.push(
-                  context,
-                  PageTransition(
-                    type: PageTransitionType.rightToLeft,
-                    child: const PlanView(),
-                  ));
+                context,
+                PageTransition(
+                  type: PageTransitionType.rightToLeft,
+                  child: const PlanView(),
+                )
+              );
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 20),
@@ -467,7 +509,7 @@ Widget _planExpire(context) {
                   Padding(
                     padding: const EdgeInsets.only(left: 333),
                     child: IconButton(
-                        icon: const Icon(Icons.more_vert, color: Colors.white),
+                        icon: Icon(Icons.more_vert, color: primaryColor),
                         onPressed: () {
                           Navigator.push(
                             context,
@@ -480,12 +522,14 @@ Widget _planExpire(context) {
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    _lang.translate('plan_expire'),
+                    'Fi-Fi Plan Expired',
                     style: GoogleFonts.nunito(
-                        textStyle: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700)),
+                      textStyle: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                      )
+                    ),
                   ),
                 ],
               ),

@@ -152,9 +152,18 @@ class _AnnouncementsDetailState extends State<AnnouncementsDetail> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Colors.white,
         title: Text(_lang.translate('announcements'),
-            style: const TextStyle(color: Colors.black, fontFamily: 'Medium')),
+          style: GoogleFonts.robotoCondensed(
+            textStyle: const TextStyle(
+              color: Colors.black,
+              fontStyle: FontStyle.italic,
+              fontSize: 24,
+              fontWeight: FontWeight.w700,
+            )
+          ),
+        ),
         leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () {

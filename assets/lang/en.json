@@ -82,7 +82,7 @@
     "amount_validate": "Amount is required",
     "amount_valid_validate": "Please enter a valid amount!", 
     "send": "SEND",
-    "copy": "COPY",
+    "copy": "COPY ADDRESS",
     "share": "SHARE",
     "speed_test": "Speed Test",
     "qr_scanner": "QR Scanner Transaction",

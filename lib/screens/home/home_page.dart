@@ -49,6 +49,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       key: globalKey,
       appBar: AppBar(
         centerTitle: true,
@@ -61,17 +62,21 @@ class _HomePageState extends State<HomePage> {
         title: RichText(
           text: TextSpan(
             text: 'KOOMPI ',
-            style: GoogleFonts.nunito(
-                fontSize: 18,
-                letterSpacing: 1.0,
-                textStyle: const TextStyle(
-                    color: Colors.black, fontWeight: FontWeight.w700)),
+            style: GoogleFonts.robotoCondensed(
+              fontSize: 24,
+              letterSpacing: 1.0,
+              textStyle: const TextStyle(
+                color: Colors.black, fontWeight: FontWeight.w700, fontStyle: FontStyle.italic
+              )
+            ),
             children: <TextSpan>[
               TextSpan(
                 text: 'Fi-Fi',
-                style: GoogleFonts.nunito(
-                    textStyle: TextStyle(
-                        color: primaryColor, fontWeight: FontWeight.w700)),
+                style: GoogleFonts.robotoCondensed(
+                  textStyle: TextStyle(
+                    color: primaryColor, fontWeight: FontWeight.w700, fontStyle: FontStyle.italic
+                  )
+                ),
               )
             ],
           ),

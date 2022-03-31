@@ -1,10 +1,9 @@
-import 'package:dio/dio.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/providers/contact_list_provider.dart';
 import 'package:koompi_hotspot/utils/auto_login_hotspot_constants.dart' as global;
 import 'package:koompi_hotspot/utils/globals.dart' as globals;
 import 'package:onesignal_flutter/onesignal_flutter.dart';
-import 'package:http/http.dart' as http;
+import 'package:dart_ping/dart_ping.dart';
 
 class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);
@@ -231,32 +230,32 @@ class _SplashState extends State<Splash> {
     /// Set App Id.
     OneSignal.shared.setAppId("05805743-ce69-4224-9afb-b2f36bf6c1db");
 
-    await OneSignal.shared
-        .promptUserForPushNotificationPermission(fallbackToSettings: true);
+    await OneSignal.shared.promptUserForPushNotificationPermission(fallbackToSettings: true);
   }
 
   Future<void> isWifiAccess() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     
     if (connectivityResult == ConnectivityResult.wifi) {
+        // Create ping object with desired args
       try {
-        var response = await Dio().post('http://www.google.com').timeout(const Duration(seconds: 3));
-        print("response: $response");
-      } catch (e) {
-        Dio().close();
-        Navigator.push(
-          context,
-          PageTransition(
-            type: PageTransitionType.rightToLeft,
-            child: const CaptivePortalWeb(),
-          ),
-        );
-        // try{
-        //   await Dio().post('http://www.google.com').then((value) => Navigator.pop(context));
-        // }
-        // catch(e){
-        //   print(e);
-        // }
+        final ping = Ping('google.com', count: 3);
+
+        // Begin ping process and listen for output
+        ping.stream.listen((event) {
+          print(event.error);
+          // if(error == 'RequestTimedOut'){
+          //   Navigator.push(
+          //     context,
+          //     PageTransition(
+          //       type: PageTransitionType.bottomToTop,
+          //       child: const CaptivePortalWeb(),
+          //     ),
+          //   );
+          // }
+        });
+      }catch(e){
+        // print(e);
       }
     }
   }

@@ -20,7 +20,7 @@ class _SendRequestState extends State<SendRequest> {
 
   final List<TokenTypeModel> _tokenTypeModelList = [
     TokenTypeModel(
-        tokenName: 'RISE',
+        tokenName: 'LUY',
         imageToken: Image.asset(
           'assets/images/rise-coin-icon.png',
           width: 22,
@@ -276,6 +276,7 @@ class _SendRequestState extends State<SendRequest> {
     return Scaffold(
       key: globalKey,
       appBar: AppBar(
+        centerTitle: true,
         leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () {
@@ -287,8 +288,14 @@ class _SendRequestState extends State<SendRequest> {
         ),
         title: Text(
           _lang.translate('send_request'),
-          style: const TextStyle(
-              color: Colors.black, fontFamily: 'Medium', fontSize: 22.0),
+          style: GoogleFonts.robotoCondensed(
+            textStyle: const TextStyle(
+              color: Colors.black,
+              fontStyle: FontStyle.italic,
+              fontSize: 24,
+              fontWeight: FontWeight.w700,
+            )
+          ),
         ),
       ),
       body: GestureDetector(

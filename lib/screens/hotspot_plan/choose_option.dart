@@ -82,9 +82,18 @@ class _ChooseOptionState extends State<ChooseOption>
     return Scaffold(
       key: globalKey,
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Colors.white,
         title: Text(_lang.translate('renew_option'),
-            style: const TextStyle(color: Colors.black, fontFamily: 'Medium')),
+          style: GoogleFonts.robotoCondensed(
+            textStyle: const TextStyle(
+              color: Colors.black,
+              fontStyle: FontStyle.italic,
+              fontSize: 24,
+              fontWeight: FontWeight.w700,
+            )
+          ),    
+        ),
         automaticallyImplyLeading: false,
         actions: <Widget>[
           Padding(

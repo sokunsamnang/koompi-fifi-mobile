@@ -168,6 +168,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
     return Scaffold(
         key: globalKey,
         appBar: AppBar(
+          centerTitle: true,
           leading: IconButton(
               icon: const Icon(Icons.arrow_back, color: Colors.black),
               onPressed: () {
@@ -180,8 +181,16 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
           //   "assets/images/appbar_logo.png",
           //   scale: 2,
           // ),
-          title: const Text('Choose a Plan',
-              style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
+          title: Text('Choose a Plan',
+            style: GoogleFonts.robotoCondensed(
+            textStyle: const TextStyle(
+              color: Colors.black,
+              fontStyle: FontStyle.italic,
+              fontSize: 24,
+              fontWeight: FontWeight.w700,
+            )
+          ),
+          ),
         ),
         body: SizedBox(
           height: MediaQuery.of(context).size.height * 2,

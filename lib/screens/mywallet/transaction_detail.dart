@@ -23,9 +23,16 @@ class _TransactionDetailState extends State<TransactionDetail> {
     return Scaffold(
       appBar: AppBar(
         systemOverlayStyle: SystemUiOverlayStyle.dark,
-        title: const Text('Transaction Details',
-            style: TextStyle(
-                color: Colors.white, fontSize: 18, fontFamily: 'Medium')),
+        title: Text('Transaction Details',
+          style: GoogleFonts.robotoCondensed(
+            textStyle: const TextStyle(
+              color: Colors.black,
+              fontStyle: FontStyle.italic,
+              fontSize: 24,
+              fontWeight: FontWeight.w700,
+            )
+          ),
+        ),
         backgroundColor: HexColor('00336A'),
         centerTitle: true,
         elevation: 0,

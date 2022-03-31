@@ -101,6 +101,7 @@ class _EditContactState extends State<EditContact> {
     return Scaffold(
       key: globalKey,
       appBar: AppBar(
+        centerTitle: true,
         leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () {
@@ -110,10 +111,16 @@ class _EditContactState extends State<EditContact> {
         iconTheme: const IconThemeData(
           color: Colors.black, //change your color here
         ),
-        title: const Text(
+        title: Text(
           'Edit Contact',
-          style: TextStyle(
-              color: Colors.black, fontFamily: 'Medium', fontSize: 22.0),
+         style: GoogleFonts.robotoCondensed(
+            textStyle: const TextStyle(
+              color: Colors.black,
+              fontStyle: FontStyle.italic,
+              fontSize: 24,
+              fontWeight: FontWeight.w700,
+            )
+          ),
         ),
       ),
       body: GestureDetector(

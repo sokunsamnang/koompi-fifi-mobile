@@ -25,11 +25,19 @@ class _WalletChoiceState extends State<WalletChoice> {
     var _lang = AppLocalizeService.of(context);
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Colors.white,
         // brightness: Brightness.light,
         title: Text(
           _lang.translate('my_wallet'),
-          style: const TextStyle(color: Colors.black, fontFamily: 'Medium'),
+          style: GoogleFonts.robotoCondensed(
+            textStyle: const TextStyle(
+              color: Colors.black,
+              fontStyle: FontStyle.italic,
+              fontSize: 24,
+              fontWeight: FontWeight.w700,
+            )
+          ),
         ),
         iconTheme: const IconThemeData(
           color: Colors.black,

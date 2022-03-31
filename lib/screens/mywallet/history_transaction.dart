@@ -262,14 +262,22 @@ class _TrxHistoryState extends State<TrxHistory> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           backgroundColor: Colors.white,
           iconTheme: const IconThemeData(
             color: Colors.black,
           ),
           automaticallyImplyLeading: true,
-          title: const Text(
+          title: Text(
             'Transaction History',
-            style: TextStyle(color: Colors.black, fontFamily: 'Medium'),
+            style: GoogleFonts.robotoCondensed(
+              textStyle: const TextStyle(
+                color: Colors.black,
+                fontStyle: FontStyle.italic,
+                fontSize: 24,
+                fontWeight: FontWeight.w700,
+              )
+            ),
           ),
         ),
         body: RefreshIndicator(

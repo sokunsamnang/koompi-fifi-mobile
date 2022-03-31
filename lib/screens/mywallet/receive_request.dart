@@ -60,14 +60,21 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
     return Scaffold(
       key: _scaffoldkey,
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(
           color: Colors.black, //change your color here
         ),
         title: Text(
           _lang.translate('receive_request'),
-          style: const TextStyle(
-              color: Colors.black, fontFamily: 'Medium', fontSize: 22.0),
+          style: GoogleFonts.robotoCondensed(
+            textStyle: const TextStyle(
+              color: Colors.black,
+              fontStyle: FontStyle.italic,
+              fontSize: 24,
+              fontWeight: FontWeight.w700,
+            )
+          ),
         ),
       ),
       body: SingleChildScrollView(
