@@ -221,7 +221,7 @@ class PostRequest with ChangeNotifier {
       /* Convert to Json String */
       "phone": phone,
       "password": password,
-      "simultaneous": "2",
+      "simultaneous": "1",
       "value": value,
       "asset": "SEL",
       "memo": memo

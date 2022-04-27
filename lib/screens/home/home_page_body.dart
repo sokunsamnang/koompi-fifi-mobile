@@ -21,20 +21,20 @@ Widget bodyPage(BuildContext context) {
       ),
       mPlan.username == null ? noPlanView(context) : _planViewButton(context),
 
-      // ===========Account Balance Widget===========
-      const SizedBox(height: 20),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: Text(
-          _lang.translate('account').toUpperCase(),
-          style: GoogleFonts.nunito(
-              textStyle: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700)),
-        ),
-      ),
-      mData.wallet == null ? startGetWallet(context) : _myWalletButton(context),
+      // // ===========Account Balance Widget===========
+      // const SizedBox(height: 20),
+      // Padding(
+      //   padding: const EdgeInsets.symmetric(horizontal: 15),
+      //   child: Text(
+      //     _lang.translate('account').toUpperCase(),
+      //     style: GoogleFonts.nunito(
+      //         textStyle: const TextStyle(
+      //             color: Colors.black,
+      //             fontSize: 16,
+      //             fontWeight: FontWeight.w700)),
+      //   ),
+      // ),
+      // mData.wallet == null ? startGetWallet(context) : _myWalletButton(context),
 
       // ===========Promotion Widget===========
       const SizedBox(height: 20),
@@ -228,14 +228,9 @@ Widget noPlanView(BuildContext context) {
                       },
                       child: Row(
                         children: <Widget>[
-                          const Icon(
-                            Icons.more_vert,
-                            color: Colors.white,
-                            size: 20,
-                          ),
-                          const SizedBox(width: 5),
                           Text(
-                            _lang.translate('buy_plan'),
+                            // _lang.translate('buy_plan'),
+                            'Go Subscribe',
                             style: GoogleFonts.roboto(
                               textStyle: const TextStyle(
                                 color: Colors.white,
@@ -541,292 +536,292 @@ Widget _planExpire(context) {
   );
 }
 
-Widget _myWalletButton(context) {
-  var balance = Provider.of<BalanceProvider>(context);
-  var _lang = AppLocalizeService.of(context);
-  return balance.balanceList.isNotEmpty
-      ? Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Center(
-              child: InkWell(
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12.0),
-                color: Colors.grey[900],
-              ),
-              child: Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  customBorder: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  onTap: () async {
-                    Navigator.push(
-                        context,
-                        PageTransition(
-                          type: PageTransitionType.rightToLeft,
-                          child: const WalletScreen(),
-                        ));
-                  },
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(12)),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      // height: MediaQuery.of(context).size.height * .35,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12.0),
-                          // color: Colors.grey[900],
-                          gradient: LinearGradient(
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
-                              colors: [
-                                HexColor('0F4471'),
-                                HexColor('083358')
-                              ])),
-                      child: Stack(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 20),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: <Widget>[
-                                const SizedBox(height: 5),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 50),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        _lang.translate('asset'),
-                                        style: const TextStyle(
-                                          fontSize: 17,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                      // Expanded(child: Container()),
-                                      Text(
-                                        _lang.translate('total'),
-                                        style: const TextStyle(
-                                          fontSize: 17,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(height: 10),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 50),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Image.asset(
-                                              'assets/images/rise-coin-icon.png',
-                                              width: 20),
-                                          const SizedBox(width: 10),
-                                          Text(
-                                            balance.balanceList[0].symbol!,
-                                            style: GoogleFonts.nunito(
-                                                textStyle: const TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 18,
-                                                    fontWeight:
-                                                        FontWeight.w700)),
-                                          ),
-                                        ],
-                                      ),
-                                      balance.balanceList[0].token ==
-                                                  "Token Suspended" ||
-                                              balance
-                                                  .balanceList[0].token!.isEmpty
-                                          ? Text(
-                                              balance.balanceList[0].token!,
-                                              style: GoogleFonts.nunito(
-                                                  textStyle: const TextStyle(
-                                                      color: Colors.red,
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.w700)),
-                                            )
-                                          : Flexible(
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(left: 50.0),
-                                              child: Text(
-                                                  balance.balanceList[0].token!,
-                                                  overflow: TextOverflow.ellipsis,
-                                                  style: GoogleFonts.nunito(
-                                                      textStyle: const TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.w700)),
-                                                ),
-                                            ),
-                                          )
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(height: 10),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 50),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Image.asset(
-                                              'assets/images/sel-coin-icon.png',
-                                              width: 22),
-                                          const SizedBox(width: 10),
-                                          Text(
-                                            balance.balanceList[1].symbol!,
-                                            style: GoogleFonts.nunito(
-                                                textStyle: const TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 18,
-                                                    fontWeight:
-                                                        FontWeight.w700)),
-                                          ),
-                                        ],
-                                      ),
-                                      balance.balanceList[1].token ==
-                                                  "Token Suspended" ||
-                                              balance
-                                                  .balanceList[1].token!.isEmpty
-                                          ? Text(
-                                              balance.balanceList[1].token!,
-                                              style: GoogleFonts.nunito(
-                                                  textStyle: const TextStyle(
-                                                      color: Colors.red,
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.w700)),
-                                            )
-                                          : Flexible(
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(left: 50.0),
-                                              child: Text(
-                                                  balance.balanceList[1].token!,
-                                                  overflow: TextOverflow.ellipsis,
-                                                  style: GoogleFonts.nunito(
-                                                      textStyle: const TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.w700)),
-                                                ),
-                                            ),
-                                          )
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(height: 10),
-                              ],
-                            ),
-                          ),
-                          Positioned(
-                            left: 345,
-                            top: 12,
-                            child: IconButton(
-                                icon: const Icon(Icons.more_vert,
-                                    color: Colors.white),
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    PageTransition(
-                                      type: PageTransitionType.rightToLeft,
-                                      child: const WalletScreen(),
-                                    ),
-                                  );
-                                }),
-                          ),
-                          Positioned(
-                            right: 280,
-                            left: -185,
-                            top: -214,
-                            child: CircleAvatar(
-                              radius: 130,
-                              backgroundColor: Colors.lightBlueAccent[50],
-                            ),
-                          ),
-                          Positioned(
-                            left: -180,
-                            top: -210,
-                            child: CircleAvatar(
-                              radius: 130,
-                              backgroundColor: Colors.lightBlue[300],
-                            ),
-                          ),
-                          const Positioned(
-                            left: 280,
-                            right: -180,
-                            bottom: -215,
-                            child: CircleAvatar(
-                              radius: 130,
-                              backgroundColor: Colors.deepOrangeAccent,
-                            ),
-                          ),
-                          const Positioned(
-                            right: -180,
-                            bottom: -210,
-                            child: CircleAvatar(
-                              radius: 130,
-                              backgroundColor: Colors.orangeAccent,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          )),
-        )
-      : _myWalletError(context);
-}
+// Widget _myWalletButton(context) {
+//   var balance = Provider.of<BalanceProvider>(context);
+//   var _lang = AppLocalizeService.of(context);
+//   return balance.balanceList.isNotEmpty
+//       ? Padding(
+//           padding: const EdgeInsets.symmetric(horizontal: 15),
+//           child: Center(
+//               child: InkWell(
+//             child: Container(
+//               width: MediaQuery.of(context).size.width,
+//               decoration: BoxDecoration(
+//                 borderRadius: BorderRadius.circular(12.0),
+//                 color: Colors.grey[900],
+//               ),
+//               child: Material(
+//                 color: Colors.transparent,
+//                 child: InkWell(
+//                   customBorder: RoundedRectangleBorder(
+//                     borderRadius: BorderRadius.circular(12),
+//                   ),
+//                   onTap: () async {
+//                     Navigator.push(
+//                         context,
+//                         PageTransition(
+//                           type: PageTransitionType.rightToLeft,
+//                           child: const WalletScreen(),
+//                         ));
+//                   },
+//                   child: ClipRRect(
+//                     borderRadius: const BorderRadius.all(Radius.circular(12)),
+//                     child: Container(
+//                       width: MediaQuery.of(context).size.width,
+//                       // height: MediaQuery.of(context).size.height * .35,
+//                       decoration: BoxDecoration(
+//                           borderRadius: BorderRadius.circular(12.0),
+//                           // color: Colors.grey[900],
+//                           gradient: LinearGradient(
+//                               begin: Alignment.centerLeft,
+//                               end: Alignment.centerRight,
+//                               colors: [
+//                                 HexColor('0F4471'),
+//                                 HexColor('083358')
+//                               ])),
+//                       child: Stack(
+//                         children: <Widget>[
+//                           Padding(
+//                             padding: const EdgeInsets.symmetric(vertical: 20),
+//                             child: Column(
+//                               mainAxisAlignment: MainAxisAlignment.center,
+//                               crossAxisAlignment: CrossAxisAlignment.end,
+//                               children: <Widget>[
+//                                 const SizedBox(height: 5),
+//                                 Padding(
+//                                   padding: const EdgeInsets.symmetric(
+//                                       horizontal: 50),
+//                                   child: Row(
+//                                     mainAxisAlignment:
+//                                         MainAxisAlignment.spaceBetween,
+//                                     children: [
+//                                       Text(
+//                                         _lang.translate('asset'),
+//                                         style: const TextStyle(
+//                                           fontSize: 17,
+//                                           color: Colors.white,
+//                                           fontWeight: FontWeight.w700,
+//                                         ),
+//                                       ),
+//                                       // Expanded(child: Container()),
+//                                       Text(
+//                                         _lang.translate('total'),
+//                                         style: const TextStyle(
+//                                           fontSize: 17,
+//                                           color: Colors.white,
+//                                           fontWeight: FontWeight.w700,
+//                                         ),
+//                                       ),
+//                                     ],
+//                                   ),
+//                                 ),
+//                                 const SizedBox(height: 10),
+//                                 Padding(
+//                                   padding: const EdgeInsets.symmetric(
+//                                       horizontal: 50),
+//                                   child: Row(
+//                                     mainAxisAlignment:
+//                                         MainAxisAlignment.spaceBetween,
+//                                     children: [
+//                                       Row(
+//                                         children: [
+//                                           Image.asset(
+//                                               'assets/images/rise-coin-icon.png',
+//                                               width: 20),
+//                                           const SizedBox(width: 10),
+//                                           Text(
+//                                             balance.balanceList[0].symbol!,
+//                                             style: GoogleFonts.nunito(
+//                                                 textStyle: const TextStyle(
+//                                                     color: Colors.white,
+//                                                     fontSize: 18,
+//                                                     fontWeight:
+//                                                         FontWeight.w700)),
+//                                           ),
+//                                         ],
+//                                       ),
+//                                       balance.balanceList[0].token ==
+//                                                   "Token Suspended" ||
+//                                               balance
+//                                                   .balanceList[0].token!.isEmpty
+//                                           ? Text(
+//                                               balance.balanceList[0].token!,
+//                                               style: GoogleFonts.nunito(
+//                                                   textStyle: const TextStyle(
+//                                                       color: Colors.red,
+//                                                       fontSize: 18,
+//                                                       fontWeight:
+//                                                           FontWeight.w700)),
+//                                             )
+//                                           : Flexible(
+//                                             child: Padding(
+//                                               padding: const EdgeInsets.only(left: 50.0),
+//                                               child: Text(
+//                                                   balance.balanceList[0].token!,
+//                                                   overflow: TextOverflow.ellipsis,
+//                                                   style: GoogleFonts.nunito(
+//                                                       textStyle: const TextStyle(
+//                                                           color: Colors.white,
+//                                                           fontSize: 18,
+//                                                           fontWeight:
+//                                                               FontWeight.w700)),
+//                                                 ),
+//                                             ),
+//                                           )
+//                                     ],
+//                                   ),
+//                                 ),
+//                                 const SizedBox(height: 10),
+//                                 Padding(
+//                                   padding: const EdgeInsets.symmetric(
+//                                       horizontal: 50),
+//                                   child: Row(
+//                                     mainAxisAlignment:
+//                                         MainAxisAlignment.spaceBetween,
+//                                     children: [
+//                                       Row(
+//                                         children: [
+//                                           Image.asset(
+//                                               'assets/images/sel-coin-icon.png',
+//                                               width: 22),
+//                                           const SizedBox(width: 10),
+//                                           Text(
+//                                             balance.balanceList[1].symbol!,
+//                                             style: GoogleFonts.nunito(
+//                                                 textStyle: const TextStyle(
+//                                                     color: Colors.white,
+//                                                     fontSize: 18,
+//                                                     fontWeight:
+//                                                         FontWeight.w700)),
+//                                           ),
+//                                         ],
+//                                       ),
+//                                       balance.balanceList[1].token ==
+//                                                   "Token Suspended" ||
+//                                               balance
+//                                                   .balanceList[1].token!.isEmpty
+//                                           ? Text(
+//                                               balance.balanceList[1].token!,
+//                                               style: GoogleFonts.nunito(
+//                                                   textStyle: const TextStyle(
+//                                                       color: Colors.red,
+//                                                       fontSize: 18,
+//                                                       fontWeight:
+//                                                           FontWeight.w700)),
+//                                             )
+//                                           : Flexible(
+//                                             child: Padding(
+//                                               padding: const EdgeInsets.only(left: 50.0),
+//                                               child: Text(
+//                                                   balance.balanceList[1].token!,
+//                                                   overflow: TextOverflow.ellipsis,
+//                                                   style: GoogleFonts.nunito(
+//                                                       textStyle: const TextStyle(
+//                                                           color: Colors.white,
+//                                                           fontSize: 18,
+//                                                           fontWeight:
+//                                                               FontWeight.w700)),
+//                                                 ),
+//                                             ),
+//                                           )
+//                                     ],
+//                                   ),
+//                                 ),
+//                                 const SizedBox(height: 10),
+//                               ],
+//                             ),
+//                           ),
+//                           Positioned(
+//                             left: 345,
+//                             top: 12,
+//                             child: IconButton(
+//                                 icon: const Icon(Icons.more_vert,
+//                                     color: Colors.white),
+//                                 onPressed: () {
+//                                   Navigator.push(
+//                                     context,
+//                                     PageTransition(
+//                                       type: PageTransitionType.rightToLeft,
+//                                       child: const WalletScreen(),
+//                                     ),
+//                                   );
+//                                 }),
+//                           ),
+//                           Positioned(
+//                             right: 280,
+//                             left: -185,
+//                             top: -214,
+//                             child: CircleAvatar(
+//                               radius: 130,
+//                               backgroundColor: Colors.lightBlueAccent[50],
+//                             ),
+//                           ),
+//                           Positioned(
+//                             left: -180,
+//                             top: -210,
+//                             child: CircleAvatar(
+//                               radius: 130,
+//                               backgroundColor: Colors.lightBlue[300],
+//                             ),
+//                           ),
+//                           const Positioned(
+//                             left: 280,
+//                             right: -180,
+//                             bottom: -215,
+//                             child: CircleAvatar(
+//                               radius: 130,
+//                               backgroundColor: Colors.deepOrangeAccent,
+//                             ),
+//                           ),
+//                           const Positioned(
+//                             right: -180,
+//                             bottom: -210,
+//                             child: CircleAvatar(
+//                               radius: 130,
+//                               backgroundColor: Colors.orangeAccent,
+//                             ),
+//                           )
+//                         ],
+//                       ),
+//                     ),
+//                   ),
+//                 ),
+//               ),
+//             ),
+//           )),
+//         )
+//       : _myWalletError(context);
+// }
 
-Widget _myWalletError(context) {
-  var _lang = AppLocalizeService.of(context);
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 15),
-    child: Center(
-        child: Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * .22,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.0),
-        color: HexColor('083C5A'),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              _lang.translate('selendra_down'),
-              style: GoogleFonts.nunito(
-                  textStyle: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700)),
-            ),
-          ],
-        ),
-      ),
-    )),
-  );
-}
+// Widget _myWalletError(context) {
+//   var _lang = AppLocalizeService.of(context);
+//   return Padding(
+//     padding: const EdgeInsets.symmetric(horizontal: 15),
+//     child: Center(
+//         child: Container(
+//       width: MediaQuery.of(context).size.width,
+//       height: MediaQuery.of(context).size.height * .22,
+//       decoration: BoxDecoration(
+//         borderRadius: BorderRadius.circular(12.0),
+//         color: HexColor('083C5A'),
+//       ),
+//       child: Padding(
+//         padding: const EdgeInsets.symmetric(vertical: 20),
+//         child: Column(
+//           crossAxisAlignment: CrossAxisAlignment.center,
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: [
+//             Text(
+//               _lang.translate('selendra_down'),
+//               style: GoogleFonts.nunito(
+//                   textStyle: const TextStyle(
+//                       color: Colors.white,
+//                       fontSize: 20,
+//                       fontWeight: FontWeight.w700)),
+//             ),
+//           ],
+//         ),
+//       ),
+//     )),
+//   );
+// }

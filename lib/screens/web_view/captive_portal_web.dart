@@ -1,9 +1,12 @@
 import 'package:koompi_hotspot/all_export.dart';
+import 'package:koompi_hotspot/providers/contact_list_provider.dart';
 import 'package:koompi_hotspot/utils/auto_login_hotspot_constants.dart'
     as global;
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:path/path.dart';
 
 String selectedUrl = 'http://connectivitycheck.android.com/generate_204';
+// String selectedUrl = 'https://unifi.koompi.org/guest/s/srdd5hh7/#/';
 String otherUrl = 'https://koompi.com/';
 
 class CaptivePortalWeb extends StatefulWidget {
@@ -15,6 +18,8 @@ class CaptivePortalWeb extends StatefulWidget {
 
 class _CaptivePortalWebState extends State<CaptivePortalWeb> {
   final GlobalKey webViewKey = GlobalKey();
+
+
 
   InAppWebViewController? webViewController;
   InAppWebViewGroupOptions options = InAppWebViewGroupOptions(
@@ -46,6 +51,11 @@ class _CaptivePortalWebState extends State<CaptivePortalWeb> {
   @override
   Widget build(BuildContext context) {
     var _lang = AppLocalizeService.of(context);
+
+    Timer requestTimer = Timer(const Duration(seconds: 5), () async {
+      StorageServices().checkUser(context);
+    });
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -99,34 +109,67 @@ class _CaptivePortalWebState extends State<CaptivePortalWeb> {
                 action: ServerTrustAuthResponseAction.PROCEED);
           },
           onLoadResource: (controller, url) async {
+            print(controller);
             SharedPreferences prefs = await SharedPreferences.getInstance();
-
+            global.phone = prefs.getString('phone')!;
+            global.password = prefs.getString('password')!;
             setState(() {
-              global.phone = prefs.getString('phone')!;
-              global.password = prefs.getString('password')!;
+              
 
-              controller.evaluateJavascript(source: '''
-                document.getElementById("user").value="${global.phone}";
-                document.getElementById("password").value="${global.password}";
+              // controller.evaluateJavascript(source: '''
+              //   document.getElementById("user").value="${global.phone}";
+              //   document.getElementById("password").value="${global.password}";
+              //   document.getElementById("btnlogin").click();
+              // ''');uateJavascript(source: "");
+
+              controller.evaluateJavascript(source: """
+                var scopeUser = angular.element(document.getElementById('user')).scope();
+                scopeUser.\$apply('homeCtrl.formModel.username = "${global.phone}";');
+                var scopePass = angular.element(document.getElementById('password')).scope();
+                scopePass.\$apply('homeCtrl.formModel.password = "${global.password}";');
                 document.getElementById("btnlogin").click();
-              ''');
+              """);
             });
           },
           onLoadStop: (controller, url) async {
+            print(url);
+            print(controller);
             SharedPreferences prefs = await SharedPreferences.getInstance();
-
+            global.phone = prefs.getString('phone')!;
+            global.password = prefs.getString('password')!;
             setState(() {
-              global.phone = prefs.getString('phone')!;
-              global.password = prefs.getString('password')!;
+              
 
               this.url = url.toString();
               urlController.text = this.url;
-              controller.evaluateJavascript(source: '''
-                document.getElementById("user").value="${global.phone}";
-                document.getElementById("password").value="${global.password}";
+              // controller.evaluateJavascript(source: '''
+              //   document.getElementById("user").value="${global.phone}";
+              //   document.getElementById("password").value="${global.password}";
+              //   document.getElementById("btnlogin").click();
+              // ''');
+              
+              controller.evaluateJavascript(source: """
+                var scopeUser = angular.element(document.getElementById('user')).scope();
+                scopeUser.\$apply('homeCtrl.formModel.username = "${global.phone}";');
+                var scopePass = angular.element(document.getElementById('password')).scope();
+                scopePass.\$apply('homeCtrl.formModel.password = "${global.password}";');
                 document.getElementById("btnlogin").click();
-              ''');
+              """);
+              
             });
+
+            
+            if(url == Uri.parse(selectedUrl)){
+              print('requesting');
+              requestTimer;
+              if(mData.fullname!.isNotEmpty){
+                print('request cancel');
+                requestTimer.cancel();
+              }
+            }
+            
+            
+            
           },
           onConsoleMessage: (controller, consoleMessage) {
             if (kDebugMode) {

@@ -1,5 +1,6 @@
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/providers/contact_list_provider.dart';
+import 'package:koompi_hotspot/screens/web_view/webview.dart';
 import 'package:koompi_hotspot/utils/auto_login_hotspot_constants.dart' as global;
 import 'package:koompi_hotspot/utils/globals.dart' as globals;
 import 'package:onesignal_flutter/onesignal_flutter.dart';
@@ -152,46 +153,18 @@ class _SplashState extends State<Splash> {
     }
   }
 
-  bool hasConnection = false;
-
-  Future<bool> hasInternetInternetConnection() async {
-    var connectivityResult = await (Connectivity().checkConnectivity());
-    //Check if device is just connect with mobile network or wifi
-    if (connectivityResult == ConnectivityResult.mobile ||
-        connectivityResult == ConnectivityResult.wifi) {
-      //Check there is actual internet connection with a mobile network or wifi
-      if (await InternetConnectionChecker().hasConnection) {
-        print('Network data detected & internet connection confirmed.');
-        hasConnection = true;
-      } else {
-        print('Network data detected but no internet connection found.');
-        Navigator.push(
-          context,
-          PageTransition(
-            type: PageTransitionType.bottomToTop,
-            child: const CaptivePortalWeb(),
-          ),
-        );
-        hasConnection = false;
-      }
-    }
-    // device has no mobile network and wifi connection at all
-    else {
-      hasConnection = false;
-    }
-    return hasConnection;
-  }
-
 
   @override
   void initState() {
     super.initState();
     configOneSignal();
     setState(() {
+      startTime();
+      getValue();
       // hasInternetInternetConnection();
       isWifiAccess();
-      getValue();
-      startTime();
+      
+      
     });
     initQuickActions();
 
@@ -239,26 +212,26 @@ class _SplashState extends State<Splash> {
     if (connectivityResult == ConnectivityResult.wifi) {
         // Create ping object with desired args
       try {
-        final ping = Ping('google.com', count: 3);
+        final ping = Ping('google.com', count: 2);
 
         // Begin ping process and listen for output
         ping.stream.listen((event) {
-          print(event.error);
-          // if(error == 'RequestTimedOut'){
-          //   Navigator.push(
-          //     context,
-          //     PageTransition(
-          //       type: PageTransitionType.bottomToTop,
-          //       child: const CaptivePortalWeb(),
-          //     ),
-          //   );
-          // }
+          if(event.error != null) {
+            Navigator.push(
+              context,
+              PageTransition(
+                type: PageTransitionType.bottomToTop,
+                child: const CaptivePortalWeb(),
+              ),
+            );
+          }
         });
       }catch(e){
         // print(e);
       }
     }
   }
+
 
   @override
   Widget build(BuildContext context) {

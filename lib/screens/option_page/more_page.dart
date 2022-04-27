@@ -1,4 +1,5 @@
 import 'package:koompi_hotspot/all_export.dart';
+import 'package:koompi_hotspot/screens/web_view/webview.dart';
 
 class MorePage extends StatefulWidget {
   const MorePage({Key? key}) : super(key: key);
@@ -249,7 +250,7 @@ class _MorePageState extends State<MorePage> {
                         borderRadius: const BorderRadius.all(Radius.circular(12.0)),
                       ),
                       leading: Icon(LineIcons.gifts, color: primaryColor),
-                      title: Text('Rewards'),
+                      title: const Text('Rewards'),
                       trailing: const Icon(LineIcons.angleRight),
                       onTap: () async {
                         
@@ -265,7 +266,7 @@ class _MorePageState extends State<MorePage> {
                         borderRadius: const BorderRadius.all(Radius.circular(12.0)),
                       ),
                       leading: Icon(Icons.mail_outline_outlined, color: primaryColor),
-                      title: Text('Earn a referral'),
+                      title: const Text('Earn a referral'),
                       trailing: const Icon(LineIcons.angleRight),
                       onTap: () async {
 
@@ -276,32 +277,63 @@ class _MorePageState extends State<MorePage> {
 
 
                   buildDivider(),
-                  const SizedBox(height: 20.0),
+                  // const SizedBox(height: 20.0),
                   Padding(
-                    padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                    child: ListTile(
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
-                        borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-                      ),
-                      leading: const Icon(LineIcons.alternateSignOut, color: Colors.red),
-                      title: Text(_lang.translate('sign_out')),
-                      onTap: () async {
-                        await Components.dialogSignOut(
-                          context,
-                          Text(_lang.translate('sign_out_warn'),
-                              textAlign: TextAlign.center),
-                          Text(
-                            _lang.translate('warning'),
-                            style: const TextStyle(fontFamily: 'Poppins-Bold'),
-                          ),
-                        );
-                      },
+                    padding: const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 15.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            const Icon(LineIcons.alternateSignOut, color: Colors.red),
+                            TextButton(
+                              onPressed: () async {
+                                await Components.dialogSignOut(
+                                  context,
+                                  Text(_lang.translate('sign_out_warn'),
+                                      textAlign: TextAlign.center),
+                                  Text(
+                                    _lang.translate('warning'),
+                                    style: const TextStyle(fontFamily: 'Poppins-Bold'),
+                                  ),
+                                );
+                              },
+                              child: Text(_lang.translate('sign_out'),
+                                style: GoogleFonts.roboto(
+                                  fontSize: 20.0,
+                                  color: Colors.red,
+                                )
+                              ),
+
+                            ),
+                          ],
+                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                        //   child: ListTile(
+                        //     shape: RoundedRectangleBorder(
+                        //       side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
+                        //       borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                        //     ),
+                        //     leading: const Icon(LineIcons.alternateSignOut, color: Colors.red),
+                        //     title: Text(_lang.translate('sign_out')),
+                        //     onTap: () async {
+                        //       await Components.dialogSignOut(
+                        //         context,
+                        //         Text(_lang.translate('sign_out_warn'),
+                        //             textAlign: TextAlign.center),
+                        //         Text(
+                        //           _lang.translate('warning'),
+                        //           style: const TextStyle(fontFamily: 'Poppins-Bold'),
+                        //         ),
+                        //       );
+                        //     },
+                        //   ),
+                        // ),
+                        _infoApp('KOOMPI Fi-Fi: ', _packageInfo.version)
+                      ],
                     ),
                   ),
-                  Center(
-                      child:
-                          _infoApp('KOOMPI Fi-Fi: ', _packageInfo.version)),
                 ],
               ),
             ],

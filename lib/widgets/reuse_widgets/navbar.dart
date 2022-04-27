@@ -15,9 +15,10 @@ class Navbar extends StatefulWidget {
 class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
   int _selectedIndex = 0;
 
+
   final List<Widget> _widgetOptions = <Widget>[
     const HomePage(),
-    const MyLocationView(),
+    const MyWallet(walletKey: ''),
     const WifiConnect(),
     const MorePage(),
   ];
@@ -82,12 +83,19 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
             if (kDebugMode) {
               print('web laoded');
             }
-            flutterWebViewPlugin.evalJavascript(
-                'document.getElementById("user").value="${global.phone}"'); // Replace with the id of username field
-            flutterWebViewPlugin.evalJavascript(
-                'document.getElementById("password").value="${global.password}"'); // Replace with the id of password field
-            flutterWebViewPlugin.evalJavascript(
-                'document.getElementById("btnlogin").click()'); // Replace with Submit button id
+            flutterWebViewPlugin.evalJavascript("""
+              var scopeUser = angular.element(document.getElementById('user')).scope();
+              scopeUser.\$apply('homeCtrl.formModel.username = "${global.phone}";');
+              var scopePass = angular.element(document.getElementById('password')).scope();
+              scopePass.\$apply('homeCtrl.formModel.password = "${global.password}";');
+              document.getElementById("btnlogin").click();
+            """);
+            // flutterWebViewPlugin.evalJavascript(
+            //     'document.getElementById("user").value="${global.phone}"'); // Replace with the id of username field
+            // flutterWebViewPlugin.evalJavascript(
+            //     'document.getElementById("password").value="${global.password}"'); // Replace with the id of password field
+            // flutterWebViewPlugin.evalJavascript(
+            //     'document.getElementById("btnlogin").click()'); // Replace with Submit button id
 
           } else if (state.type == WebViewState.abortLoad) {
             // if there is a problem with loading the url
@@ -179,9 +187,9 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
                     icon: LineIcons.home,
                     text: _lang.translate('home'),
                   ),
-                  GButton(
-                    icon: LineIcons.map,
-                    text: _lang.translate('map'),
+                  const GButton(
+                    icon: LineIcons.wallet,
+                    text: 'Jaay',
                   ),
                   GButton(
                     icon: Icons.wifi_outlined,
