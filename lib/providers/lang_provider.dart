@@ -40,7 +40,6 @@ class LangProvider with ChangeNotifier {
     } else {
       _lang = myLocale.countryCode!;
     }
-    //print(myLocale.countryCode);
 
     notifyListeners();
   }

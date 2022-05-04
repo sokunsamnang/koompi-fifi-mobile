@@ -30,10 +30,21 @@ class _LanguageViewState extends State<LanguageView>
     var data = Provider.of<LangProvider>(context);
     var _lang = AppLocalizeService.of(context);
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
         backgroundColor: Colors.white,
         title: Text(_lang.translate('language'),
-            style: const TextStyle(color: Colors.black, fontFamily: 'Medium')),
+          style: GoogleFonts.robotoCondensed(
+            textStyle: const TextStyle(
+              color: Colors.black,
+              fontStyle: FontStyle.italic,
+              fontSize: 24,
+              fontWeight: FontWeight.w700,
+            )
+          ),
+        ),
         leading: Builder(builder: (BuildContext context) {
           return IconButton(
               icon: const Icon(
@@ -51,7 +62,7 @@ class _LanguageViewState extends State<LanguageView>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Card(
-                elevation: 4.0,
+                elevation: 8.0,
                 margin:
                     const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
                 shape: RoundedRectangleBorder(

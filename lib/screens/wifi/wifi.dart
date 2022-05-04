@@ -313,16 +313,22 @@ class _WifiConnectState extends State<WifiConnect> {
     var _lang = AppLocalizeService.of(context);
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               _lang.translate('wifi'),
-              style: const TextStyle(
-                color: Colors.black,
-                fontFamily: "Poppins-Bold",
-                fontSize: 18,
+              style: GoogleFonts.robotoCondensed(
+                textStyle: const TextStyle(
+                  color: Colors.black,
+                  fontStyle: FontStyle.italic,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w700,
+                )
               ),
             ),
             TextButton.icon(

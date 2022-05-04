@@ -160,59 +160,68 @@ class _HotspotPlanState extends State<HotspotPlan> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: globalKey,
-        appBar: AppBar(
-          leading: IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.black),
-              onPressed: () {
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  PageTransition(
-                    type: PageTransitionType.rightToLeft,
-                    child: const Navbar(0),
-                  ),
-                  ModalRoute.withName('/navbar'),
-                );
-              }),
-          automaticallyImplyLeading: false,
-          // centerTitle: true,
-          backgroundColor: Colors.white,
-          // title: Image.asset(
-          //   "assets/images/appbar_logo.png",
-          //   scale: 2,
-          // ),
-          title: const Text('Choose a Plan',
-              style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
+      backgroundColor: Colors.white,
+      key: globalKey,
+      appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
+        leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                PageTransition(
+                  type: PageTransitionType.rightToLeft,
+                  child: const Navbar(0),
+                ),
+                ModalRoute.withName('/navbar'),
+              );
+            }),
+        automaticallyImplyLeading: false,
+        // centerTitle: true,
+        backgroundColor: Colors.white,
+        // title: Image.asset(
+        //   "assets/images/appbar_logo.png",
+        //   scale: 2,
+        // ),
+        title: Text('Choose a Plan',
+          style: GoogleFonts.robotoCondensed(
+            fontSize: 24, 
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.bold,
+            color: Colors.black
+          ),
         ),
-        body: WillPopScope(
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height,
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      top: 20.0, left: 28.0, right: 28.0, bottom: 38.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      // Center(
-                      //   child: Text(
-                      //     _lang.translate('choose_plan'),
-                      //     style: GoogleFonts.nunito(
-                      //     textStyle: TextStyle(color: HexColor('0CACDA'), fontSize: 30, fontWeight: FontWeight.w700)
-                      //     ),
-                      //   ),
-                      // ),
-                      const SizedBox(height: 25.0),
-                      plan30DaysButton(context),
-                      const SizedBox(height: 50.0),
-                      plan365DaysButton(context),
-                    ],
-                  ),
+      ),
+      body: WillPopScope(
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    top: 20.0, left: 28.0, right: 28.0, bottom: 38.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    // Center(
+                    //   child: Text(
+                    //     _lang.translate('choose_plan'),
+                    //     style: GoogleFonts.nunito(
+                    //     textStyle: TextStyle(color: HexColor('0CACDA'), fontSize: 30, fontWeight: FontWeight.w700)
+                    //     ),
+                    //   ),
+                    // ),
+                    const SizedBox(height: 25.0),
+                    plan30DaysButton(context),
+                    const SizedBox(height: 50.0),
+                    plan365DaysButton(context),
+                  ],
                 ),
               ),
             ),
-            onWillPop: redirectNavbar));
+          ),
+          onWillPop: redirectNavbar));
   }
 
   Widget plan30DaysButton(BuildContext context) {
@@ -221,19 +230,10 @@ class _HotspotPlanState extends State<HotspotPlan> {
       // width: MediaQuery.of(context).size.width,
       // height: MediaQuery.of(context).size.height * .27,
       // padding: EdgeInsets.all(16),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-              color: Colors.black12,
-              offset: Offset(0.0, 15.0),
-              blurRadius: 15.0),
-          BoxShadow(
-              color: Colors.black12,
-              offset: Offset(0.0, -10.0),
-              blurRadius: 10.0),
-        ],
-        borderRadius: BorderRadius.all(Radius.circular(12)),
+        border: Border.all(color: primaryColor.withOpacity(0.8), width: 1.5),
+        borderRadius: const BorderRadius.all(Radius.circular(12)),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -247,12 +247,14 @@ class _HotspotPlanState extends State<HotspotPlan> {
               Center(
                 child: Text(
                   // '5.000 RISE',
-                  '50.00000 SEL',
-                  style: GoogleFonts.nunito(
-                      textStyle: TextStyle(
-                          color: HexColor('0CACDA'),
-                          fontSize: 30,
-                          fontWeight: FontWeight.w700)),
+                  '50.0000 SEL',
+                  style: GoogleFonts.roboto(
+                  textStyle: TextStyle(
+                      color: HexColor('0CACDA'),
+                      fontSize: 30,
+                      fontWeight: FontWeight.w700,
+                    )
+                  ),
                 ),
               ),
               Divider(
@@ -268,20 +270,24 @@ class _HotspotPlanState extends State<HotspotPlan> {
                   children: [
                     Text(
                       '${_lang.translate('device')}:',
-                      style: GoogleFonts.nunito(
-                          textStyle: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700)),
+                      style: GoogleFonts.roboto(
+                        textStyle: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        )
+                      ),
                     ),
                     Expanded(child: Container()),
                     Text(
                       '2 ${_lang.translate('devices')}',
-                      style: GoogleFonts.nunito(
-                          textStyle: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700)),
+                      style: GoogleFonts.robotoCondensed(
+                        textStyle: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontStyle: FontStyle.italic,
+                        )
+                      ),
                     ),
                   ],
                 ),
@@ -293,20 +299,24 @@ class _HotspotPlanState extends State<HotspotPlan> {
                   children: [
                     Text(
                       '${_lang.translate('speed')}:',
-                      style: GoogleFonts.nunito(
-                          textStyle: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700)),
+                      style: GoogleFonts.roboto(
+                        textStyle: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        )
+                      ),
                     ),
                     Expanded(child: Container()),
                     Text(
                       '5 ${_lang.translate('mb')}',
-                      style: GoogleFonts.nunito(
-                          textStyle: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700)),
+                      style: GoogleFonts.robotoCondensed(
+                        textStyle: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontStyle: FontStyle.italic,
+                        )
+                      ),
                     ),
                   ],
                 ),
@@ -318,20 +328,24 @@ class _HotspotPlanState extends State<HotspotPlan> {
                   children: [
                     Text(
                       '${_lang.translate('expire')}:',
-                      style: GoogleFonts.nunito(
-                          textStyle: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700)),
+                      style: GoogleFonts.roboto(
+                        textStyle: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        )
+                      ),
                     ),
                     Expanded(child: Container()),
                     Text(
                       '30 ${_lang.translate('day')}',
-                      style: GoogleFonts.nunito(
-                          textStyle: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700)),
+                      style: GoogleFonts.robotoCondensed(
+                        textStyle: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontStyle: FontStyle.italic,
+                        )
+                      ),
                     ),
                   ],
                 ),
@@ -344,17 +358,18 @@ class _HotspotPlanState extends State<HotspotPlan> {
                     width: MediaQuery.of(context).size.width,
                     height: 50,
                     decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                            colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(12),
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                              color: const Color(0xFF6078ea).withOpacity(.3),
-                              offset: const Offset(0.0, 8.0),
-                              blurRadius: 8.0)
-                        ]),
+                      gradient: const LinearGradient(
+                          colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(12),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                            color: const Color(0xFF6078ea).withOpacity(.3),
+                            offset: const Offset(0.0, 8.0),
+                            blurRadius: 8.0)
+                      ]
+                    ),
                     child: Material(
                       color: Colors.transparent,
                       child: InkWell(
@@ -391,19 +406,10 @@ class _HotspotPlanState extends State<HotspotPlan> {
   Widget plan365DaysButton(BuildContext context) {
     var _lang = AppLocalizeService.of(context);
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-              color: Colors.black12,
-              offset: Offset(0.0, 15.0),
-              blurRadius: 15.0),
-          BoxShadow(
-              color: Colors.black12,
-              offset: Offset(0.0, -10.0),
-              blurRadius: 10.0),
-        ],
-        borderRadius: BorderRadius.all(Radius.circular(12)),
+        border: Border.all(color: primaryColor.withOpacity(0.8), width: 1.5),
+        borderRadius: const BorderRadius.all(Radius.circular(12)),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -417,12 +423,14 @@ class _HotspotPlanState extends State<HotspotPlan> {
               Center(
                 child: Text(
                   // '50.000 RISE',
-                  '500.00000 SEL',
-                  style: GoogleFonts.nunito(
-                      textStyle: TextStyle(
-                          color: HexColor('0CACDA'),
-                          fontSize: 30,
-                          fontWeight: FontWeight.w700)),
+                  '500.0000 SEL',
+                  style: GoogleFonts.roboto(
+                  textStyle: TextStyle(
+                      color: HexColor('0CACDA'),
+                      fontSize: 30,
+                      fontWeight: FontWeight.w700,
+                    )
+                  ),
                 ),
               ),
               Divider(
@@ -438,20 +446,24 @@ class _HotspotPlanState extends State<HotspotPlan> {
                   children: [
                     Text(
                       '${_lang.translate('device')}:',
-                      style: GoogleFonts.nunito(
-                          textStyle: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700)),
+                      style: GoogleFonts.roboto(
+                        textStyle: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        )
+                      ),
                     ),
                     Expanded(child: Container()),
                     Text(
                       '2 ${_lang.translate('devices')}',
-                      style: GoogleFonts.nunito(
-                          textStyle: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700)),
+                      style: GoogleFonts.robotoCondensed(
+                        textStyle: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontStyle: FontStyle.italic,
+                        )
+                      ),
                     ),
                   ],
                 ),
@@ -463,20 +475,24 @@ class _HotspotPlanState extends State<HotspotPlan> {
                   children: [
                     Text(
                       '${_lang.translate('speed')}:',
-                      style: GoogleFonts.nunito(
-                          textStyle: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700)),
+                      style: GoogleFonts.roboto(
+                        textStyle: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700
+                          )
+                        ),
                     ),
                     Expanded(child: Container()),
                     Text(
                       '5 ${_lang.translate('mb')}',
-                      style: GoogleFonts.nunito(
-                          textStyle: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700)),
+                      style: GoogleFonts.robotoCondensed(
+                        textStyle: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontStyle: FontStyle.italic,
+                        )
+                      ),
                     ),
                   ],
                 ),
@@ -489,19 +505,23 @@ class _HotspotPlanState extends State<HotspotPlan> {
                     Text(
                       '${_lang.translate('expire')}:',
                       style: GoogleFonts.nunito(
-                          textStyle: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700)),
+                        textStyle: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        )
+                      ),
                     ),
                     Expanded(child: Container()),
                     Text(
                       '365 ${_lang.translate('day')}',
-                      style: GoogleFonts.nunito(
-                          textStyle: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700)),
+                      style: GoogleFonts.robotoCondensed(
+                        textStyle: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontStyle: FontStyle.italic,
+                        )
+                      ),
                     ),
                   ],
                 ),

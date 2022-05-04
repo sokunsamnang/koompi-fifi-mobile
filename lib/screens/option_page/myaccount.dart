@@ -1,6 +1,6 @@
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:koompi_hotspot/all_export.dart';
-import 'package:koompi_hotspot/utils/flutter_absolute_path.dart';
 
 class MyAccount extends StatefulWidget {
   const MyAccount({Key? key}) : super(key: key);
@@ -17,49 +17,13 @@ class _MyAccountState extends State<MyAccount>
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   String? imageUrl;
 
-  Future<void> loadAsset() async {
-    List<Asset> resultList = <Asset>[];
+  Future pickImage() async {
+    final pickedFile =
+        await ImagePicker.platform.pickImage(source: ImageSource.gallery);
 
-    try {
-      resultList = await MultiImagePicker.pickImages(
-        enableCamera: false,
-        cupertinoOptions: const CupertinoOptions(takePhotoIcon: "chat"),
-        maxImages: 1,
-        materialOptions: MaterialOptions(
-          statusBarColor: '#${const Color(0xff0caddb).value.toRadixString(16)}',
-          actionBarColor: '#${const Color(0xff0caddb).value.toRadixString(16)}',
-          actionBarTitle: "KOOMPI Fi-Fi",
-          allViewTitle: "All Photos",
-          useDetailsView: false,
-          selectCircleStrokeColor: "#000000",
-        ),
-      );
-
+    if (pickedFile != null) {
       setState(() {
-        getAssettoFile(resultList);
-      });
-    } catch (e) {
-      e.toString();
-    }
-    if (!mounted) return;
-  }
-
-  Future<void> getAssettoFile(List<Asset> resultList) async {
-    for (Asset asset in resultList) {
-      final filePath =
-          await FlutterAbsolutePath.getAbsolutePath(asset.identifier!);
-      _image = File(filePath);
-      if (kDebugMode) {
-        print("Image $filePath");
-      }
-      await PostRequest().upLoadImage(File(filePath)).then((value) {
-        if (kDebugMode) {
-          print("My response $value");
-        }
-        // setState(() {
-        //   imageUrl = json.decode(value.body)['uri'];
-        //   mData.image = imageUrl;
-        // });
+        imageUrl = pickedFile.path;
       });
     }
   }
@@ -95,6 +59,9 @@ class _MyAccountState extends State<MyAccount>
           address!,
         );
         if (response.statusCode == 200) {
+          if(imageUrl != null){
+            await PostRequest().upLoadImage(File(imageUrl!));
+          }
           setState(() {
             StorageServices().updateUserData(context);
           });
@@ -145,9 +112,6 @@ class _MyAccountState extends State<MyAccount>
   //LocationPicker
   var locationModel = LocationList();
 
-  //Image Profile
-  File? _image;
-
   //Gender Select
   List<String> lst = ['Male', 'Female'];
   String? selectedIndex;
@@ -192,10 +156,21 @@ class _MyAccountState extends State<MyAccount>
   Widget build(BuildContext context) {
     var _lang = AppLocalizeService.of(context);
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
         backgroundColor: Colors.white,
         title: Text(_lang.translate('edit_account'),
-            style: const TextStyle(color: Colors.black, fontFamily: 'Medium')),
+          style: GoogleFonts.robotoCondensed(
+            textStyle: const TextStyle(
+              color: Colors.black,
+              fontStyle: FontStyle.italic,
+              fontSize: 24,
+              fontWeight: FontWeight.w700,
+            )
+          ),
+        ),
         leading: Builder(builder: (BuildContext context) {
           return IconButton(
               icon: const Icon(
@@ -255,9 +230,9 @@ class _MyAccountState extends State<MyAccount>
                           child: SizedBox(
                             width: 100.0,
                             height: 100.0,
-                            child: (_image != null)
+                            child: (imageUrl != null)
                                 ? Image.file(
-                                    _image!,
+                                    File(imageUrl!),
                                     fit: BoxFit.cover,
                                   )
                                 : CircleAvatar(
@@ -279,7 +254,7 @@ class _MyAccountState extends State<MyAccount>
                                 color: primaryColor,
                                 fontSize: 20.0,
                                 fontFamily: 'Medium')),
-                        onPressed: () => loadAsset(),
+                        onPressed: () => pickImage(),
                       ),
                     ),
                     const SizedBox(height: 16.0),
@@ -451,7 +426,7 @@ class _MyAccountState extends State<MyAccount>
         selectedItem: address,
         onChanged: (value) =>
             setState(() => locationModel.selectedKhLocation = value.toString()),
-        onCancelled: () => Navigator.pop(context),
+        onCancelled: () => Navigator.canPop(context),
         onConfirmed: () => address = locationModel.selectedKhLocation,
       ),
     );

@@ -92,8 +92,11 @@ class _PlanViewState extends State<PlanView> {
   Widget build(BuildContext context) {
     var _lang = AppLocalizeService.of(context);
     return Scaffold(
+      backgroundColor: Colors.white,
       key: globalKey,
       appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
         leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () {
@@ -102,11 +105,14 @@ class _PlanViewState extends State<PlanView> {
         backgroundColor: Colors.white,
         title: Text(
           _lang.translate('my_plan'),
-          style: GoogleFonts.nunito(
-              textStyle: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700)),
+          style: GoogleFonts.robotoCondensed(
+            textStyle: const TextStyle(
+              color: Colors.black,
+              fontStyle: FontStyle.italic,
+              fontSize: 24,
+              fontWeight: FontWeight.w700,
+            )
+          ),
         ),
       ),
       body: SizedBox(
@@ -211,19 +217,10 @@ class _PlanViewState extends State<PlanView> {
         // width: MediaQuery.of(context).size.width,
         // height: MediaQuery.of(context).size.height * .27,
         // padding: EdgeInsets.all(10),
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(12)),
-          boxShadow: [
-            BoxShadow(
-                color: Colors.black12,
-                offset: Offset(0.0, 15.0),
-                blurRadius: 15.0),
-            BoxShadow(
-                color: Colors.black12,
-                offset: Offset(0.0, -10.0),
-                blurRadius: 10.0),
-          ],
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
+          border: Border.all(color: primaryColor.withOpacity(0.8), width: 1.5)
         ),
         child: Stack(children: [
           Column(

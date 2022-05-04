@@ -10,6 +10,80 @@ class PostRequest with ChangeNotifier {
   String? alertText;
   final StorageServices _prefService = StorageServices();
 
+  // Add contact address
+  Future<http.Response> postContactAddress(String username, String address) async {
+    
+    await _prefService.read('token').then((value) {
+      _backend.token = Map<String, dynamic>.from({'token': value});
+    });
+
+    _backend.bodyEncode = json.encode({
+      /* Convert to Json String */
+      "contact_name": username,
+      "contact_wallet": address
+    });
+
+    _backend.response = await http.post(
+      Uri.parse('${ApiService.url}/contactlist'),
+      headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"),
+      body: _backend.bodyEncode
+    );
+
+    if (kDebugMode) {
+      print(_backend.response!.body);
+    }
+    return _backend.response!;
+  }
+
+  Future<http.Response> putContactAddress(String id, String username, String address) async {
+
+    await _prefService.read('token').then((value) {
+      _backend.token = Map<String, dynamic>.from({'token': value});
+    });
+
+    _backend.bodyEncode = json.encode({
+      /* Convert to Json String */
+      "id": id,
+      "contact_name": username,
+      "contact_wallet": address
+    });
+
+    _backend.response = await http.put(
+      Uri.parse('${ApiService.url}/contactlist'),
+      headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"),
+      body: _backend.bodyEncode
+    );
+
+    if (kDebugMode) {
+      print(_backend.response!.body);
+    }
+    return _backend.response!;
+  }
+
+  Future<http.Response> deleteContactAddress(int id) async {
+
+    await _prefService.read('token').then((value) {
+      _backend.token = Map<String, dynamic>.from({'token': value});
+    });
+
+    _backend.bodyEncode = json.encode({
+      /* Convert to Json String */
+      "id": id,
+    });
+
+    _backend.response = await http.delete(
+      Uri.parse('${ApiService.url}/contactlist'),
+      headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"),
+      body: _backend.bodyEncode
+    );
+
+    if (kDebugMode) {
+      print(_backend.response!.body);
+    }
+    return _backend.response!;
+  }
+
+
   /*Login Account With Phone Number */
 
   Future<http.Response> userLogInPhone(String phone, String password) async {
@@ -57,9 +131,10 @@ class PostRequest with ChangeNotifier {
     });
 
     _backend.response = await http.put(
-        Uri.parse('${ApiService.url}/alert-notification'),
-        headers: _backend.conceteHeader("authorization", "Bearer $token"),
-        body: _backend.bodyEncode);
+      Uri.parse('${ApiService.url}/alert-notification'),
+      headers: _backend.conceteHeader("authorization", "Bearer $token"),
+      body: _backend.bodyEncode
+    );
 
     if (kDebugMode) {
       print(_backend.response!.body);
@@ -137,8 +212,7 @@ class PostRequest with ChangeNotifier {
   }
 
   //Hotspot Plan
-  Future<http.Response> buyHotspotPlan(
-      String phone, String password, String value, String memo) async {
+  Future<http.Response> buyHotspotPlan(String phone, String password, String value, String memo) async {
     await _prefService.read('token').then((value) {
       _backend.token = Map<String, dynamic>.from({'token': value});
     });
@@ -147,7 +221,7 @@ class PostRequest with ChangeNotifier {
       /* Convert to Json String */
       "phone": phone,
       "password": password,
-      "simultaneous": "2",
+      "simultaneous": "1",
       "value": value,
       "asset": "SEL",
       "memo": memo
@@ -364,3 +438,4 @@ class PostRequest with ChangeNotifier {
     return imageUrl!;
   }
 }
+

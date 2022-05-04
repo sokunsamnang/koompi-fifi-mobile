@@ -1,4 +1,5 @@
 import 'package:koompi_hotspot/all_export.dart';
+import 'package:koompi_hotspot/providers/contact_list_provider.dart';
 
 class StorageServices {
   // static String _decode;
@@ -42,24 +43,23 @@ class StorageServices {
       }
       try {
         await GetRequest().getUserProfile(token).then((value) async {
-          await Provider.of<GetPlanProvider>(context, listen: false)
-              .fetchHotspotPlan();
-          await Provider.of<NotificationProvider>(context, listen: false)
-              .fetchNotification();
-          await Provider.of<BalanceProvider>(context, listen: false)
-              .fetchPortfolio();
-          await Provider.of<TrxHistoryProvider>(context, listen: false)
-              .fetchTrxHistory();
+          await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
+          await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
+          await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
+          await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+          await Provider.of<ContactListProvider>(context, listen: false).fetchContactList();
         });
-      } on SocketException catch (_) {
-        if (kDebugMode) {
-          print('No network socket exception');
-        }
-        await Components.dialogNoOption(
-            context,
-            textAlignCenter(text: _lang.translate('no_internet_message')),
-            warningTitleDialog());
-      } on TimeoutException catch (_) {
+      }
+      //  on SocketException catch (_) {
+      //   if (kDebugMode) {
+      //     print('No network socket exception');
+      //   }
+      //   await Components.dialogNoOption(
+      //       context,
+      //       textAlignCenter(text: _lang.translate('no_internet_message')),
+      //       warningTitleDialog());
+      // }
+       on TimeoutException catch (_) {
         if (kDebugMode) {
           print('Time out exception');
         }

@@ -94,20 +94,14 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
           print('Internet connected');
         }
         if (response.statusCode == 200) {
-          Future.delayed(const Duration(seconds: 2), () async {
-            await Provider.of<GetPlanProvider>(context, listen: false)
-                .fetchHotspotPlan();
-            Timer(
-                const Duration(milliseconds: 500),
-                () => Navigator.pushAndRemoveUntil(
-                      context,
-                      PageTransition(
-                        type: PageTransitionType.rightToLeft,
-                        child: const CompletePlan(),
-                      ),
-                      ModalRoute.withName('/navbar'),
-                    ));
-          });
+          Navigator.pushAndRemoveUntil(
+            context,
+            PageTransition(
+              type: PageTransitionType.rightToLeft,
+              child: const CompletePlan(),
+            ),
+            ModalRoute.withName('/navbar'),
+          );
         } else {
           _passwordController.clear();
           await Components.dialog(
@@ -172,50 +166,53 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: globalKey,
-        appBar: AppBar(
-          leading: IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.black),
-              onPressed: () {
-                Navigator.of(context).pop();
-              }),
-          automaticallyImplyLeading: false,
-          // centerTitle: true,
-          backgroundColor: Colors.white,
-          // title: Image.asset(
-          //   "assets/images/appbar_logo.png",
-          //   scale: 2,
-          // ),
-          title: const Text('Choose a Plan',
-              style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
+      backgroundColor: Colors.white,
+      key: globalKey,
+      appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
+        leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () {
+              Navigator.of(context).pop();
+            }),
+        automaticallyImplyLeading: false,
+        // centerTitle: true,
+        backgroundColor: Colors.white,
+        // title: Image.asset(
+        //   "assets/images/appbar_logo.png",
+        //   scale: 2,
+        // ),
+        title: Text('Choose a Plan',
+          style: GoogleFonts.robotoCondensed(
+          textStyle: const TextStyle(
+            color: Colors.black,
+            fontStyle: FontStyle.italic,
+            fontSize: 24,
+            fontWeight: FontWeight.w700,
+          )
         ),
-        body: SizedBox(
-          height: MediaQuery.of(context).size.height * 2,
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  left: 28.0, right: 28.0, top: 20.0, bottom: 38.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  // Center(
-                  //   child: Text(
-                  //     _lang.translate('choose_plan'),
-                  //     style: GoogleFonts.nunito(
-                  //     textStyle: TextStyle(color: primaryColor, fontSize: 30, fontWeight: FontWeight.w700)
-                  //     ),
-                  //   ),
-                  // ),
-                  const SizedBox(height: 25.0),
-                  plan30DaysButton(context),
-                  const SizedBox(height: 50.0),
-                  plan365DaysButton(context),
-                ],
-              ),
+        ),
+      ),
+      body: SizedBox(
+        height: MediaQuery.of(context).size.height * 2,
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.only(
+                left: 28.0, right: 28.0, top: 20.0, bottom: 38.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const SizedBox(height: 25.0),
+                plan30DaysButton(context),
+                const SizedBox(height: 50.0),
+                plan365DaysButton(context),
+              ],
             ),
           ),
-        ));
+        ),
+      ));
   }
 
   Widget plan30DaysButton(BuildContext context) {
@@ -247,7 +244,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
               Center(
                 child: Text(
                   // '5.000 RISE',
-                  '50.00000 SEL',
+                  '50.0000 SEL',
                   style: GoogleFonts.nunito(
                       textStyle: TextStyle(
                           color: primaryColor,
@@ -440,7 +437,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
               Center(
                 child: Text(
                   // '50.000 RISE',
-                  '500.00000 SEL',
+                  '500.0000 SEL',
                   style: GoogleFonts.nunito(
                       textStyle: TextStyle(
                           color: primaryColor,

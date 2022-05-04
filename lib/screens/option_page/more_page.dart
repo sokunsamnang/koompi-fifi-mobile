@@ -1,4 +1,5 @@
 import 'package:koompi_hotspot/all_export.dart';
+import 'package:koompi_hotspot/screens/web_view/webview.dart';
 
 class MorePage extends StatefulWidget {
   const MorePage({Key? key}) : super(key: key);
@@ -48,32 +49,16 @@ class _MorePageState extends State<MorePage> {
   Widget build(BuildContext context) {
     var _lang = AppLocalizeService.of(context);
     return Scaffold(
+      backgroundColor: Colors.white,
       key: globalKey,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Card(
-                elevation: 8.0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-                margin: const EdgeInsets.all(8.0),
-                color: Colors.white,
+              Padding(
+                padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 15.0, bottom: 10.0),
                 child: ListTile(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  onTap: () async {
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        type: PageTransitionType.rightToLeft,
-                        child: const MyAccount(),
-                      ),
-                    );
-                  },
                   title: Text(
                     name ?? 'KOOMPI',
                     style: const TextStyle(
@@ -85,38 +70,76 @@ class _MorePageState extends State<MorePage> {
                         : NetworkImage("${ApiService.getAvatar}/${mData.image}")
                             as ImageProvider<Object>,
                   ),
-                  trailing: const Icon(LineIcons.edit),
                 ),
               ),
-              const SizedBox(height: 10.0),
-              Card(
-                elevation: 4.0,
-                margin:
-                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0)),
-                child: Column(
-                  children: <Widget>[
-                    ListTile(
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              topLeft: Radius.circular(10)),
-                        ),
-                        leading: Icon(LineIcons.key, color: primaryColor),
-                        title: Text(_lang.translate('change_password')),
-                        trailing: const Icon(LineIcons.angleRight),
-                        onTap: () async {
-                          Navigator.push(
-                            context,
-                            PageTransition(
-                              type: PageTransitionType.rightToLeft,
-                              child: const ChangePassword(),
-                            ),
-                          );
-                        }),
-                    buildDivider(),
-                    ListTile(
+              buildDivider(),
+              const SizedBox(height: 20.0),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  // ==================== Account Settings ====================
+
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                    child: Text('Account Settings', 
+                      style: GoogleFonts.roboto(
+                        fontSize: 20.0,
+                        color: Colors.grey,
+                      )
+                    ),
+                  ),
+                  const SizedBox(height: 10.0),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                    child: ListTile(
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
+                        borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                      ),
+                      leading: Icon(Icons.people_alt_outlined, color: primaryColor),
+                      title: const Text('Edit Profile'),
+                      trailing: const Icon(LineIcons.angleRight),
+                      onTap: () async {
+                        Navigator.push(
+                          context,
+                          PageTransition(
+                            type: PageTransitionType.rightToLeft,
+                            child: const MyAccount(),
+                          ),
+                        );
+                      }
+                    ),
+                  ),
+                  const SizedBox(height: 10.0),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                    child: ListTile(
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
+                        borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                      ),
+                      leading: Icon(LineIcons.key, color: primaryColor),
+                      title: Text(_lang.translate('change_password')),
+                      trailing: const Icon(LineIcons.angleRight),
+                      onTap: () async {
+                        Navigator.push(
+                          context,
+                          PageTransition(
+                            type: PageTransitionType.rightToLeft,
+                            child: const ChangePassword(),
+                          ),
+                        );
+                      }
+                    ),
+                  ),
+                  const SizedBox(height: 10.0),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                    child: ListTile(
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
+                        borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                      ),
                       leading: Icon(LineIcons.language, color: primaryColor),
                       title: Text(_lang.translate('language')),
                       trailing: const Icon(LineIcons.angleRight),
@@ -130,8 +153,29 @@ class _MorePageState extends State<MorePage> {
                         );
                       },
                     ),
-                    buildDivider(),
-                    ListTile(
+                  ),
+                  const SizedBox(height: 20.0),
+
+                  // ==================== Fi-Fi ====================
+                  buildDivider(),
+                  const SizedBox(height: 20.0),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                    child: Text('Fi-Fi', 
+                      style: GoogleFonts.roboto(
+                        fontSize: 20.0,
+                        color: Colors.grey,
+                      )
+                    ),
+                  ),
+                  const SizedBox(height: 10.0),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                    child: ListTile(
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
+                        borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                      ),
                       leading: Icon(LineIcons.wifi, color: primaryColor),
                       title: Text(_lang.translate('login_hotspot')),
                       trailing: const Icon(LineIcons.angleRight),
@@ -144,29 +188,153 @@ class _MorePageState extends State<MorePage> {
                         );
                       },
                     ),
-                    buildDivider(),
-                    ListTile(
-                      leading: const Icon(LineIcons.alternateSignOut,
-                          color: Colors.red),
-                      title: Text(_lang.translate('sign_out')),
+                  ),
+                  const SizedBox(height: 10.0),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                    child: ListTile(
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
+                        borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                      ),
+                      leading: Icon(Icons.devices_outlined, color: primaryColor),
+                      title: Text('Devices'),
+                      trailing: const Icon(LineIcons.angleRight),
                       onTap: () async {
-                        await Components.dialogSignOut(
+
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 10.0),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                    child: ListTile(
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
+                        borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                      ),
+                      leading: Icon(LineIcons.mapAlt, color: primaryColor),
+                      title: Text('Fi-Fi Map'),
+                      trailing: const Icon(LineIcons.angleRight),
+                      onTap: () async {
+                        Navigator.push(
                           context,
-                          Text(_lang.translate('sign_out_warn'),
-                              textAlign: TextAlign.center),
-                          Text(
-                            _lang.translate('warning'),
-                            style: const TextStyle(fontFamily: 'Poppins-Bold'),
-                          ),
+                          PageTransition(
+                              type: PageTransitionType.rightToLeft,
+                              child: const MyLocationView()),
                         );
                       },
                     ),
-                    buildDivider(),
-                    Center(
-                        child:
-                            _infoApp('KOOMPI Fi-Fi: ', _packageInfo.version)),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 20.0),
+
+                  // ==================== Rewards ====================
+
+                  buildDivider(),
+                  const SizedBox(height: 20.0),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                    child: Text('Rewards', 
+                      style: GoogleFonts.roboto(
+                        fontSize: 20.0,
+                        color: Colors.grey,
+                      )
+                    ),
+                  ),
+                  const SizedBox(height: 10.0),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                    child: ListTile(
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
+                        borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                      ),
+                      leading: Icon(LineIcons.gifts, color: primaryColor),
+                      title: const Text('Rewards'),
+                      trailing: const Icon(LineIcons.angleRight),
+                      onTap: () async {
+                        
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 10.0),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                    child: ListTile(
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
+                        borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                      ),
+                      leading: Icon(Icons.mail_outline_outlined, color: primaryColor),
+                      title: const Text('Earn a referral'),
+                      trailing: const Icon(LineIcons.angleRight),
+                      onTap: () async {
+
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 20.0),
+
+
+                  buildDivider(),
+                  // const SizedBox(height: 20.0),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 15.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            const Icon(LineIcons.alternateSignOut, color: Colors.red),
+                            TextButton(
+                              onPressed: () async {
+                                await Components.dialogSignOut(
+                                  context,
+                                  Text(_lang.translate('sign_out_warn'),
+                                      textAlign: TextAlign.center),
+                                  Text(
+                                    _lang.translate('warning'),
+                                    style: const TextStyle(fontFamily: 'Poppins-Bold'),
+                                  ),
+                                );
+                              },
+                              child: Text(_lang.translate('sign_out'),
+                                style: GoogleFonts.roboto(
+                                  fontSize: 20.0,
+                                  color: Colors.red,
+                                )
+                              ),
+
+                            ),
+                          ],
+                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                        //   child: ListTile(
+                        //     shape: RoundedRectangleBorder(
+                        //       side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
+                        //       borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                        //     ),
+                        //     leading: const Icon(LineIcons.alternateSignOut, color: Colors.red),
+                        //     title: Text(_lang.translate('sign_out')),
+                        //     onTap: () async {
+                        //       await Components.dialogSignOut(
+                        //         context,
+                        //         Text(_lang.translate('sign_out_warn'),
+                        //             textAlign: TextAlign.center),
+                        //         Text(
+                        //           _lang.translate('warning'),
+                        //           style: const TextStyle(fontFamily: 'Poppins-Bold'),
+                        //         ),
+                        //       );
+                        //     },
+                        //   ),
+                        // ),
+                        _infoApp('KOOMPI Fi-Fi: ', _packageInfo.version)
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

@@ -17,6 +17,7 @@ export 'package:date_format/date_format.dart';
 export 'package:provider/provider.dart';
 
 /*Flutter Package*/
+export 'package:internet_connection_checker/internet_connection_checker.dart';
 export 'package:koompi_hotspot/utils/data_connectiviy_service.dart';
 export 'package:url_launcher/url_launcher.dart';
 export 'package:package_info/package_info.dart';
@@ -40,7 +41,7 @@ export 'package:shared_preferences/shared_preferences.dart';
 export 'package:http_parser/http_parser.dart';
 
 // Connection and Wi-Fi
-export 'package:connectivity/connectivity.dart';
+export 'package:connectivity_plus/connectivity_plus.dart';
 export 'package:koompi_hotspot/utils/connection.dart';
 
 // Widget
@@ -52,7 +53,6 @@ export 'package:intl_phone_number_input/intl_phone_number_input.dart';
 // Image and File
 export 'package:flutter_svg/flutter_svg.dart';
 export 'package:flutter_image_compress/flutter_image_compress.dart';
-export 'package:multi_image_picker2/multi_image_picker2.dart';
 
 // Animation
 export 'package:flare_flutter/flare_actor.dart';

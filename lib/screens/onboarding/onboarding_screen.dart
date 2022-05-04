@@ -25,7 +25,7 @@ class IntroScreenState extends State<IntroScreen> {
         styleTitle: kTitleStyle,
         description: 'KOOMPI Fi-Fi is accessable and affordable',
         styleDescription: kSubtitleStyle,
-        pathImage: "assets/images/onboarding0.png",
+        pathImage: "assets/images/onboarding0.svg",
       ),
     );
     slides.add(
@@ -34,7 +34,7 @@ class IntroScreenState extends State<IntroScreen> {
         styleTitle: kTitleStyle,
         description: 'For everyone and KOOMPI\'s school partner',
         styleDescription: kSubtitleStyle,
-        pathImage: "assets/images/onboarding1.png",
+        pathImage: "assets/images/onboarding1.svg",
       ),
     );
     slides.add(
@@ -44,7 +44,7 @@ class IntroScreenState extends State<IntroScreen> {
         description:
             'We all are connected by the internet, like neurons in a giant brain',
         styleDescription: kSubtitleStyle,
-        pathImage: "assets/images/onboarding2.png",
+        pathImage: "assets/images/onboarding2.svg",
       ),
     );
   }
@@ -97,12 +97,13 @@ class IntroScreenState extends State<IntroScreen> {
           child: ListView(
             children: <Widget>[
               GestureDetector(
-                  child: Image.asset(
-                currentSlide.pathImage!,
-                width: 200.0,
-                height: 200.0,
-                fit: BoxFit.contain,
-              )),
+                child: SvgPicture.asset(
+                  currentSlide.pathImage!,
+                  width: 200.0,
+                  height: 200.0,
+                  fit: BoxFit.contain,
+                )
+              ),
               Container(
                 child: Text(
                   currentSlide.title!,

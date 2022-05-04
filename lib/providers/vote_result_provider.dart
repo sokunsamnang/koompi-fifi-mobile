@@ -33,7 +33,5 @@ class VoteResultProvider with ChangeNotifier {
     }
 
     notifyListeners();
-    // print('alerttext value $response.body');
-    // return alertText!;
   }
 }

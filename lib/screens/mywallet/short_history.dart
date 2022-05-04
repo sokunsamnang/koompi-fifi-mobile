@@ -10,7 +10,7 @@ Widget shortTrxHistory(BuildContext context) {
 
   var _lang = AppLocalizeService.of(context);
   List<Widget> _buildList(
-      List<TrxHistoryModel> history, BuildContext context, String userWallet) {
+      List<TrxHistoryModel> history, BuildContext context, String? userWallet) {
     List<Widget> listItems = [];
     // List<Widget> listItems = List.filled(history.length, Container());
 
@@ -237,7 +237,7 @@ Widget shortTrxHistory(BuildContext context) {
                     SliverList(
                       delegate: SliverChildListDelegate(
                         _buildList(
-                            history.trxHistoryList, context, mData.wallet!),
+                            history.trxHistoryList, context, mData.wallet),
                       ),
                     ),
                   ],

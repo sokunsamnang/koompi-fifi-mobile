@@ -184,19 +184,17 @@ class Components {
                                 await StorageServices().clearToken('token');
                                 await StorageServices().clearToken('phone');
                                 await StorageServices().clearToken('password');
-                                Future.delayed(const Duration(seconds: 2), () {
-                                  Timer(
-                                      const Duration(milliseconds: 500),
-                                      () => Navigator.pushAndRemoveUntil(
-                                            context,
-                                            PageTransition(
-                                              type: PageTransitionType
-                                                  .bottomToTop,
-                                              child: const LoginPhone(),
-                                            ),
-                                            ModalRoute.withName('/loginPhone'),
-                                          ));
-                                });
+                                Timer(
+                                  const Duration(milliseconds: 500),
+                                  () => Navigator.pushAndRemoveUntil(
+                                        context,
+                                        PageTransition(
+                                          type: PageTransitionType
+                                              .bottomToTop,
+                                          child: const LoginPhone(),
+                                        ),
+                                        ModalRoute.withName('/loginPhone'),
+                                      ));
                               }),
                         ],
                       ),
@@ -261,19 +259,17 @@ class Components {
                               child: Text(firsTxtBtn),
                               onPressed: () async {
                                 dialogLoading(context);
-                                Future.delayed(const Duration(seconds: 2), () {
-                                  Timer(
-                                      const Duration(milliseconds: 500),
-                                      () => Navigator.pushAndRemoveUntil(
-                                            context,
-                                            PageTransition(
-                                              type: PageTransitionType
-                                                  .bottomToTop,
-                                              child: const LoginPhone(),
-                                            ),
-                                            ModalRoute.withName('/loginPhone'),
-                                          ));
-                                });
+                                Timer(
+                                  const Duration(milliseconds: 500),
+                                  () => Navigator.pushAndRemoveUntil(
+                                        context,
+                                        PageTransition(
+                                          type: PageTransitionType
+                                              .bottomToTop,
+                                          child: const LoginPhone(),
+                                        ),
+                                        ModalRoute.withName('/loginPhone'),
+                                      ));
                               }),
                         ],
                       ),
@@ -619,7 +615,6 @@ Widget textScale(
 
 Widget buildDivider() {
   return Container(
-    margin: const EdgeInsets.symmetric(horizontal: 8.0),
     width: double.infinity,
     height: 1.0,
     color: Colors.grey.shade400,

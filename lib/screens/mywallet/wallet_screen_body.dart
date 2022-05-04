@@ -10,10 +10,6 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   final GetRequest _getRequest = GetRequest();
 
-  void resetState() {
-    setState(() {});
-  }
-
   void fetchHistory() async {
     await _getRequest.getTrxHistory();
   }
@@ -35,6 +31,6 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     return mData.wallet == null
         ? const WalletChoice()
-        : MyWallet(resetState: resetState);
+        : const MyWallet(walletKey: '',);
   }
 }

@@ -5,7 +5,7 @@ class ModelUserData {
   String? phone;
   String? birthdate;
   String? address;
-  String? image = '';
+  String? image;
   String? wallet;
   String? playerid;
 

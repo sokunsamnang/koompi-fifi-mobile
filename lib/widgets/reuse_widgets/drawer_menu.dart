@@ -25,31 +25,6 @@ class SideMenu extends StatelessWidget {
             }),
           ),
           buildDivider(),
-          // DrawerHeader(
-          //   margin: EdgeInsets.zero,
-          //   padding: EdgeInsets.zero,
-          //   child: Column(
-          //     crossAxisAlignment: CrossAxisAlignment.center,
-          //     mainAxisAlignment: MainAxisAlignment.center,
-          //     children: [
-          //       CircleAvatar(
-          //         radius: 40.0,
-          //         backgroundImage: mData.image == null
-          //             ? AssetImage('assets/images/avatar.png')
-          //             : NetworkImage("${ApiService.getAvatar}/${mData.image}"),
-          //       ),
-          //       Text(
-          //         mData.fullname ?? 'KOOMPI',
-          //         style: TextStyle(
-          //             color: Colors.black, fontFamily: "Poppins-Bold"),
-          //       ),
-          //       Text(
-          //         mData.phone ?? 'KOOMPI',
-          //         style: TextStyle(color: Colors.black),
-          //       ),
-          //     ],
-          //   ),
-          // ),
           DrawerListTile(
             title: "Home",
             iconSrc: LineIcons.home,
@@ -65,8 +40,8 @@ class SideMenu extends StatelessWidget {
             },
           ),
           DrawerListTile(
-            title: "Fi-Fi Maps",
-            iconSrc: LineIcons.map,
+            title: "JAAY",
+            iconSrc: LineIcons.wallet,
             press: () {
               Navigator.pushAndRemoveUntil(
                 context,
@@ -75,6 +50,19 @@ class SideMenu extends StatelessWidget {
                   child: const Navbar(1),
                 ),
                 ModalRoute.withName('/navbar'),
+              );
+            },
+          ),
+          DrawerListTile(
+            title: "Fi-Fi Maps",
+            iconSrc: LineIcons.map,
+            press: () {
+              Navigator.push(
+                context,
+                PageTransition(
+                  type: PageTransitionType.rightToLeft,
+                  child: const MyLocationView(),
+                ),
               );
             },
           ),
@@ -159,19 +147,6 @@ class DrawerListTile extends StatelessWidget {
     );
   }
 }
-
-class UserProfileData {
-  final ImageProvider? image;
-  final String? name;
-  final String? phone;
-
-  const UserProfileData({
-    @required this.image,
-    @required this.name,
-    @required this.phone,
-  });
-}
-
 class UserProfile extends StatelessWidget {
   const UserProfile({
     @required this.onPressed,
@@ -219,7 +194,9 @@ class UserProfile extends StatelessWidget {
   Widget _buildImage() {
     return CircleAvatar(
       radius: 25,
-      backgroundImage: NetworkImage("${ApiService.getAvatar}/${mData.image}"),
+      backgroundImage: mData.image == null
+                      ? const AssetImage('assets/images/avatar.png')
+                      : NetworkImage("${ApiService.getAvatar}/${mData.image}") as ImageProvider<Object>,
     );
   }
 

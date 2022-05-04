@@ -1,4 +1,3 @@
-import 'package:data_connection_checker_tv/data_connection_checker.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:koompi_hotspot/all_export.dart';
@@ -16,9 +15,10 @@ class Navbar extends StatefulWidget {
 class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
   int _selectedIndex = 0;
 
+
   final List<Widget> _widgetOptions = <Widget>[
     const HomePage(),
-    const MyLocationView(),
+    const MyWallet(walletKey: ''),
     const WifiConnect(),
     const MorePage(),
   ];
@@ -37,9 +37,9 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
           if (kDebugMode) {
             print(event);
           }
-          if (event == DataConnectionStatus.connected) {
+          if (event == InternetConnectionStatus.connected) {
             return;
-          } else if (event == DataConnectionStatus.disconnected) {
+          } else if (event == InternetConnectionStatus.disconnected) {
             _paused();
           } else {
             return;
@@ -74,8 +74,7 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
         print('Run web portal');
       }
       flutterWebViewPlugin.close();
-      flutterWebViewPlugin.launch(selectedUrl,
-          hidden: true, withJavascript: true, ignoreSSLErrors: true);
+      flutterWebViewPlugin.launch(selectedUrl, hidden: true, withJavascript: true, ignoreSSLErrors: true);
       _onchanged = flutterWebViewPlugin.onStateChanged
           .listen((WebViewStateChanged state) {
         if (mounted) {
@@ -84,12 +83,19 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
             if (kDebugMode) {
               print('web laoded');
             }
-            flutterWebViewPlugin.evalJavascript(
-                'document.getElementById("user").value="${global.phone}"'); // Replace with the id of username field
-            flutterWebViewPlugin.evalJavascript(
-                'document.getElementById("password").value="${global.password}"'); // Replace with the id of password field
-            flutterWebViewPlugin.evalJavascript(
-                'document.getElementById("btnlogin").click()'); // Replace with Submit button id
+            flutterWebViewPlugin.evalJavascript("""
+              var scopeUser = angular.element(document.getElementById('user')).scope();
+              scopeUser.\$apply('homeCtrl.formModel.username = "${global.phone}";');
+              var scopePass = angular.element(document.getElementById('password')).scope();
+              scopePass.\$apply('homeCtrl.formModel.password = "${global.password}";');
+              document.getElementById("btnlogin").click();
+            """);
+            // flutterWebViewPlugin.evalJavascript(
+            //     'document.getElementById("user").value="${global.phone}"'); // Replace with the id of username field
+            // flutterWebViewPlugin.evalJavascript(
+            //     'document.getElementById("password").value="${global.password}"'); // Replace with the id of password field
+            // flutterWebViewPlugin.evalJavascript(
+            //     'document.getElementById("btnlogin").click()'); // Replace with Submit button id
 
           } else if (state.type == WebViewState.abortLoad) {
             // if there is a problem with loading the url
@@ -110,7 +116,6 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-
     if (widget.selectedIndex == 0) {
       _selectedIndex = 0;
     }
@@ -133,9 +138,9 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
       if (kDebugMode) {
         print(event);
       }
-      if (event == DataConnectionStatus.connected) {
+      if (event == InternetConnectionStatus.connected) {
         return;
-      } else if (event == DataConnectionStatus.disconnected) {
+      } else if (event == InternetConnectionStatus.disconnected) {
         _paused();
       } else {
         return;
@@ -174,18 +179,17 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
                 gap: 8,
                 activeColor: Colors.white,
                 iconSize: 24,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                duration: const Duration(milliseconds: 800),
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                duration: const Duration(milliseconds: 250),
                 tabBackgroundColor: primaryColor,
                 tabs: [
                   GButton(
                     icon: LineIcons.home,
                     text: _lang.translate('home'),
                   ),
-                  GButton(
-                    icon: LineIcons.map,
-                    text: _lang.translate('map'),
+                  const GButton(
+                    icon: LineIcons.wallet,
+                    text: 'Jaay',
                   ),
                   GButton(
                     icon: Icons.wifi_outlined,

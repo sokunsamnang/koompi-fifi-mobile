@@ -20,7 +20,7 @@ class _SendRequestState extends State<SendRequest> {
 
   final List<TokenTypeModel> _tokenTypeModelList = [
     TokenTypeModel(
-        tokenName: 'RISE',
+        tokenName: 'LUY',
         imageToken: Image.asset(
           'assets/images/rise-coin-icon.png',
           width: 22,
@@ -97,22 +97,23 @@ class _SendRequestState extends State<SendRequest> {
             memo.text);
         var responseJson = json.decode(_backend.response!.body);
         if (_backend.response!.statusCode == 200) {
-          Future.delayed(const Duration(seconds: 2), () async {
-            await Provider.of<BalanceProvider>(context, listen: false)
-                .fetchPortfolio();
-            await Provider.of<TrxHistoryProvider>(context, listen: false)
-                .fetchTrxHistory();
-            Timer(
-                const Duration(milliseconds: 500),
-                () => Navigator.pushAndRemoveUntil(
-                      context,
-                      PageTransition(
-                        type: PageTransitionType.bottomToTop,
-                        child: const CompletePayment(),
-                      ),
-                      ModalRoute.withName('/navbar'),
-                    ));
-          });
+          await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
+          await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+          Navigator.pushAndRemoveUntil(
+            context,
+            PageTransition(
+              type: PageTransitionType.bottomToTop,
+              child: const CompletePayment(),
+            ),
+            ModalRoute.withName('/navbar'),
+          );
+        } else if (_backend.response!.statusCode == 500) {
+          await Components.dialog(
+              context,
+              textAlignCenter(text: 'Something went wrong. Please try again.'),
+              warningTitleDialog());
+          Navigator.of(context).pop();
+          _passwordController.clear();
         } else {
           await Components.dialog(
               context,
@@ -273,8 +274,11 @@ class _SendRequestState extends State<SendRequest> {
   Widget build(BuildContext context) {
     var _lang = AppLocalizeService.of(context);
     return Scaffold(
+      backgroundColor: Colors.white,
       key: globalKey,
       appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
         leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () {
@@ -286,8 +290,14 @@ class _SendRequestState extends State<SendRequest> {
         ),
         title: Text(
           _lang.translate('send_request'),
-          style: const TextStyle(
-              color: Colors.black, fontFamily: 'Medium', fontSize: 22.0),
+          style: GoogleFonts.robotoCondensed(
+            textStyle: const TextStyle(
+              color: Colors.black,
+              fontStyle: FontStyle.italic,
+              fontSize: 24,
+              fontWeight: FontWeight.w700,
+            )
+          ),
         ),
       ),
       body: GestureDetector(
@@ -371,7 +381,7 @@ class _SendRequestState extends State<SendRequest> {
                             ? FilteringTextInputFormatter.allow(
                                 RegExp(r'^\d+\.?\d{0,3}'))
                             : FilteringTextInputFormatter.allow(
-                                RegExp(r'^\d+\.?\d{0,5}'))
+                                RegExp(r'^\d+\.?\d{0,4}'))
                       ],
                       controller: amount,
                       decoration: InputDecoration(

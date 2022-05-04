@@ -1,9 +1,10 @@
-import 'package:data_connection_checker_tv/data_connection_checker.dart';
 import 'package:koompi_hotspot/all_export.dart';
-import 'package:koompi_hotspot/utils/auto_login_hotspot_constants.dart'
-    as global;
+import 'package:koompi_hotspot/providers/contact_list_provider.dart';
+import 'package:koompi_hotspot/screens/web_view/webview.dart';
+import 'package:koompi_hotspot/utils/auto_login_hotspot_constants.dart' as global;
 import 'package:koompi_hotspot/utils/globals.dart' as globals;
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:dart_ping/dart_ping.dart';
 
 class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);
@@ -37,6 +38,9 @@ class _AppState extends State<App> {
         ),
         ChangeNotifierProvider<VoteResultProvider>(
           create: (context) => VoteResultProvider(),
+        ),
+        ChangeNotifierProvider<ContactListProvider>(
+          create: (context) => ContactListProvider(),
         ),
       ],
       child: Consumer<LangProvider>(
@@ -92,8 +96,6 @@ class _SplashState extends State<Splash> {
   startTime() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool? firstTime = prefs.getBool('first_time');
-
-    // var _duration = new Duration(seconds: 3);
 
     if (firstTime != null && !firstTime) {
       // Not first time
@@ -151,14 +153,18 @@ class _SplashState extends State<Splash> {
     }
   }
 
+
   @override
   void initState() {
     super.initState();
     configOneSignal();
     setState(() {
-      isInternet();
-      getValue();
       startTime();
+      getValue();
+      // hasInternetInternetConnection();
+      isWifiAccess();
+      
+      
     });
     initQuickActions();
 
@@ -197,63 +203,35 @@ class _SplashState extends State<Splash> {
     /// Set App Id.
     OneSignal.shared.setAppId("05805743-ce69-4224-9afb-b2f36bf6c1db");
 
-    await OneSignal.shared
-        .promptUserForPushNotificationPermission(fallbackToSettings: true);
+    await OneSignal.shared.promptUserForPushNotificationPermission(fallbackToSettings: true);
   }
 
-  Future<bool> isInternet() async {
+  Future<void> isWifiAccess() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.mobile) {
-      // I am connected to a mobile network, make sure there is actually a net connection.
-      if (await DataConnectionChecker().hasConnection) {
-        // Mobile data detected & internet connection confirmed.
-        if (kDebugMode) {
-          print('Mobile data detected & internet connection confirmed.');
-        }
-        return true;
-      } else {
-        // Mobile data detected but no internet connection found.
-        if (kDebugMode) {
-          print('Mobile data detected but no internet connection found.');
-        }
-        return false;
-      }
-    } else if (connectivityResult == ConnectivityResult.wifi) {
-      // I am connected to a WIFI network, make sure there is actually a net connection.
-      if (kDebugMode) {
-        print(
-            'I am connected to a WIFI network, make sure there is actually a net connection.');
-      }
-      if (await DataConnectionChecker().hasConnection) {
-        // Wifi detected & internet connection confirmed.
-        if (kDebugMode) {
-          print('Wifi detected & internet connection confirmed.');
-        }
-        return true;
-      } else {
-        // Wifi detected but no internet connection found.
-        if (kDebugMode) {
-          print('Wifi detected but no internet connection found.');
-        }
+    
+    if (connectivityResult == ConnectivityResult.wifi) {
+        // Create ping object with desired args
+      try {
+        final ping = Ping('google.com', count: 2);
 
-        Navigator.push(
-          context,
-          PageTransition(
-            type: PageTransitionType.rightToLeft,
-            child: const CaptivePortalWeb(),
-          ),
-        );
-        return false;
+        // Begin ping process and listen for output
+        ping.stream.listen((event) {
+          if(event.error != null) {
+            Navigator.push(
+              context,
+              PageTransition(
+                type: PageTransitionType.bottomToTop,
+                child: const CaptivePortalWeb(),
+              ),
+            );
+          }
+        });
+      }catch(e){
+        // print(e);
       }
-    } else {
-      // Neither mobile data or WIFI detected, not internet connection found.
-      if (kDebugMode) {
-        print(
-            'Neither mobile data or WIFI detected, not internet connection found.');
-      }
-      return false;
     }
   }
+
 
   @override
   Widget build(BuildContext context) {

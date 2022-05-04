@@ -13,10 +13,19 @@ class _CompletePlanState extends State<CompletePlan> {
     var _lang = AppLocalizeService.of(context);
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         backgroundColor: Colors.white,
         centerTitle: true,
         title: Text(_lang.translate('complete'),
-            style: const TextStyle(fontFamily: 'Medium', color: Colors.black)),
+          style: GoogleFonts.robotoCondensed(
+            textStyle: const TextStyle(
+              color: Colors.black,
+              fontStyle: FontStyle.italic,
+              fontSize: 24,
+              fontWeight: FontWeight.w700,
+            )
+          ),
+        ),
       ),
       backgroundColor: Colors.white,
       body: WillPopScope(
@@ -82,20 +91,17 @@ class _CompletePlanState extends State<CompletePlan> {
                                   await Provider.of<GetPlanProvider>(context,
                                           listen: false)
                                       .fetchHotspotPlan();
-                                  Future.delayed(const Duration(seconds: 3),
-                                      () async {
-                                    Timer(
-                                        const Duration(milliseconds: 500),
-                                        () => Navigator.pushAndRemoveUntil(
-                                              context,
-                                              PageTransition(
-                                                type: PageTransitionType
-                                                    .bottomToTop,
-                                                child: const Navbar(0),
-                                              ),
-                                              ModalRoute.withName('/navbar'),
-                                            ));
-                                  });
+                                  Timer(
+                                    const Duration(milliseconds: 500),
+                                    () => Navigator.pushAndRemoveUntil(
+                                          context,
+                                          PageTransition(
+                                            type: PageTransitionType
+                                                .bottomToTop,
+                                            child: const Navbar(0),
+                                          ),
+                                          ModalRoute.withName('/navbar'),
+                                        ));
                                 },
                                 child: Center(
                                   child: Text(_lang.translate('home'),

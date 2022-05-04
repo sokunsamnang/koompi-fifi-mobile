@@ -150,10 +150,21 @@ class _AnnouncementsDetailState extends State<AnnouncementsDetail> {
     var _notification = Provider.of<NotificationProvider>(context);
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
         backgroundColor: Colors.white,
         title: Text(_lang.translate('announcements'),
-            style: const TextStyle(color: Colors.black, fontFamily: 'Medium')),
+          style: GoogleFonts.robotoCondensed(
+            textStyle: const TextStyle(
+              color: Colors.black,
+              fontStyle: FontStyle.italic,
+              fontSize: 24,
+              fontWeight: FontWeight.w700,
+            )
+          ),
+        ),
         leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () {

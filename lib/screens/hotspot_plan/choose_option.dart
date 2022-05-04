@@ -50,17 +50,15 @@ class _ChooseOptionState extends State<ChooseOption>
           print('Internet connected');
         }
         if (response.statusCode == 200) {
-          Future.delayed(const Duration(seconds: 2), () async {
-            Timer(
-                const Duration(milliseconds: 500),
-                () => Navigator.pushAndRemoveUntil(
-                      context,
-                      PageTransition(
-                          type: PageTransitionType.rightToLeft,
-                          child: const CompletePlan()),
-                      ModalRoute.withName('/navbar'),
-                    ));
-          });
+          Timer(
+            const Duration(milliseconds: 500),
+            () => Navigator.pushAndRemoveUntil(
+                  context,
+                  PageTransition(
+                      type: PageTransitionType.rightToLeft,
+                      child: const CompletePlan()),
+                  ModalRoute.withName('/navbar'),
+                ));
         } else {
           await Components.dialog(
               context,
@@ -82,11 +80,22 @@ class _ChooseOptionState extends State<ChooseOption>
   Widget build(BuildContext context) {
     var _lang = AppLocalizeService.of(context);
     return Scaffold(
+      backgroundColor: Colors.white,
       key: globalKey,
       appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
         backgroundColor: Colors.white,
         title: Text(_lang.translate('renew_option'),
-            style: const TextStyle(color: Colors.black, fontFamily: 'Medium')),
+          style: GoogleFonts.robotoCondensed(
+            textStyle: const TextStyle(
+              color: Colors.black,
+              fontStyle: FontStyle.italic,
+              fontSize: 24,
+              fontWeight: FontWeight.w700,
+            )
+          ),    
+        ),
         automaticallyImplyLeading: false,
         actions: <Widget>[
           Padding(

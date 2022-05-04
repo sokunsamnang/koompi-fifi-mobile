@@ -1,4 +1,6 @@
+import 'package:in_app_update/in_app_update.dart';
 import 'package:koompi_hotspot/all_export.dart';
+import 'package:koompi_hotspot/providers/contact_list_provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -10,10 +12,31 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
 
+  // AppUpdateInfo? updateInfo;
+
+  // Platform messages are asynchronous, so we initialize in an async method.
+  // Future<void> checkForUpdate() async {
+  //   InAppUpdate.checkForUpdate().then((info) {
+  //     setState(() {
+  //       updateInfo = info;
+  //     });
+  //   }).catchError((e) {
+  //     showSnack(e.toString());
+  //   });
+  // }
+
+  // void showSnack(String text) {
+  //   if (globalKey.currentContext != null) {
+  //     ScaffoldMessenger.of(globalKey.currentContext!)
+  //         .showSnackBar(SnackBar(content: Text(text)));
+  //   }
+  // }
+
   @override
   void initState() {
     super.initState();
     // configOneSignal();
+    // checkForUpdate();
     AppServices.noInternetConnection(globalKey);
     versionCheck(context);
   }
@@ -26,9 +49,11 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       key: globalKey,
       appBar: AppBar(
         centerTitle: true,
+        elevation: 0,
         automaticallyImplyLeading: false,
         leading: IconButton(
           icon: const Icon(LineIcons.bars),
@@ -38,17 +63,21 @@ class _HomePageState extends State<HomePage> {
         title: RichText(
           text: TextSpan(
             text: 'KOOMPI ',
-            style: GoogleFonts.nunito(
-                fontSize: 18,
-                letterSpacing: 1.0,
-                textStyle: const TextStyle(
-                    color: Colors.black, fontWeight: FontWeight.w700)),
+            style: GoogleFonts.robotoCondensed(
+              fontSize: 24,
+              letterSpacing: 1.0,
+              textStyle: const TextStyle(
+                color: Colors.black, fontWeight: FontWeight.w700, fontStyle: FontStyle.italic
+              )
+            ),
             children: <TextSpan>[
               TextSpan(
                 text: 'Fi-Fi',
-                style: GoogleFonts.nunito(
-                    textStyle: TextStyle(
-                        color: primaryColor, fontWeight: FontWeight.w700)),
+                style: GoogleFonts.robotoCondensed(
+                  textStyle: TextStyle(
+                    color: primaryColor, fontWeight: FontWeight.w700, fontStyle: FontStyle.italic
+                  )
+                ),
               )
             ],
           ),
@@ -92,14 +121,11 @@ class _HomePageState extends State<HomePage> {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          await Provider.of<GetPlanProvider>(context, listen: false)
-              .fetchHotspotPlan();
-          await Provider.of<TrxHistoryProvider>(context, listen: false)
-              .fetchTrxHistory();
-          await Provider.of<BalanceProvider>(context, listen: false)
-              .fetchPortfolio();
-          await Provider.of<NotificationProvider>(context, listen: false)
-              .fetchNotification();
+          await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
+          await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+          await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
+          await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
+          await Provider.of<ContactListProvider>(context, listen: false).fetchContactList();
         },
         child: SizedBox(
           height: MediaQuery.of(context).size.height,

@@ -23,13 +23,20 @@ class _TransactionDetailState extends State<TransactionDetail> {
     return Scaffold(
       appBar: AppBar(
         systemOverlayStyle: SystemUiOverlayStyle.dark,
-        title: const Text('Transaction Details',
-            style: TextStyle(
-                color: Colors.white, fontSize: 18, fontFamily: 'Medium')),
-        backgroundColor: HexColor('00336A'),
+        title: Text('Transaction Details',
+          style: GoogleFonts.robotoCondensed(
+            textStyle: const TextStyle(
+              color: Colors.white,
+              fontStyle: FontStyle.italic,
+              fontSize: 24,
+              fontWeight: FontWeight.w700,
+            )
+          ),
+        ),
+        backgroundColor: primaryColor.withOpacity(0.8),
         centerTitle: true,
         elevation: 0,
-        shadowColor: HexColor('00336A'),
+        shadowColor: primaryColor.withOpacity(0.8),
         automaticallyImplyLeading: true,
         leading: IconButton(
             icon: const Icon(Icons.arrow_back),
@@ -49,7 +56,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                   children: <Widget>[
                     Container(
                       height: 75.0,
-                      color: HexColor('00336A'),
+                      color: primaryColor.withOpacity(0.8),
                     ),
                     Container(
                       color: Colors.white,
@@ -266,7 +273,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                               ),
                               Text(
                                 history[i].sender! +
-                                    (history[i].from!.isNotEmpty
+                                    (history[i].from != null
                                         ? ' (${history[i].from})'
                                         : ''),
                                 style: GoogleFonts.nunito(
@@ -295,7 +302,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                               ),
                               Text(
                                 history[i].destination! +
-                                    (history[i].to!.isNotEmpty
+                                    (history[i].to != null
                                         ? ' (${history[i].to})'
                                         : ''),
                                 style: GoogleFonts.nunito(
@@ -342,20 +349,109 @@ class _TransactionDetailState extends State<TransactionDetail> {
                             height: 25,
                           ),
                           //========= Repeat or Return Button =========
-                          mData.wallet == history[i].destination
-                              ? SizedBox(
-                                  width: MediaQuery.of(context).size.width,
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      onPrimary: Colors.white,
-                                      primary: HexColor('0CACDA'),
-                                      elevation: 2.5,
-                                      shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(12)),
-                                      ),
+                          // mData.wallet == history[i].destination
+                          //     ? SizedBox(
+                          //         width: MediaQuery.of(context).size.width,
+                          //         child: ElevatedButton(
+                          //           style: ElevatedButton.styleFrom(
+                          //             onPrimary: Colors.white,
+                          //             primary: HexColor('0CACDA'),
+                          //             elevation: 2.5,
+                          //             shape: const RoundedRectangleBorder(
+                          //               borderRadius: BorderRadius.all(
+                          //                   Radius.circular(12)),
+                          //             ),
+                          //           ),
+                          //           onPressed: () {
+                          //             Navigator.push(
+                          //               context,
+                          //               PageTransition(
+                          //                 type: PageTransitionType.bottomToTop,
+                          //                 child: SendRequest(
+                          //                     history[i].sender!,
+                          //                     history[i].symbol!,
+                          //                     history[i].amount.toString()),
+                          //               ),
+                          //             );
+                          //           },
+                          //           child: Padding(
+                          //             padding: const EdgeInsets.symmetric(
+                          //                 horizontal: 30, vertical: 15),
+                          //             child: Text(
+                          //               'RETURN',
+                          //               style: GoogleFonts.nunito(
+                          //                   textStyle: const TextStyle(
+                          //                       color: Colors.white,
+                          //                       fontSize: 16,
+                          //                       fontWeight: FontWeight.w600)),
+                          //             ),
+                          //           ),
+                          //         ),
+                          //       )
+                          //     : SizedBox(
+                          //         width: MediaQuery.of(context).size.width,
+                          //         child: ElevatedButton(
+                          //           style: ElevatedButton.styleFrom(
+                          //             onPrimary: Colors.white,
+                          //             primary: HexColor('0CACDA'),
+                          //             elevation: 2.5,
+                          //             shape: const RoundedRectangleBorder(
+                          //               borderRadius: BorderRadius.all(
+                          //                   Radius.circular(12)),
+                          //             ),
+                          //           ),
+                          //           onPressed: () {
+                          //             Navigator.push(
+                          //               context,
+                          //               PageTransition(
+                          //                 type: PageTransitionType.bottomToTop,
+                          //                 child: SendRequest(
+                          //                     history[i].destination!,
+                          //                     history[i].symbol!,
+                          //                     history[i].amount!.toString()),
+                          //               ),
+                          //             );
+                          //           },
+                          //           child: Padding(
+                          //             padding: const EdgeInsets.symmetric(
+                          //                 horizontal: 30, vertical: 15),
+                          //             child: Text(
+                          //               'REPEAT',
+                          //               style: GoogleFonts.nunito(
+                          //                   textStyle: const TextStyle(
+                          //                       color: Colors.white,
+                          //                       fontSize: 16,
+                          //                       fontWeight: FontWeight.w600)),
+                          //             ),
+                          //           ),
+                          //         ),
+                          //       ),
+
+                          mData.wallet == history[i].destination ? Center(
+                            child: InkWell(
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    gradient: const LinearGradient(colors: [
+                                      Color(0xFF17ead9),
+                                      Color(0xFF6078ea)
+                                    ]),
+                                    borderRadius: BorderRadius.circular(12),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color:
+                                              const Color(0xFF6078ea).withOpacity(.3),
+                                          offset: const Offset(0.0, 8.0),
+                                          blurRadius: 8.0)
+                                    ]),
+                                child: Material(
+                                  color: Colors.transparent,
+                                  child: InkWell(
+                                    customBorder: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
                                     ),
-                                    onPressed: () {
+                                    onTap: () async {
                                       Navigator.push(
                                         context,
                                         PageTransition(
@@ -367,33 +463,49 @@ class _TransactionDetailState extends State<TransactionDetail> {
                                         ),
                                       );
                                     },
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 30, vertical: 15),
+                                    child: Center(
                                       child: Text(
                                         'RETURN',
                                         style: GoogleFonts.nunito(
-                                            textStyle: const TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w600)),
+                                          textStyle: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w700
+                                            )
+                                          ),
                                       ),
                                     ),
                                   ),
-                                )
-                              : SizedBox(
-                                  width: MediaQuery.of(context).size.width,
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      onPrimary: Colors.white,
-                                      primary: HexColor('0CACDA'),
-                                      elevation: 2.5,
-                                      shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(12)),
-                                      ),
+                                ),
+                              ),
+                            ),
+                          )
+                          :
+                          Center(
+                            child: InkWell(
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    gradient: const LinearGradient(colors: [
+                                      Color(0xFF17ead9),
+                                      Color(0xFF6078ea)
+                                    ]),
+                                    borderRadius: BorderRadius.circular(12),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color:
+                                              const Color(0xFF6078ea).withOpacity(.3),
+                                          offset: const Offset(0.0, 8.0),
+                                          blurRadius: 8.0)
+                                    ]),
+                                child: Material(
+                                  color: Colors.transparent,
+                                  child: InkWell(
+                                    customBorder: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
                                     ),
-                                    onPressed: () {
+                                    onTap: () async {
                                       Navigator.push(
                                         context,
                                         PageTransition(
@@ -405,54 +517,58 @@ class _TransactionDetailState extends State<TransactionDetail> {
                                         ),
                                       );
                                     },
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 30, vertical: 15),
+                                    child: Center(
                                       child: Text(
                                         'REPEAT',
-                                        style: GoogleFonts.nunito(
-                                            textStyle: const TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w600)),
+                                        style: GoogleFonts.roboto(
+                                          textStyle: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w700
+                                            )
+                                          ),
                                       ),
                                     ),
                                   ),
                                 ),
-
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          //========= Back Button =========
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                onPrimary: Colors.white,
-                                primary: HexColor('0CACDA'),
-                                elevation: 2.5,
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(12)),
-                                ),
-                              ),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 30, vertical: 15),
-                                child: Text(
-                                  'BACK TO WALLET',
-                                  style: GoogleFonts.nunito(
-                                      textStyle: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w600)),
-                                ),
                               ),
                             ),
                           ),
+
+
+                          // const SizedBox(
+                          //   height: 20,
+                          // ),
+                          // //========= Back Button =========
+                          // SizedBox(
+                          //   width: MediaQuery.of(context).size.width,
+                          //   child: ElevatedButton(
+                          //     style: ElevatedButton.styleFrom(
+                          //       onPrimary: Colors.white,
+                          //       primary: HexColor('0CACDA'),
+                          //       elevation: 2.5,
+                          //       shape: const RoundedRectangleBorder(
+                          //         borderRadius:
+                          //             BorderRadius.all(Radius.circular(12)),
+                          //       ),
+                          //     ),
+                          //     onPressed: () {
+                          //       Navigator.pop(context);
+                          //     },
+                          //     child: Padding(
+                          //       padding: const EdgeInsets.symmetric(
+                          //           horizontal: 30, vertical: 15),
+                          //       child: Text(
+                          //         'BACK TO WALLET',
+                          //         style: GoogleFonts.nunito(
+                          //             textStyle: const TextStyle(
+                          //                 color: Colors.black,
+                          //                 fontSize: 16,
+                          //                 fontWeight: FontWeight.w600)),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
                     )

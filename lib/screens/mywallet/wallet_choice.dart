@@ -25,11 +25,20 @@ class _WalletChoiceState extends State<WalletChoice> {
     var _lang = AppLocalizeService.of(context);
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
         backgroundColor: Colors.white,
         // brightness: Brightness.light,
         title: Text(
           _lang.translate('my_wallet'),
-          style: const TextStyle(color: Colors.black, fontFamily: 'Medium'),
+          style: GoogleFonts.robotoCondensed(
+            textStyle: const TextStyle(
+              color: Colors.black,
+              fontStyle: FontStyle.italic,
+              fontSize: 24,
+              fontWeight: FontWeight.w700,
+            )
+          ),
         ),
         iconTheme: const IconThemeData(
           color: Colors.black,
@@ -40,16 +49,30 @@ class _WalletChoiceState extends State<WalletChoice> {
         child: Column(
           children: <Widget>[
             Expanded(
-              child: SvgPicture.asset(
-                'assets/images/undraw_wallet.svg',
-                height: MediaQuery.of(context).size.height * 0.2,
-                width: MediaQuery.of(context).size.height * 0.2,
-                placeholderBuilder: (context) => const Center(),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    'assets/images/wallet.svg',
+                    height: MediaQuery.of(context).size.height * 0.2,
+                    width: MediaQuery.of(context).size.height * 0.2,
+                    placeholderBuilder: (context) => const Center(),
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    "Generate new address wallet.",
+                    style: GoogleFonts.nunito(
+                      textStyle: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.1,
-            ),
+            
             Center(
               child: InkWell(
                 child: Container(
@@ -93,13 +116,17 @@ class _WalletChoiceState extends State<WalletChoice> {
                             String _token = value!;
                             await GetRequest().getUserProfile(_token);
                           });
-                          Navigator.pushReplacement(
-                            context,
-                            PageTransition(
-                              type: PageTransitionType.rightToLeft,
-                              child: const MyWallet(),
-                            ),
-                          );
+                          Timer(
+                            const Duration(milliseconds: 500),
+                            () => Navigator.pushAndRemoveUntil(
+                                  context,
+                                  PageTransition(
+                                    type: PageTransitionType
+                                        .bottomToTop,
+                                    child: const Navbar(0),
+                                  ),
+                                  ModalRoute.withName('/navbar'),
+                                ));
                         } else {
                           await Components.dialog(
                               context,

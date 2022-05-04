@@ -27,8 +27,8 @@ class MyLocationViewState extends State<MyLocationView>
 
   final Geolocator geolocator = Geolocator();
 
-  double lat = 0;
-  double long = 0;
+  double lat = 0.0;
+  double long = 0.0;
   final double _outZoom = 3.0;
   final double _inZoom = 15.0;
   final double _maxZoom = 18.0;
@@ -60,6 +60,8 @@ class MyLocationViewState extends State<MyLocationView>
   @override
   void initState() {
     super.initState();
+    print(long);
+    print(lat);
     AppServices.noInternetConnection(mykey);
     _markers = _latLngList
         .map((point) => Marker(
@@ -72,13 +74,13 @@ class MyLocationViewState extends State<MyLocationView>
               anchorPos: AnchorPos.align(AnchorAlign.top),
             ))
         .toList();
-
-    if (long == 0 || lat == 0) {
+        
+    setState(() {
+      if (long == 0.0 || lat == 0.0) {
       ///checks GPS then call localize
       _checkGPS();
-      localize();
-      _moveCamera();
     }
+    });
 
     _controller = AnimationController(
       vsync: this,
@@ -94,7 +96,7 @@ class MyLocationViewState extends State<MyLocationView>
 
   _moveCamera() {
     isMoving = true;
-    if (lat != 0 && long != 0) {
+    if (lat != 0.0 && long != 0.0) {
       mapController.onReady.then((result) {
         mapController.move(LatLng(lat, long), _inZoom);
         icons[0] = Icons.gps_fixed;
@@ -108,8 +110,23 @@ class MyLocationViewState extends State<MyLocationView>
     if (status == LocationPermission.denied && !isGPSOn) {
       loc.Location locationR = loc.Location();
       locationR.requestService();
+    } else if (isGPSOn == false) {
+      loc.Location locationR = loc.Location();
+      locationR.requestService();
+    } else {
+      localize();
+      _moveCamera();
     }
   }
+
+  // void _checkGPS() async {
+  //   var status = await Geolocator.checkPermission();
+  //   bool isGPSOn = await Geolocator.isLocationServiceEnabled();
+  //   if (status == LocationPermission.denied || !isGPSOn) {
+  //     loc.Location locationR = loc.Location();
+  //     locationR.requestService();
+  //   }
+  // }
 
   void localize() {
     Geolocator.getPositionStream(locationSettings: locationSettings)
@@ -130,6 +147,7 @@ class MyLocationViewState extends State<MyLocationView>
           }
         });
       }
+      print(mounted);
     });
   }
 
@@ -262,13 +280,22 @@ class MyLocationViewState extends State<MyLocationView>
     return Scaffold(
       key: mykey,
       appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
         title: Text(_lang.translate('fifi_map'),
-            style: const TextStyle(color: Colors.black, fontFamily: 'Medium')),
+          style: GoogleFonts.robotoCondensed(
+            textStyle: const TextStyle(
+              color: Colors.black,
+              fontStyle: FontStyle.italic,
+              fontSize: 24,
+              fontWeight: FontWeight.w700,
+            )
+          ),
+        ),
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(
           color: Colors.black, //change your color here
         ),
-        automaticallyImplyLeading: false,
       ),
       body: Column(
         children: <Widget>[
@@ -289,7 +316,7 @@ class MyLocationViewState extends State<MyLocationView>
           ///onPress LockCamera button
           if (isMoving == false) {
             /// if position not null [LatLng]
-            if (lat != 0 && long != 0) {
+            if (lat != 0.0 && long != 0.0) {
               setState(() {
                 ///change icon to lockedCamera
                 icons[0] = Icons.gps_fixed;

@@ -1,11 +1,9 @@
-import 'package:data_connection_checker_tv/data_connection_checker.dart';
 import 'package:koompi_hotspot/all_export.dart';
 
 class DataConnectivityService {
-  StreamController<DataConnectionStatus> connectivityStreamController =
-      StreamController<DataConnectionStatus>();
+  StreamController<InternetConnectionStatus> connectivityStreamController = StreamController<InternetConnectionStatus>();
   DataConnectivityService() {
-    DataConnectionChecker().onStatusChange.listen((dataConnectionStatus) {
+    InternetConnectionChecker().onStatusChange.listen((dataConnectionStatus) {
       connectivityStreamController.add(dataConnectionStatus);
     });
   }
