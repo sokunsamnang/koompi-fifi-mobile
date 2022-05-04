@@ -204,6 +204,7 @@ class _TrxHistoryState extends State<TrxHistory> {
     var history = Provider.of<TrxHistoryProvider>(context);
     return Scaffold(
       // Have No History
+      backgroundColor: Colors.white,
       body: history.trxHistoryList.isEmpty
           ? SafeArea(
               child: Container(
@@ -243,16 +244,19 @@ class _TrxHistoryState extends State<TrxHistory> {
                 )
               // Display History List
               : SafeArea(
-                  child: CustomScrollView(
-                    shrinkWrap: true,
-                    slivers: [
-                      SliverList(
-                        delegate: SliverChildListDelegate(
-                          _buildList(
-                              history.trxHistoryList, context, mData.wallet!),
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height,
+                    child: CustomScrollView(
+                      shrinkWrap: true,
+                      slivers: [
+                        SliverList(
+                          delegate: SliverChildListDelegate(
+                            _buildList(
+                                history.trxHistoryList, context, mData.wallet!),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
     );
@@ -261,30 +265,31 @@ class _TrxHistoryState extends State<TrxHistory> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          iconTheme: const IconThemeData(
-            color: Colors.black,
-          ),
-          automaticallyImplyLeading: true,
-          title: Text(
-            'Transaction History',
-            style: GoogleFonts.robotoCondensed(
-              textStyle: const TextStyle(
-                color: Colors.black,
-                fontStyle: FontStyle.italic,
-                fontSize: 24,
-                fontWeight: FontWeight.w700,
-              )
-            ),
+      appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        iconTheme: const IconThemeData(
+          color: Colors.black,
+        ),
+        automaticallyImplyLeading: true,
+        title: Text(
+          'Transaction History',
+          style: GoogleFonts.robotoCondensed(
+            textStyle: const TextStyle(
+              color: Colors.black,
+              fontStyle: FontStyle.italic,
+              fontSize: 24,
+              fontWeight: FontWeight.w700,
+            )
           ),
         ),
-        body: RefreshIndicator(
-            onRefresh: () async {
-              await Provider.of<TrxHistoryProvider>(context, listen: false)
-                  .fetchTrxHistory();
-            },
-            child: trxHistory(context)));
+      ),
+      body: RefreshIndicator(
+          onRefresh: () async {
+            await Provider.of<TrxHistoryProvider>(context, listen: false)
+                .fetchTrxHistory();
+          },
+          child: trxHistory(context)));
   }
 }

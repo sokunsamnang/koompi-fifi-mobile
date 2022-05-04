@@ -25,6 +25,7 @@ class _WalletChoiceState extends State<WalletChoice> {
     var _lang = AppLocalizeService.of(context);
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         centerTitle: true,
         backgroundColor: Colors.white,
         // brightness: Brightness.light,

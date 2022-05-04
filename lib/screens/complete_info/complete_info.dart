@@ -142,7 +142,9 @@ class _CompleteInfoState extends State<CompleteInfo> {
   Widget build(BuildContext context) {
     var _lang = AppLocalizeService.of(context);
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        elevation: 0,
         centerTitle: true,
         backgroundColor: Colors.white,
         title: Text(_lang.translate('complete_profile_appbar'),

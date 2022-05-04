@@ -80,8 +80,10 @@ class _ChooseOptionState extends State<ChooseOption>
   Widget build(BuildContext context) {
     var _lang = AppLocalizeService.of(context);
     return Scaffold(
+      backgroundColor: Colors.white,
       key: globalKey,
       appBar: AppBar(
+        elevation: 0,
         centerTitle: true,
         backgroundColor: Colors.white,
         title: Text(_lang.translate('renew_option'),

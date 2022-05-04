@@ -40,8 +40,8 @@ class SideMenu extends StatelessWidget {
             },
           ),
           DrawerListTile(
-            title: "Fi-Fi Maps",
-            iconSrc: LineIcons.map,
+            title: "JAAY",
+            iconSrc: LineIcons.wallet,
             press: () {
               Navigator.pushAndRemoveUntil(
                 context,
@@ -50,6 +50,19 @@ class SideMenu extends StatelessWidget {
                   child: const Navbar(1),
                 ),
                 ModalRoute.withName('/navbar'),
+              );
+            },
+          ),
+          DrawerListTile(
+            title: "Fi-Fi Maps",
+            iconSrc: LineIcons.map,
+            press: () {
+              Navigator.push(
+                context,
+                PageTransition(
+                  type: PageTransitionType.rightToLeft,
+                  child: const MyLocationView(),
+                ),
               );
             },
           ),

@@ -267,8 +267,10 @@ class _ChangePasswordState extends State<ChangePassword>
   Widget build(BuildContext context) {
     var _lang = AppLocalizeService.of(context);
     return Scaffold(
+      backgroundColor: Colors.white,
       key: _modelChangePassword.globalKey,
       appBar: AppBar(
+        elevation: 0,
         centerTitle: true,
         backgroundColor: Colors.white,
         title: Text(_lang.translate('change_password'),

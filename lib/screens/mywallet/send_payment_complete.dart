@@ -25,6 +25,7 @@ class _CompletePaymentState extends State<CompletePayment> {
     var _lang = AppLocalizeService.of(context);
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         backgroundColor: Colors.white,
         centerTitle: true,
         title: Text(_lang.translate('complete'),

@@ -313,7 +313,9 @@ class _WifiConnectState extends State<WifiConnect> {
     var _lang = AppLocalizeService.of(context);
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        elevation: 0,
         centerTitle: true,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

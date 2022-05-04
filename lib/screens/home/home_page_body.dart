@@ -308,7 +308,7 @@ Widget _planViewButton(context) {
                                 ),
                                 IconButton(
                                     icon: const Icon(Icons.more_vert,
-                                        color: Colors.white),
+                                        color: Colors.black),
                                     onPressed: () {
                                       Navigator.push(
                                         context,

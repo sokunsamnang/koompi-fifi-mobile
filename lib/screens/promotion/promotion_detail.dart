@@ -142,7 +142,9 @@ class _PromotionScreenState extends State<PromotionScreen> {
     var _notification = Provider.of<NotificationProvider>(context);
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        elevation: 0,
         centerTitle: true,
         backgroundColor: Colors.white,
         title: Text(_lang.translate('promotion'),

@@ -166,51 +166,53 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: globalKey,
-        appBar: AppBar(
-          centerTitle: true,
-          leading: IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.black),
-              onPressed: () {
-                Navigator.of(context).pop();
-              }),
-          automaticallyImplyLeading: false,
-          // centerTitle: true,
-          backgroundColor: Colors.white,
-          // title: Image.asset(
-          //   "assets/images/appbar_logo.png",
-          //   scale: 2,
-          // ),
-          title: Text('Choose a Plan',
-            style: GoogleFonts.robotoCondensed(
-            textStyle: const TextStyle(
-              color: Colors.black,
-              fontStyle: FontStyle.italic,
-              fontSize: 24,
-              fontWeight: FontWeight.w700,
-            )
-          ),
-          ),
+      backgroundColor: Colors.white,
+      key: globalKey,
+      appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
+        leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () {
+              Navigator.of(context).pop();
+            }),
+        automaticallyImplyLeading: false,
+        // centerTitle: true,
+        backgroundColor: Colors.white,
+        // title: Image.asset(
+        //   "assets/images/appbar_logo.png",
+        //   scale: 2,
+        // ),
+        title: Text('Choose a Plan',
+          style: GoogleFonts.robotoCondensed(
+          textStyle: const TextStyle(
+            color: Colors.black,
+            fontStyle: FontStyle.italic,
+            fontSize: 24,
+            fontWeight: FontWeight.w700,
+          )
         ),
-        body: SizedBox(
-          height: MediaQuery.of(context).size.height * 2,
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  left: 28.0, right: 28.0, top: 20.0, bottom: 38.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  const SizedBox(height: 25.0),
-                  plan30DaysButton(context),
-                  const SizedBox(height: 50.0),
-                  plan365DaysButton(context),
-                ],
-              ),
+        ),
+      ),
+      body: SizedBox(
+        height: MediaQuery.of(context).size.height * 2,
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.only(
+                left: 28.0, right: 28.0, top: 20.0, bottom: 38.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const SizedBox(height: 25.0),
+                plan30DaysButton(context),
+                const SizedBox(height: 50.0),
+                plan365DaysButton(context),
+              ],
             ),
           ),
-        ));
+        ),
+      ));
   }
 
   Widget plan30DaysButton(BuildContext context) {

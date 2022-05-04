@@ -34,6 +34,7 @@ class QrScannerState extends State<QrScanner> {
     var _lang = AppLocalizeService.of(context);
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         centerTitle: true,
         title: Text(_lang.translate('qr_scanner'),
           style: GoogleFonts.robotoCondensed(

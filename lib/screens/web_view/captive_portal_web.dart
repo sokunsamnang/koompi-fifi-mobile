@@ -5,8 +5,8 @@ import 'package:koompi_hotspot/utils/auto_login_hotspot_constants.dart'
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:path/path.dart';
 
-String selectedUrl = 'http://connectivitycheck.android.com/generate_204';
-// String selectedUrl = 'https://unifi.koompi.org/guest/s/srdd5hh7/#/';
+// String selectedUrl = 'http://connectivitycheck.android.com/generate_204';
+String selectedUrl = 'https://unifi.koompi.org/guest/s/srdd5hh7/#/';
 String otherUrl = 'https://koompi.com/';
 
 class CaptivePortalWeb extends StatefulWidget {
@@ -58,6 +58,7 @@ class _CaptivePortalWebState extends State<CaptivePortalWeb> {
 
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         centerTitle: true,
         backgroundColor: Colors.white,
         title: Text(_lang.translate('login_hotspot'),
@@ -110,9 +111,6 @@ class _CaptivePortalWebState extends State<CaptivePortalWeb> {
           },
           onLoadResource: (controller, url) async {
             print(controller);
-            SharedPreferences prefs = await SharedPreferences.getInstance();
-            global.phone = prefs.getString('phone')!;
-            global.password = prefs.getString('password')!;
             setState(() {
               
 
@@ -134,11 +132,7 @@ class _CaptivePortalWebState extends State<CaptivePortalWeb> {
           onLoadStop: (controller, url) async {
             print(url);
             print(controller);
-            SharedPreferences prefs = await SharedPreferences.getInstance();
-            global.phone = prefs.getString('phone')!;
-            global.password = prefs.getString('password')!;
             setState(() {
-              
 
               this.url = url.toString();
               urlController.text = this.url;
@@ -167,8 +161,6 @@ class _CaptivePortalWebState extends State<CaptivePortalWeb> {
                 requestTimer.cancel();
               }
             }
-            
-            
             
           },
           onConsoleMessage: (controller, consoleMessage) {

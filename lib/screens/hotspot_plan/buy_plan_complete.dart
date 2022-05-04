@@ -13,6 +13,7 @@ class _CompletePlanState extends State<CompletePlan> {
     var _lang = AppLocalizeService.of(context);
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         backgroundColor: Colors.white,
         centerTitle: true,
         title: Text(_lang.translate('complete'),

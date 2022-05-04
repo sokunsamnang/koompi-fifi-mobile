@@ -280,6 +280,7 @@ class MyLocationViewState extends State<MyLocationView>
     return Scaffold(
       key: mykey,
       appBar: AppBar(
+        elevation: 0,
         centerTitle: true,
         title: Text(_lang.translate('fifi_map'),
           style: GoogleFonts.robotoCondensed(

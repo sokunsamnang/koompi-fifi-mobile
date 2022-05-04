@@ -42,6 +42,14 @@ class _MyWalletState extends State<MyWallet> {
     _scaffoldKey.currentState?.showSnackBar(snackBarContent);
   }
 
+  void commingSoonSnackBar() {
+    const snackBarContent = SnackBar(
+      content: Text("Coming Soon"),
+    );
+
+    // ignore: deprecated_member_use
+    _scaffoldKey.currentState?.showSnackBar(snackBarContent);
+  }
 
   void copyWallet(String _wallet) {
     Clipboard.setData(
@@ -105,17 +113,20 @@ class _MyWalletState extends State<MyWallet> {
             await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
             await Provider.of<ContactListProvider>(context, listen: false).fetchContactList();
           },
-          child: balance.balanceList.isNotEmpty ? SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                myBalance(context, showSnackBar, copyWallet),
-                const SizedBox(
-                  height: 6,
-                ),
-                walletAccount(context),
-              ],
+          child: balance.balanceList.isNotEmpty ? SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  myBalance(context, showSnackBar, copyWallet),
+                  const SizedBox(
+                    height: 6,
+                  ),
+                  walletAccount(context),
+                ],
+              ),
             ),
           ) 
           : 
@@ -256,13 +267,14 @@ class _MyWalletState extends State<MyWallet> {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                              type: PageTransitionType.rightToLeft,
-                              child: const SwapToken(),
-                            )
-                        );
+                        commingSoonSnackBar();
+                        // Navigator.push(
+                        //     context,
+                        //     PageTransition(
+                        //       type: PageTransitionType.rightToLeft,
+                        //       child: const SwapToken(),
+                        //     )
+                        // );
                       },
                       child: Image.asset('assets/images/swap.png', scale: 2),
                       style: ButtonStyle(
@@ -791,6 +803,28 @@ void _sendWalletBottomSheet(BuildContext context, String walletKey) {
                           MyText(
                               top: 6,
                               text: _lang.translate('fill_address'),
+                              fontSize: 12,
+                              color: '#000000')
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () async {
+                        await Navigator.push(
+                            context,
+                            PageTransition(
+                                type: PageTransitionType.bottomToTop,
+                                child: const ContactListScreen()));
+                      },
+                      child: Column(
+                        children: [
+                          Icon(Icons.payments_outlined,
+                              size: 35, color: primaryColor),
+                          const MyText(
+                              top: 6,
+                              text: 'Quick Transfer',
                               fontSize: 12,
                               color: '#000000')
                         ],

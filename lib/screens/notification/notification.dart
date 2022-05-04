@@ -23,6 +23,7 @@ class _NotificationsState extends State<Notifications>
 
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         centerTitle: true,
         backgroundColor: Colors.white,
         title: Text(

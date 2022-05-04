@@ -48,7 +48,9 @@ class _ContactListScreenState extends State<ContactListScreen> {
   const duration = Duration(milliseconds: 300);
 
   return Scaffold(
+    backgroundColor: Colors.white,
     appBar: AppBar(
+      elevation: 0,
       centerTitle: true,
       leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),

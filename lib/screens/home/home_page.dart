@@ -53,6 +53,7 @@ class _HomePageState extends State<HomePage> {
       key: globalKey,
       appBar: AppBar(
         centerTitle: true,
+        elevation: 0,
         automaticallyImplyLeading: false,
         leading: IconButton(
           icon: const Icon(LineIcons.bars),

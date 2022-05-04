@@ -160,67 +160,68 @@ class _HotspotPlanState extends State<HotspotPlan> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+      key: globalKey,
+      appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
+        leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                PageTransition(
+                  type: PageTransitionType.rightToLeft,
+                  child: const Navbar(0),
+                ),
+                ModalRoute.withName('/navbar'),
+              );
+            }),
+        automaticallyImplyLeading: false,
+        // centerTitle: true,
         backgroundColor: Colors.white,
-        key: globalKey,
-        appBar: AppBar(
-          centerTitle: true,
-          leading: IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.black),
-              onPressed: () {
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  PageTransition(
-                    type: PageTransitionType.rightToLeft,
-                    child: const Navbar(0),
-                  ),
-                  ModalRoute.withName('/navbar'),
-                );
-              }),
-          automaticallyImplyLeading: false,
-          // centerTitle: true,
-          backgroundColor: Colors.white,
-          // title: Image.asset(
-          //   "assets/images/appbar_logo.png",
-          //   scale: 2,
-          // ),
-          title: Text('Choose a Plan',
-            style: GoogleFonts.robotoCondensed(
-              fontSize: 24, 
-              fontStyle: FontStyle.italic,
-              fontWeight: FontWeight.bold,
-              color: Colors.black
-            ),
+        // title: Image.asset(
+        //   "assets/images/appbar_logo.png",
+        //   scale: 2,
+        // ),
+        title: Text('Choose a Plan',
+          style: GoogleFonts.robotoCondensed(
+            fontSize: 24, 
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.bold,
+            color: Colors.black
           ),
         ),
-        body: WillPopScope(
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height,
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      top: 20.0, left: 28.0, right: 28.0, bottom: 38.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      // Center(
-                      //   child: Text(
-                      //     _lang.translate('choose_plan'),
-                      //     style: GoogleFonts.nunito(
-                      //     textStyle: TextStyle(color: HexColor('0CACDA'), fontSize: 30, fontWeight: FontWeight.w700)
-                      //     ),
-                      //   ),
-                      // ),
-                      const SizedBox(height: 25.0),
-                      plan30DaysButton(context),
-                      const SizedBox(height: 50.0),
-                      plan365DaysButton(context),
-                    ],
-                  ),
+      ),
+      body: WillPopScope(
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    top: 20.0, left: 28.0, right: 28.0, bottom: 38.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    // Center(
+                    //   child: Text(
+                    //     _lang.translate('choose_plan'),
+                    //     style: GoogleFonts.nunito(
+                    //     textStyle: TextStyle(color: HexColor('0CACDA'), fontSize: 30, fontWeight: FontWeight.w700)
+                    //     ),
+                    //   ),
+                    // ),
+                    const SizedBox(height: 25.0),
+                    plan30DaysButton(context),
+                    const SizedBox(height: 50.0),
+                    plan365DaysButton(context),
+                  ],
                 ),
               ),
             ),
-            onWillPop: redirectNavbar));
+          ),
+          onWillPop: redirectNavbar));
   }
 
   Widget plan30DaysButton(BuildContext context) {

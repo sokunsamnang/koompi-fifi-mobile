@@ -152,6 +152,7 @@ class _AnnouncementsDetailState extends State<AnnouncementsDetail> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        elevation: 0,
         centerTitle: true,
         backgroundColor: Colors.white,
         title: Text(_lang.translate('announcements'),
