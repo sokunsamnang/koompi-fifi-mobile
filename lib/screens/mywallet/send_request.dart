@@ -242,6 +242,8 @@ class _SendRequestState extends State<SendRequest> {
 
   @override
   void initState() {
+    super.initState();
+
     AppServices.noInternetConnection(globalKey);
     recieveWallet = TextEditingController(text: widget.walletKey);
     amount = TextEditingController(text: widget.amount.toString());
@@ -252,7 +254,7 @@ class _SendRequestState extends State<SendRequest> {
     _tokenTypeModel = _tokenTypeModelList[0];
     asset = _tokenTypeModel.tokenName!;
 
-    if (widget.assetName == "RISE") {
+    if (widget.assetName == "LUY") {
       _tokenTypeModel = _tokenTypeModelList[0];
       asset = _tokenTypeModel.tokenName!;
     }
@@ -262,7 +264,6 @@ class _SendRequestState extends State<SendRequest> {
       asset = _tokenTypeModel.tokenName!;
     }
 
-    super.initState();
   }
 
   @override

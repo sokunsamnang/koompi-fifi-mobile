@@ -189,91 +189,91 @@ class _MorePageState extends State<MorePage> {
                       },
                     ),
                   ),
-                  const SizedBox(height: 10.0),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                    child: ListTile(
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
-                        borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-                      ),
-                      leading: Icon(Icons.devices_outlined, color: primaryColor),
-                      title: Text('Devices'),
-                      trailing: const Icon(LineIcons.angleRight),
-                      onTap: () async {
+                  // const SizedBox(height: 10.0),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                  //   child: ListTile(
+                  //     shape: RoundedRectangleBorder(
+                  //       side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
+                  //       borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                  //     ),
+                  //     leading: Icon(Icons.devices_outlined, color: primaryColor),
+                  //     title: Text('Devices'),
+                  //     trailing: const Icon(LineIcons.angleRight),
+                  //     onTap: () async {
 
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 10.0),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                    child: ListTile(
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
-                        borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-                      ),
-                      leading: Icon(LineIcons.mapAlt, color: primaryColor),
-                      title: Text('Fi-Fi Map'),
-                      trailing: const Icon(LineIcons.angleRight),
-                      onTap: () async {
-                        Navigator.push(
-                          context,
-                          PageTransition(
-                              type: PageTransitionType.rightToLeft,
-                              child: const MyLocationView()),
-                        );
-                      },
-                    ),
-                  ),
+                  //     },
+                  //   ),
+                  // ),
+                  // const SizedBox(height: 10.0),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                  //   child: ListTile(
+                  //     shape: RoundedRectangleBorder(
+                  //       side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
+                  //       borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                  //     ),
+                  //     leading: Icon(LineIcons.mapAlt, color: primaryColor),
+                  //     title: Text('Fi-Fi Map'),
+                  //     trailing: const Icon(LineIcons.angleRight),
+                  //     onTap: () async {
+                  //       Navigator.push(
+                  //         context,
+                  //         PageTransition(
+                  //             type: PageTransitionType.rightToLeft,
+                  //             child: const MyLocationView()),
+                  //       );
+                  //     },
+                  //   ),
+                  // ),
                   const SizedBox(height: 20.0),
 
                   // ==================== Rewards ====================
 
-                  buildDivider(),
-                  const SizedBox(height: 20.0),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                    child: Text('Rewards', 
-                      style: GoogleFonts.roboto(
-                        fontSize: 20.0,
-                        color: Colors.grey,
-                      )
-                    ),
-                  ),
-                  const SizedBox(height: 10.0),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                    child: ListTile(
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
-                        borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-                      ),
-                      leading: Icon(LineIcons.gifts, color: primaryColor),
-                      title: const Text('Rewards'),
-                      trailing: const Icon(LineIcons.angleRight),
-                      onTap: () async {
+                  // buildDivider(),
+                  // const SizedBox(height: 20.0),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                  //   child: Text('Rewards', 
+                  //     style: GoogleFonts.roboto(
+                  //       fontSize: 20.0,
+                  //       color: Colors.grey,
+                  //     )
+                  //   ),
+                  // ),
+                  // const SizedBox(height: 10.0),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                  //   child: ListTile(
+                  //     shape: RoundedRectangleBorder(
+                  //       side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
+                  //       borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                  //     ),
+                  //     leading: Icon(LineIcons.gifts, color: primaryColor),
+                  //     title: const Text('Rewards'),
+                  //     trailing: const Icon(LineIcons.angleRight),
+                  //     onTap: () async {
                         
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 10.0),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                    child: ListTile(
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
-                        borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-                      ),
-                      leading: Icon(Icons.mail_outline_outlined, color: primaryColor),
-                      title: const Text('Earn a referral'),
-                      trailing: const Icon(LineIcons.angleRight),
-                      onTap: () async {
+                  //     },
+                  //   ),
+                  // ),
+                  // const SizedBox(height: 10.0),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                  //   child: ListTile(
+                  //     shape: RoundedRectangleBorder(
+                  //       side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
+                  //       borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                  //     ),
+                  //     leading: Icon(Icons.mail_outline_outlined, color: primaryColor),
+                  //     title: const Text('Earn a referral'),
+                  //     trailing: const Icon(LineIcons.angleRight),
+                  //     onTap: () async {
 
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 20.0),
+                  //     },
+                  //   ),
+                  // ),
+                  // const SizedBox(height: 20.0),
 
 
                   buildDivider(),

@@ -71,92 +71,89 @@ class _MyWalletState extends State<MyWallet> {
     super.dispose();
   }
 
-  void fetchWallet() async {
-    await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
-    await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
-  }
+  // void fetchWallet() async {
+  //   await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
+  //   await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+  // }
 
 
   @override
   Widget build(BuildContext context) {
     var _lang = AppLocalizeService.of(context);
-    var balance = Provider.of<BalanceProvider>(context);
+    var _balance = Provider.of<BalanceProvider>(context);
     AppBar appBar = AppBar();
     appBarheight = appBar.preferredSize.height;
 
-    return WillPopScope(
-      onWillPop: redirectNavbar,
-      child: Scaffold(
-        key: _scaffoldKey,
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          elevation: 0,
-          centerTitle: true,
-          title: Text(
-            'JAAY',
-            style: GoogleFonts.robotoCondensed(
-              fontSize: 24,
-              fontStyle: FontStyle.italic,
-              fontWeight: FontWeight.w700,
-              color: Colors.black,
-            ),
+    return Scaffold(
+      key: _scaffoldKey,
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
+        title: Text(
+          'JAAY',
+          style: GoogleFonts.robotoCondensed(
+            fontSize: 24,
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
           ),
-          backgroundColor: primaryColor.withOpacity(0.8), 
-          iconTheme: const IconThemeData(
-            color: Colors.black, //change your color here
-          ),
-          automaticallyImplyLeading: false,
         ),
-        body: RefreshIndicator(
-          onRefresh: () async {
-            await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
-            await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
-            await Provider.of<ContactListProvider>(context, listen: false).fetchContactList();
-          },
-          child: balance.balanceList.isNotEmpty ? SizedBox(
-            height: MediaQuery.of(context).size.height,
-            child: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  myBalance(context, showSnackBar, copyWallet),
-                  const SizedBox(
-                    height: 6,
-                  ),
-                  walletAccount(context),
-                ],
-              ),
+        backgroundColor: primaryColor.withOpacity(0.8), 
+        iconTheme: const IconThemeData(
+          color: Colors.black, //change your color here
+        ),
+        automaticallyImplyLeading: false,
+      ),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
+          await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+          await Provider.of<ContactListProvider>(context, listen: false).fetchContactList();
+        },
+        child: _balance.balanceList.isNotEmpty ? SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                myBalance(context, showSnackBar, copyWallet),
+                const SizedBox(
+                  height: 6,
+                ),
+                walletAccount(context),
+              ],
             ),
-          ) 
-          : 
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SvgPicture.asset('assets/images/server-down.svg', height: MediaQuery.of(context).size.height / 5,),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  'Something went wrong! Please try again later.',
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.robotoCondensed(
-                    fontSize: 21, 
-                    fontStyle: FontStyle.italic,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black,
-                  ),
+          ),
+        ) 
+        : 
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset('assets/images/server-down.svg', height: MediaQuery.of(context).size.height / 5,),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                'Something went wrong! Please try again later.',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.robotoCondensed(
+                  fontSize: 21, 
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.black,
                 ),
               ),
-            ],
-          )
-        ),
+            ),
+          ],
+        )
       ),
     );
   }
 
   Widget myBalance(BuildContext context, Function showSnackBar, Function copyAddress) {
-    var balance = Provider.of<BalanceProvider>(context);
+    var _balance = Provider.of<BalanceProvider>(context);
     return Container(
       decoration: BoxDecoration(
         color: primaryColor.withOpacity(0.8),
@@ -173,7 +170,7 @@ class _MyWalletState extends State<MyWallet> {
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: Text(
-              '${balance.balanceList[1].token!} ${balance.balanceList[1].symbol!}' ,
+              '${_balance.balanceList[1].token!} ${_balance.balanceList[1].symbol!}' ,
               style: GoogleFonts.robotoCondensed(
                 fontSize: 36,
                 fontWeight: FontWeight.w700,
@@ -267,14 +264,14 @@ class _MyWalletState extends State<MyWallet> {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        commingSoonSnackBar();
-                        // Navigator.push(
-                        //     context,
-                        //     PageTransition(
-                        //       type: PageTransitionType.rightToLeft,
-                        //       child: const SwapToken(),
-                        //     )
-                        // );
+                        // commingSoonSnackBar();
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                              type: PageTransitionType.rightToLeft,
+                              child: const SwapToken(),
+                            )
+                        );
                       },
                       child: Image.asset('assets/images/swap.png', scale: 2),
                       style: ButtonStyle(
@@ -304,7 +301,7 @@ class _MyWalletState extends State<MyWallet> {
   }
 
   Widget walletAccount(BuildContext context) {
-    var balance = Provider.of<BalanceProvider>(context);
+    var _balance = Provider.of<BalanceProvider>(context);
 
     return Padding(
       padding: const EdgeInsets.all(15.0),
@@ -336,7 +333,7 @@ class _MyWalletState extends State<MyWallet> {
                   ),
                   leading: Image.asset('assets/images/rise-coin-icon.png', width: 40, height: 40,),
                   title: Text(
-                    balance.balanceList[0].symbol!,
+                    _balance.balanceList[0].symbol!,
                     style: GoogleFonts.roboto(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
@@ -344,7 +341,7 @@ class _MyWalletState extends State<MyWallet> {
                     ),
                   ),
                   trailing: Text(
-                    balance.balanceList[0].token!,
+                    _balance.balanceList[0].token!,
                     style: GoogleFonts.roboto(
                       fontSize: 20,
                       fontStyle: FontStyle.italic,
@@ -364,7 +361,7 @@ class _MyWalletState extends State<MyWallet> {
                   ),
                   leading: Image.asset('assets/images/sel-coin-icon.png', width: 40, height: 40,),
                   title: Text(
-                    balance.balanceList[1].symbol!,
+                    _balance.balanceList[1].symbol!,
                     style: GoogleFonts.roboto(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
@@ -372,7 +369,7 @@ class _MyWalletState extends State<MyWallet> {
                     ),
                   ),
                   trailing: Text(
-                    balance.balanceList[1].token!,
+                    _balance.balanceList[1].token!,
                     style: GoogleFonts.roboto(
                       fontSize: 20,
                       fontStyle: FontStyle.italic,
