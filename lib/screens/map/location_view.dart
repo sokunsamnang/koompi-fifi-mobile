@@ -1,7 +1,13 @@
-import 'package:geolocator/geolocator.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:koompi_hotspot/utils/app_localization.dart';
+import 'package:koompi_hotspot/utils/connection.dart';
+import 'package:koompi_hotspot/widgets/reuse_widgets/dialog.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:koompi_hotspot/all_export.dart';
-import 'package:location/location.dart' as loc;
+import 'package:location/location.dart';
 
 class MyLocationView extends StatefulWidget {
   const MyLocationView({Key? key}) : super(key: key);
@@ -25,7 +31,7 @@ class MyLocationViewState extends State<MyLocationView>
     // Icons.content_copy,
   ];
 
-  final Geolocator geolocator = Geolocator();
+  // final Geolocator geolocator = Geolocator();
 
   double lat = 0.0;
   double long = 0.0;
@@ -50,18 +56,19 @@ class MyLocationViewState extends State<MyLocationView>
   ];
   List<Marker> _markers = [];
 
-  final LocationSettings locationSettings = const LocationSettings(
-    accuracy: LocationAccuracy.high,
-    distanceFilter: 100,
-  );
+  // final LocationSettings locationSettings = const LocationSettings(
+  //   accuracy: LocationAccuracy.high,
+  //   distanceFilter: 100,
+  // );
 
   ///=========================================[initState]=============================================
 
   @override
   void initState() {
     super.initState();
-    print(long);
-    print(lat);
+    _mapController = MapController();
+    initLocationService();
+
     AppServices.noInternetConnection(mykey);
     _markers = _latLngList
         .map((point) => Marker(
@@ -75,12 +82,12 @@ class MyLocationViewState extends State<MyLocationView>
             ))
         .toList();
         
-    setState(() {
-      if (long == 0.0 || lat == 0.0) {
-      ///checks GPS then call localize
-      _checkGPS();
-    }
-    });
+    // setState(() {
+    //   if (long == 0.0 || lat == 0.0) {
+    //   ///checks GPS then call localize
+    //   _checkGPS();
+    //   }
+    // });
 
     _controller = AnimationController(
       vsync: this,
@@ -104,20 +111,89 @@ class MyLocationViewState extends State<MyLocationView>
     }
   }
 
-  void _checkGPS() async {
-    var status = await Geolocator.checkPermission();
-    bool isGPSOn = await Geolocator.isLocationServiceEnabled();
-    if (status == LocationPermission.denied && !isGPSOn) {
-      loc.Location locationR = loc.Location();
-      locationR.requestService();
-    } else if (isGPSOn == false) {
-      loc.Location locationR = loc.Location();
-      locationR.requestService();
-    } else {
-      localize();
-      _moveCamera();
+  // void _checkGPS() async {
+  //   var status = await Geolocator.checkPermission();
+  //   bool isGPSOn = await Geolocator.isLocationServiceEnabled();
+  //   if (status == LocationPermission.denied && !isGPSOn) {
+  //     loc.Location locationR = loc.Location();
+  //     locationR.requestService();
+  //   } else if (isGPSOn == false) {
+  //     loc.Location locationR = loc.Location();
+  //     locationR.requestService();
+  //   } else {
+  //     // localize();
+  //     _moveCamera();
+  //   }
+  // }
+
+  LocationData? _currentLocation;
+  late final MapController _mapController;
+
+  bool _liveUpdate = false;
+  bool _permission = false;
+
+  String? _serviceError = '';
+
+  var interActiveFlags = InteractiveFlag.all;
+
+  final Location _locationService = Location();
+
+
+  void initLocationService() async {
+    await _locationService.changeSettings(
+      accuracy: LocationAccuracy.high,
+      interval: 1000,
+    );
+
+    LocationData? location;
+    bool serviceEnabled;
+    bool serviceRequestResult;
+
+    try {
+      serviceEnabled = await _locationService.serviceEnabled();
+
+      if (serviceEnabled) {
+        var permission = await _locationService.requestPermission();
+        _permission = permission == PermissionStatus.granted;
+
+        if (_permission) {
+          location = await _locationService.getLocation();
+          _currentLocation = location;
+          _locationService.onLocationChanged
+              .listen((LocationData result) async {
+            if (mounted) {
+              setState(() {
+                _currentLocation = result;
+
+                // If Live Update is enabled, move map center
+                if (_liveUpdate) {
+                  _mapController.move(
+                      LatLng(_currentLocation!.latitude!,
+                          _currentLocation!.longitude!),
+                      _mapController.zoom);
+                }
+              });
+            }
+          });
+        }
+      } else {
+        serviceRequestResult = await _locationService.requestService();
+        if (serviceRequestResult) {
+          initLocationService();
+          return;
+        }
+      }
+    } on PlatformException catch (e) {
+      debugPrint(e.toString());
+      if (e.code == 'PERMISSION_DENIED') {
+        _serviceError = e.message;
+      } else if (e.code == 'SERVICE_STATUS_ERROR') {
+        _serviceError = e.message;
+      }
+      location = null;
     }
   }
+
 
   // void _checkGPS() async {
   //   var status = await Geolocator.checkPermission();
@@ -128,28 +204,28 @@ class MyLocationViewState extends State<MyLocationView>
   //   }
   // }
 
-  void localize() {
-    Geolocator.getPositionStream(locationSettings: locationSettings)
-        .listen((Position position) {
-      /// To not call setState when this state is not active
-      if (!mounted) {
-        return;
-      }
-      if (mounted) {
-        setState(() {
-          lat = position.latitude;
-          long = position.longitude;
-          long = long;
-          lat = lat;
-          if (isMoving == true) {
-            mapController.move(LatLng(lat, long), _inZoom);
-            icons[0] = Icons.gps_fixed;
-          }
-        });
-      }
-      print(mounted);
-    });
-  }
+  // void localize() {
+  //   Geolocator.getPositionStream(locationSettings: locationSettings)
+  //       .listen((Position position) {
+  //     /// To not call setState when this state is not active
+  //     if (!mounted) {
+  //       return;
+  //     }
+  //     if (mounted) {
+  //       setState(() {
+  //         lat = position.latitude;
+  //         long = position.longitude;
+  //         long = long;
+  //         lat = lat;
+  //         if (isMoving == true) {
+  //           mapController.move(LatLng(lat, long), _inZoom);
+  //           icons[0] = Icons.gps_fixed;
+  //         }
+  //       });
+  //     }
+  //     print("localize $mounted");
+  //   });
+  // }
 
   ///to show a snackBar after copy
   final GlobalKey<ScaffoldState> mykey = GlobalKey<ScaffoldState>();
@@ -159,6 +235,16 @@ class MyLocationViewState extends State<MyLocationView>
   @override
   Widget build(BuildContext context) {
     var _lang = AppLocalizeService.of(context);
+    LatLng currentLatLng;
+
+    // Until currentLocation is initially updated, Widget can locate to 0, 0
+    // by default or store previous location value to show.
+    if (_currentLocation != null) {
+      currentLatLng = LatLng(_currentLocation!.latitude!, _currentLocation!.longitude!);
+    } else {
+      currentLatLng = LatLng(11.5564, 104.9282);
+    }
+    
     Widget _loadBuild() {
       ///[Position Found Render Marker]
       if (lat != 0 && long != 0) {
@@ -246,12 +332,12 @@ class MyLocationViewState extends State<MyLocationView>
           child: FlutterMap(
             mapController: mapController,
             options: MapOptions(
-                interactiveFlags:
-                    InteractiveFlag.pinchZoom | InteractiveFlag.drag,
-                center: LatLng(11.5564, 104.9282),
-                zoom: _outZoom,
-                minZoom: _minZoom,
-                maxZoom: _maxZoom),
+              interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
+              center: LatLng(11.5564, 104.9282),
+              zoom: _outZoom,
+              minZoom: _minZoom,
+              maxZoom: _maxZoom
+            ),
             layers: [
               TileLayerOptions(
                   urlTemplate:

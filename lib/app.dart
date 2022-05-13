@@ -1,7 +1,9 @@
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/providers/contact_list_provider.dart';
 import 'package:koompi_hotspot/screens/web_view/webview.dart';
 import 'package:koompi_hotspot/utils/auto_login_hotspot_constants.dart' as global;
+import 'package:koompi_hotspot/utils/firebase_dynamic_links.dart';
 import 'package:koompi_hotspot/utils/globals.dart' as globals;
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:dart_ping/dart_ping.dart';
@@ -157,6 +159,7 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
+    initDynamicLinks();
     configOneSignal();
     setState(() {
       startTime();
@@ -171,6 +174,45 @@ class _SplashState extends State<Splash> {
     //Set Language
     setDefaultLang();
   }
+
+  String url = '';
+
+  ///Retreive dynamic link firebase.
+  void initDynamicLinks() async {
+    final PendingDynamicLinkData? data =
+        await FirebaseDynamicLinks.instance.getInitialLink();
+    final Uri? deepLink = data?.link;
+
+    if (deepLink != null) {
+      handleDynamicLink(deepLink);
+    }
+    FirebaseDynamicLinks.instance.onLink(
+        onSuccess: (PendingDynamicLinkData? dynamicLink) async {
+      final Uri? deepLink = dynamicLink?.link;
+
+      if (deepLink != null) {
+        handleDynamicLink(deepLink);
+      }
+    }, onError: (OnLinkErrorException e) async {
+      print(e.message);
+    });
+  }
+
+  handleDynamicLink(Uri url) {
+    List<String> separatedString = [];
+    separatedString.addAll(url.path.split('/'));
+    if (separatedString[1] == "startapp") {
+      Navigator.push(
+        context,
+        PageTransition(
+          type: PageTransitionType.bottomToTop,
+          child: const CaptivePortalWeb(),
+        ),
+      );
+    }
+  }
+
+
 
   final quickActions = const QuickActions();
 

@@ -1,4 +1,5 @@
 import 'package:koompi_hotspot/all_export.dart';
+import 'package:koompi_hotspot/screens/map/location.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({
@@ -61,7 +62,7 @@ class SideMenu extends StatelessWidget {
                 context,
                 PageTransition(
                   type: PageTransitionType.rightToLeft,
-                  child: const MyLocationView(),
+                  child: const LocationView(),
                 ),
               );
             },

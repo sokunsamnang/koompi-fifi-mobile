@@ -105,7 +105,7 @@ class _SwapTokenState extends State<SwapToken> {
                   child: swapTo(context),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 100.0),
+                  padding: const EdgeInsets.only(top: 50.0),
                   child: summarySwap(context),
                 ),
                 Padding(
@@ -166,6 +166,7 @@ class _SwapTokenState extends State<SwapToken> {
                     ),
                   ),
                   const SizedBox(height: 25),
+                  // buildDivider(),
                   Row(
                     children: [
                       Expanded(
@@ -175,12 +176,13 @@ class _SwapTokenState extends State<SwapToken> {
                             FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,4}'))
                           ],
                           decoration: InputDecoration(
-                            hintText: 'Enter amount',
+                            hintText: '0.00',
                             hintStyle: GoogleFonts.robotoCondensed(
                               textStyle: TextStyle(
                                 color: HexColor('000000').withOpacity(0.5),
                                 fontSize: 20,
-                                fontStyle: FontStyle.italic
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.w700
                               )
                             ),
                             border: InputBorder.none,

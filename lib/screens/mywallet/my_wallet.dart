@@ -31,24 +31,23 @@ class _MyWalletState extends State<MyWallet> {
 
   var appBarheight = 0.0;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  
   // var _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   void showSnackBar() {
-    const snackBarContent = SnackBar(
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text("Copied Address"),
-    );
-
-    // ignore: deprecated_member_use
-    _scaffoldKey.currentState?.showSnackBar(snackBarContent);
+      behavior: SnackBarBehavior.floating,
+    ));
   }
 
   void commingSoonSnackBar() {
-    const snackBarContent = SnackBar(
-      content: Text("Coming Soon"),
-    );
-
-    // ignore: deprecated_member_use
-    _scaffoldKey.currentState?.showSnackBar(snackBarContent);
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text("Coming Soon!"),
+      behavior: SnackBarBehavior.floating,
+    ));
   }
 
   void copyWallet(String _wallet) {
@@ -85,7 +84,7 @@ class _MyWalletState extends State<MyWallet> {
     appBarheight = appBar.preferredSize.height;
 
     return Scaffold(
-      key: _scaffoldKey,
+      // key: _scaffoldKey,
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
@@ -183,8 +182,9 @@ class _MyWalletState extends State<MyWallet> {
             width: MediaQuery.of(context).size.width / 2,
             child: InkWell(
               onTap: () {
-                showSnackBar();
                 copyAddress(mData.wallet!);
+                showSnackBar();
+                
               },
               child: Container(
                 padding: const EdgeInsets.all(8.0),
@@ -502,8 +502,8 @@ Widget _buildDivider() {
 
 void _qrBottomSheet(BuildContext context, Function showSnackBar, Function copyWallet) {
 
-  final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
-  final GlobalKey _keyQrShare = GlobalKey();
+  final GlobalKey<ScaffoldState> _modelScaffoldKey = GlobalKey<ScaffoldState>();
+  // final GlobalKey _keyQrShare = GlobalKey();
 
 
   void qrShare(GlobalKey globalKey, String _wallet) async {
@@ -531,9 +531,10 @@ void _qrBottomSheet(BuildContext context, Function showSnackBar, Function copyWa
     ),
     isScrollControlled: true,
     context: context,
-    builder: (BuildContext context) {
+    builder: (_) {
       var _lang = AppLocalizeService.of(context);
       return Container(
+        key: _modelScaffoldKey,
         height: MediaQuery.of(context).size.height * 0.75,
         // width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.all(20.0),
@@ -542,7 +543,6 @@ void _qrBottomSheet(BuildContext context, Function showSnackBar, Function copyWa
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             RepaintBoundary(
-              key: _keyQrShare,
               child: Container(
                 color: Colors.white,
                 child: Column(
@@ -615,41 +615,6 @@ void _qrBottomSheet(BuildContext context, Function showSnackBar, Function copyWa
                 ),
               ),
             ),
-            // Center(
-            //   child: InkWell(
-            //     child: Container(
-            //       width: MediaQuery.of(context).size.width,
-            //       height: 50,
-            //       decoration: BoxDecoration(
-            //         color: primaryColor.withOpacity(0.8),
-            //         borderRadius: BorderRadius.circular(12),
-            //       ),
-            //       child: Material(
-            //         color: Colors.transparent,
-            //         child: InkWell(
-            //           customBorder: RoundedRectangleBorder(
-            //             borderRadius: BorderRadius.circular(12),
-            //           ),
-            //           onTap: () async {
-            //             copyWallet(mData.wallet!);
-            //             showSnackBar();
-            //           },
-            //           child: Center(
-            //             child: Text(
-            //               _lang.translate('copy'),
-            //               style: GoogleFonts.nunito(
-            //                   textStyle: const TextStyle(
-            //                 color: Colors.white,
-            //                 fontWeight: FontWeight.w700,
-            //                 fontSize: 18,
-            //               )),
-            //             ),
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
             Center(
               child: InkWell(
                 child: Container(
@@ -676,7 +641,12 @@ void _qrBottomSheet(BuildContext context, Function showSnackBar, Function copyWa
                       ),
                       onTap: () async {
                         copyWallet(mData.wallet!);
-                        showSnackBar();
+                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                        // showSnackBar();
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text("Copied Address"),
+                          behavior: SnackBarBehavior.floating,
+                        ));
                       },
                       child: Center(
                         child: Text(
@@ -709,7 +679,7 @@ void _qrBottomSheet(BuildContext context, Function showSnackBar, Function copyWa
                   ),
                 ),
                 onPressed: () {
-                  qrShare(_keyQrShare, mData.wallet!);
+                  qrShare(_modelScaffoldKey, mData.wallet!);
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
