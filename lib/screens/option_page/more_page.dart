@@ -1,5 +1,6 @@
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
+import 'package:koompi_hotspot/screens/map/location.dart';
 
 class MorePage extends StatefulWidget {
   const MorePage({Key? key}) : super(key: key);
@@ -63,7 +64,7 @@ class _MorePageState extends State<MorePage> {
                 padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 15.0, bottom: 10.0),
                 child: ListTile(
                   title: Text(
-                    name ?? 'KOOMPI',
+                    name ?? 'Guest',
                     style: const TextStyle(
                         color: Colors.black, fontFamily: "Poppins-Bold"),
                   ),
@@ -214,26 +215,26 @@ class _MorePageState extends State<MorePage> {
                         //     },
                         //   ),
                         // ),
-                        // Padding(
-                        //   padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, right: 10.0, left: 10.0),
-                        //   child: ListTile(
-                        //     shape: RoundedRectangleBorder(
-                        //       side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
-                        //       borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-                        //     ),
-                        //     leading: Icon(LineIcons.mapAlt, color: primaryColor),
-                        //     title: Text('Fi-Fi Map'),
-                        //     trailing: const Icon(LineIcons.angleRight),
-                        //     onTap: () async {
-                        //       Navigator.push(
-                        //         context,
-                        //         PageTransition(
-                        //             type: PageTransitionType.rightToLeft,
-                        //             child: const MyLocationView()),
-                        //       );
-                        //     },
-                        //   ),
-                        // ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, right: 10.0, left: 10.0),
+                          child: ListTile(
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
+                              borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                            ),
+                            leading: Icon(LineIcons.mapAlt, color: primaryColor),
+                            title: Text('Fi-Fi Map'),
+                            trailing: const Icon(LineIcons.angleRight),
+                            onTap: () async {
+                              Navigator.push(
+                                context,
+                                PageTransition(
+                                    type: PageTransitionType.rightToLeft,
+                                    child: const LocationView()),
+                              );
+                            },
+                          ),
+                        ),
                       ],
                     ),
                   ),

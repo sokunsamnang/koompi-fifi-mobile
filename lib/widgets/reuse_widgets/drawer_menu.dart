@@ -41,7 +41,7 @@ class SideMenu extends StatelessWidget {
             },
           ),
           DrawerListTile(
-            title: "JAAY",
+            title: "Fi Wallet",
             iconSrc: LineIcons.wallet,
             press: () {
               Navigator.pushAndRemoveUntil(
@@ -203,7 +203,7 @@ class UserProfile extends StatelessWidget {
 
   Widget _buildName() {
     return Text(
-      mData.fullname!,
+      mData.fullname ?? 'Guest',
       style: const TextStyle(
         fontWeight: FontWeight.bold,
       ),

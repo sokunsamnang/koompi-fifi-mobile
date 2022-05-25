@@ -189,7 +189,7 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
                   ),
                   const GButton(
                     icon: LineIcons.wallet,
-                    text: 'Jaay',
+                    text: 'Fi Wallet',
                   ),
                   GButton(
                     icon: Icons.wifi_outlined,

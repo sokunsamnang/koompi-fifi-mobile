@@ -252,8 +252,8 @@ class MenuItem {
 class MenuItems {
   static const List<MenuItem> firstItems = [edit, delete];
 
-  static const edit = MenuItem(text: 'Edit Template', icon: Icons.edit);
-  static const delete = MenuItem(text: 'Delete Template', icon: Icons.delete);
+  static const edit = MenuItem(text: 'Edit', icon: Icons.edit);
+  static const delete = MenuItem(text: 'Delete', icon: Icons.delete);
 
   static Widget buildItem(MenuItem item) {
     return Row(

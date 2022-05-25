@@ -85,6 +85,8 @@ class _MyAccountState extends State<MyAccount>
     }
   }
 
+  final _birthdate = DateFormat('dd-MMM-yyyy').format(DateTime.now());
+  
   @override
   void initState() {
     super.initState();
@@ -97,6 +99,17 @@ class _MyAccountState extends State<MyAccount>
     _controller!.dispose();
   }
 
+
+  // final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  void comingSoonSnackBar() {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text("Please Complete All Infomation!"),
+      behavior: SnackBarBehavior.floating,
+    ));
+  }
+  
   //Get Data
   String? name = mData.fullname;
   String? gender = mData.gender;
@@ -130,7 +143,7 @@ class _MyAccountState extends State<MyAccount>
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: dateFormart.parse(birthdate!),
+      initialDate: dateFormart.parse(_birthdate),
       firstDate: DateTime(1770, 1),
       lastDate: DateTime(2101),
       builder: (context, child) {
@@ -192,6 +205,9 @@ class _MyAccountState extends State<MyAccount>
                 ),
                 onPressed: () async {
                   setState(() {
+                    fullnameController.text.isEmpty || gender!.isEmpty || gender!.isEmpty || address!.isEmpty ?
+                    comingSoonSnackBar()
+                    : 
                     _submitValidate();
                   });
                 },
@@ -258,7 +274,7 @@ class _MyAccountState extends State<MyAccount>
                       ),
                     ),
                     const SizedBox(height: 16.0),
-                    Text(_lang.translate('fullname')),
+                    // Text(_lang.translate('fullname')),
                     const SizedBox(height: 10.0),
                     TextFormField(
                       validator: (val) => val!.length < 3
@@ -296,7 +312,7 @@ class _MyAccountState extends State<MyAccount>
                       ),
                     ),
                     const SizedBox(height: 16.0),
-                    Text(_lang.translate('phone_number_tf')),
+                    // Text(_lang.translate('phone_number_tf')),
                     const SizedBox(height: 10.0),
                     TextFormField(
                       readOnly: true,
@@ -330,16 +346,16 @@ class _MyAccountState extends State<MyAccount>
                       ),
                     ),
                     const SizedBox(height: 16.0),
-                    Text(_lang.translate('dateofbirth')),
+                    // Text(_lang.translate('dateofbirth')),
                     const SizedBox(height: 10.0),
                     dateOfbirth(
                         selectedDate, _selectDate, dateFormart, context),
                     const SizedBox(height: 16.0),
-                    Text(_lang.translate('locaton')),
+                    // Text(_lang.translate('locaton')),
                     const SizedBox(height: 10.0),
                     locationPicker(context),
                     const SizedBox(height: 16.0),
-                    Text(_lang.translate('gender')),
+                    // Text(_lang.translate('gender')),
                     const SizedBox(height: 10.0),
                     Row(
                       children: <Widget>[
@@ -406,6 +422,25 @@ class _MyAccountState extends State<MyAccount>
                         ),
                       ],
                     ),
+                    const SizedBox(height: 50.0),
+                    // name == null ?
+                    // Row(
+                    //   crossAxisAlignment: CrossAxisAlignment.end,
+                    //   mainAxisAlignment: MainAxisAlignment.start,
+                    //   children: const <Widget>[
+                    //     Icon(
+                    //       LineIcons.info,
+                    //       color: Color.fromARGB(255, 255, 125, 125),
+                    //     ),
+                    //     Text('Complated all information to receveie SEL Token',
+                    //         style: TextStyle(
+                    //             fontFamily: 'Medium',
+                    //             fontSize: 12.0,
+                    //             color: Colors.grey)),
+                    //   ],
+                    // )
+                    // :
+                    // Container(),
                   ],
                 ),
               ),

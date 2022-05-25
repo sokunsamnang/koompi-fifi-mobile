@@ -179,8 +179,7 @@ class _SplashState extends State<Splash> {
 
   ///Retreive dynamic link firebase.
   void initDynamicLinks() async {
-    final PendingDynamicLinkData? data =
-        await FirebaseDynamicLinks.instance.getInitialLink();
+    final PendingDynamicLinkData? data = await FirebaseDynamicLinks.instance.getInitialLink();
     final Uri? deepLink = data?.link;
 
     if (deepLink != null) {
@@ -201,12 +200,13 @@ class _SplashState extends State<Splash> {
   handleDynamicLink(Uri url) {
     List<String> separatedString = [];
     separatedString.addAll(url.path.split('/'));
+    print("route url: ${separatedString[1]}");
     if (separatedString[1] == "startapp") {
       Navigator.push(
         context,
         PageTransition(
           type: PageTransitionType.bottomToTop,
-          child: const CaptivePortalWeb(),
+          child: const MyAccount(),
         ),
       );
     }

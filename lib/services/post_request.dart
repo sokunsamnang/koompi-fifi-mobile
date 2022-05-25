@@ -104,6 +104,24 @@ class PostRequest with ChangeNotifier {
     return _backend.response!;
   }
 
+  Future<http.Response> logInPhone(String phone, String password) async {
+    _backend.bodyEncode = json.encode({
+      /* Convert to Json String */
+      "phone": phone,
+      "password": password
+    });
+
+    _backend.response = await http.post(
+        Uri.parse('${ApiService.url}/auth/login-phone'),
+        headers: _backend.conceteHeader('', ''),
+        body: _backend.bodyEncode);
+
+    if (kDebugMode) {
+      print(_backend.response!.body);
+    }
+    return _backend.response!;
+  }
+
   /* complete User Information */
   Future<http.Response> completeInfoUser(String fullname, String phone,
       String gender, String birthdate, String address) async {

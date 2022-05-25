@@ -20,17 +20,17 @@ class _SendRequestState extends State<SendRequest> {
 
   final List<TokenTypeModel> _tokenTypeModelList = [
     TokenTypeModel(
-        tokenName: 'LUY',
-        imageToken: Image.asset(
-          'assets/images/rise-coin-icon.png',
-          width: 22,
-        )),
-    TokenTypeModel(
         tokenName: 'SEL',
         imageToken: Image.asset(
           'assets/images/sel-coin-icon.png',
           width: 22,
         )),
+    // TokenTypeModel(
+    //     tokenName: 'LUY',
+    //     imageToken: Image.asset(
+    //       'assets/images/rise-coin-icon.png',
+    //       width: 22,
+    //     )),
   ];
 
   TokenTypeModel _tokenTypeModel = TokenTypeModel();
@@ -254,15 +254,17 @@ class _SendRequestState extends State<SendRequest> {
     _tokenTypeModel = _tokenTypeModelList[0];
     asset = _tokenTypeModel.tokenName!;
 
-    if (widget.assetName == "LUY") {
+    if (widget.assetName == "SEL") {
       _tokenTypeModel = _tokenTypeModelList[0];
       asset = _tokenTypeModel.tokenName!;
     }
 
-    if (widget.assetName == "SEL") {
-      _tokenTypeModel = _tokenTypeModelList[1];
-      asset = _tokenTypeModel.tokenName!;
-    }
+    // if (widget.assetName == "LUY") {
+    //   _tokenTypeModel = _tokenTypeModelList[1];
+    //   asset = _tokenTypeModel.tokenName!;
+    // }
+
+
 
   }
 
@@ -320,9 +322,9 @@ class _SendRequestState extends State<SendRequest> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     const SizedBox(
-                      height: 10.0,
+                      height: 16.0,
                     ),
-                    Text(_lang.translate('receive_address')),
+                    // Text(_lang.translate('receive_address')),
                     const SizedBox(height: 10.0),
                     TextFormField(
                       validator: (val) => val!.isEmpty
@@ -359,7 +361,7 @@ class _SendRequestState extends State<SendRequest> {
                       ),
                     ),
                     const SizedBox(height: 16.0),
-                    Text(_lang.translate('asset')),
+                    // Text(_lang.translate('asset')),
                     const SizedBox(height: 10.0),
                     CustomDropdown(
                       dropdownMenuItemList: _tokenTypeModelDropdownList,
@@ -368,7 +370,7 @@ class _SendRequestState extends State<SendRequest> {
                       isEnabled: true,
                     ),
                     const SizedBox(height: 16.0),
-                    Text(_lang.translate('amount')),
+                    // Text(_lang.translate('amount')),
                     const SizedBox(height: 10.0),
                     TextFormField(
                       validator: (val) => val!.isEmpty
@@ -378,10 +380,11 @@ class _SendRequestState extends State<SendRequest> {
                       autovalidateMode: AutovalidateMode.always,
                       keyboardType: TextInputType.number,
                       inputFormatters: [
-                        _tokenTypeModel == _tokenTypeModelList[0]
-                            ? FilteringTextInputFormatter.allow(
-                                RegExp(r'^\d+\.?\d{0,3}'))
-                            : FilteringTextInputFormatter.allow(
+                        // _tokenTypeModel == _tokenTypeModelList[0]
+                        //     ? FilteringTextInputFormatter.allow(
+                        //         RegExp(r'^\d+\.?\d{0,3}'))
+                        //     : 
+                            FilteringTextInputFormatter.allow(
                                 RegExp(r'^\d+\.?\d{0,4}'))
                       ],
                       controller: amount,
@@ -414,7 +417,7 @@ class _SendRequestState extends State<SendRequest> {
                       ),
                     ),
                     const SizedBox(height: 16.0),
-                    const Text('Memo'),
+                    // const Text('Memo'),  
                     const SizedBox(height: 10.0),
                     TextFormField(
                       controller: memo,

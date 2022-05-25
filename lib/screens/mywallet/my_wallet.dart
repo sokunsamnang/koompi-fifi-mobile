@@ -42,7 +42,7 @@ class _MyWalletState extends State<MyWallet> {
     ));
   }
 
-  void commingSoonSnackBar() {
+  void comingSoonSnackBar() {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text("Coming Soon!"),
@@ -90,12 +90,12 @@ class _MyWalletState extends State<MyWallet> {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          'JAAY',
+          'Fi Wallet',
           style: GoogleFonts.robotoCondensed(
             fontSize: 24,
             fontStyle: FontStyle.italic,
             fontWeight: FontWeight.w700,
-            color: Colors.black,
+            color: Colors.white,
           ),
         ),
         backgroundColor: primaryColor.withOpacity(0.8), 
@@ -169,7 +169,7 @@ class _MyWalletState extends State<MyWallet> {
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: Text(
-              '${_balance.balanceList[1].token!} ${_balance.balanceList[1].symbol!}' ,
+              '${_balance.balanceList[0].token!} ${_balance.balanceList[0].symbol!}' ,
               style: GoogleFonts.robotoCondensed(
                 fontSize: 36,
                 fontWeight: FontWeight.w700,
@@ -179,7 +179,7 @@ class _MyWalletState extends State<MyWallet> {
             ),
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width / 2,
+            width: MediaQuery.of(context).size.width / 1.5,
             child: InkWell(
               onTap: () {
                 copyAddress(mData.wallet!);
@@ -189,17 +189,31 @@ class _MyWalletState extends State<MyWallet> {
               child: Container(
                 padding: const EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black),
+                  // border: Border.all(color: Colors.black),
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(25.0),
                 ),
-                child: Text(
-                  '${mData.wallet!.substring(0, 11)}'
-                  '\u2026'
-                  '${mData.wallet!.substring(mData.wallet!.length - 11)}',
-                  textAlign: TextAlign.center,
-                  maxLines: 1,
-                  style: GoogleFonts.roboto(color: Colors.black.withOpacity(0.5)),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      '${mData.wallet!.substring(0, 11)}'
+                      '\u2026'
+                      '${mData.wallet!.substring(mData.wallet!.length - 11)}',
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                      style: GoogleFonts.roboto(color: Colors.black.withOpacity(0.5)),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Icon(
+                      Icons.content_copy,
+                      color: primaryColor.withOpacity(0.8),
+                      size: 20,
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -218,7 +232,7 @@ class _MyWalletState extends State<MyWallet> {
                       },
                       child: Image.asset('assets/images/recieve.png', scale: 2),
                       style: ButtonStyle(
-                        shape: MaterialStateProperty.all(const CircleBorder(side: BorderSide(color: Colors.black))),
+                        shape: MaterialStateProperty.all(const CircleBorder()),
                         padding: MaterialStateProperty.all(const EdgeInsets.all(10)),
                         backgroundColor: MaterialStateProperty.all(Colors.white),
                       )
@@ -229,7 +243,7 @@ class _MyWalletState extends State<MyWallet> {
                         style: GoogleFonts.roboto(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
-                          color: Colors.black.withOpacity(0.75),
+                          color: Colors.white,
                         )
                       ),
                     )
@@ -243,7 +257,7 @@ class _MyWalletState extends State<MyWallet> {
                       },
                       child: Image.asset('assets/images/transfer.png', scale: 2),
                       style: ButtonStyle(
-                        shape: MaterialStateProperty.all(const CircleBorder(side: BorderSide(color: Colors.black))),
+                        shape: MaterialStateProperty.all(const CircleBorder()),
                         padding: MaterialStateProperty.all(const EdgeInsets.all(10)),
                         backgroundColor: MaterialStateProperty.all(Colors.white),
                       ),
@@ -254,7 +268,7 @@ class _MyWalletState extends State<MyWallet> {
                         style: GoogleFonts.roboto(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
-                          color: Colors.black.withOpacity(0.75),
+                          color: Colors.white,
                         )
                       ),
                     )
@@ -264,18 +278,18 @@ class _MyWalletState extends State<MyWallet> {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        // commingSoonSnackBar();
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                              type: PageTransitionType.rightToLeft,
-                              child: const SwapToken(),
-                            )
-                        );
+                        comingSoonSnackBar();
+                        // Navigator.push(
+                        //     context,
+                        //     PageTransition(
+                        //       type: PageTransitionType.rightToLeft,
+                        //       child: const SwapToken(),
+                        //     )
+                        // );
                       },
                       child: Image.asset('assets/images/swap.png', scale: 2),
                       style: ButtonStyle(
-                        shape: MaterialStateProperty.all(const CircleBorder(side: BorderSide(color: Colors.black))),
+                        shape: MaterialStateProperty.all(const CircleBorder()),
                         padding: MaterialStateProperty.all(const EdgeInsets.all(10)),
                         backgroundColor: MaterialStateProperty.all(Colors.white),
                       ),
@@ -286,7 +300,7 @@ class _MyWalletState extends State<MyWallet> {
                         style: GoogleFonts.roboto(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
-                          color: Colors.black.withOpacity(0.75),
+                          color: Colors.white,
                         )
                       ),
                     )
@@ -309,7 +323,7 @@ class _MyWalletState extends State<MyWallet> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text('Wallet Account',
+          Text('Assets',
             style: GoogleFonts.robotoCondensed(
               fontSize: 25,
               fontWeight: FontWeight.w700,
@@ -331,7 +345,7 @@ class _MyWalletState extends State<MyWallet> {
                         topRight: Radius.circular(10),
                         topLeft: Radius.circular(10)),
                   ),
-                  leading: Image.asset('assets/images/rise-coin-icon.png', width: 40, height: 40,),
+                  leading: Image.asset('assets/images/sel-coin-icon.png', width: 40, height: 40,),
                   title: Text(
                     _balance.balanceList[0].symbol!,
                     style: GoogleFonts.roboto(
@@ -349,7 +363,13 @@ class _MyWalletState extends State<MyWallet> {
                     ),
                   ),
                   onTap: () async {
-
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                        type: PageTransitionType.rightToLeft,
+                        child: const TrxHistory(),
+                      ),
+                    );
                   }
                 ),
                 _buildDivider(),
@@ -359,7 +379,7 @@ class _MyWalletState extends State<MyWallet> {
                         topRight: Radius.circular(10),
                         topLeft: Radius.circular(10)),
                   ),
-                  leading: Image.asset('assets/images/sel-coin-icon.png', width: 40, height: 40,),
+                  leading: SvgPicture.asset('assets/images/Luy-coin.svg', width: 40, height: 40,),
                   title: Text(
                     _balance.balanceList[1].symbol!,
                     style: GoogleFonts.roboto(
@@ -377,13 +397,35 @@ class _MyWalletState extends State<MyWallet> {
                     ),
                   ),
                   onTap: () async {
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        type: PageTransitionType.rightToLeft,
-                        child: const TrxHistory(),
-                      ),
-                    );
+
+                  }
+                ),
+                _buildDivider(),
+                ListTile(
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(10),
+                        topLeft: Radius.circular(10)),
+                  ),
+                  leading: Image.asset('assets/images/KSD-coin.png', width: 40, height: 40,),
+                  title: Text(
+                    _balance.balanceList[2].symbol!,
+                    style: GoogleFonts.roboto(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black,
+                    ),
+                  ),
+                  trailing: Text(
+                    _balance.balanceList[2].token!,
+                    style: GoogleFonts.roboto(
+                      fontSize: 20,
+                      fontStyle: FontStyle.italic,
+                      color: Colors.black,
+                    ),
+                  ),
+                  onTap: () async {
+
                   }
                 ),
               ],
@@ -584,7 +626,7 @@ void _qrBottomSheet(BuildContext context, Function showSnackBar, Function copyWa
                       ),
                     ),
                     Text(
-                      mData.fullname ?? '',
+                      mData.fullname ?? 'Guest',
                       style: GoogleFonts.roboto(
                           textStyle: TextStyle(
                               color: primaryColor,
