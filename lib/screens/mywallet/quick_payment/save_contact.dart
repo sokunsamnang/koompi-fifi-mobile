@@ -138,13 +138,13 @@ class _SaveContactState extends State<SaveContact> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     const SizedBox(
-                      height: 10.0,
+                      height: 16.0,
                     ),
-                    const Text('Template Name'),
+                    // const Text('Template Name'),
                     const SizedBox(height: 10.0),
                     TextFormField(
                       validator: (val) => val!.isEmpty
-                          ? 'Template Name is required'
+                          ? 'Name is required'
                           : null,
                       onSaved: (val) => usernameController.text = val!,
                       autovalidateMode: AutovalidateMode.always,
@@ -153,7 +153,7 @@ class _SaveContactState extends State<SaveContact> {
                       decoration: InputDecoration(
                         prefixIcon:
                             Icon(Icons.contact_page, color: HexColor('0CACDA')),
-                        hintText: 'Template Name',
+                        hintText: 'Name',
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
                           borderSide: BorderSide(
@@ -177,7 +177,7 @@ class _SaveContactState extends State<SaveContact> {
                       ),
                     ),
                     const SizedBox(height: 16.0),
-                    const Text('Receiver Address'),
+                    // const Text('Receiver Address'),
                     const SizedBox(height: 10.0),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,

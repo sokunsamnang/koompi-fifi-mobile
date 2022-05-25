@@ -31,24 +31,23 @@ class _MyWalletState extends State<MyWallet> {
 
   var appBarheight = 0.0;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  
   // var _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   void showSnackBar() {
-    const snackBarContent = SnackBar(
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text("Copied Address"),
-    );
-
-    // ignore: deprecated_member_use
-    _scaffoldKey.currentState?.showSnackBar(snackBarContent);
+      behavior: SnackBarBehavior.floating,
+    ));
   }
 
-  void commingSoonSnackBar() {
-    const snackBarContent = SnackBar(
-      content: Text("Coming Soon"),
-    );
-
-    // ignore: deprecated_member_use
-    _scaffoldKey.currentState?.showSnackBar(snackBarContent);
+  void comingSoonSnackBar() {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text("Coming Soon!"),
+      behavior: SnackBarBehavior.floating,
+    ));
   }
 
   void copyWallet(String _wallet) {
@@ -71,92 +70,89 @@ class _MyWalletState extends State<MyWallet> {
     super.dispose();
   }
 
-  void fetchWallet() async {
-    await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
-    await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
-  }
+  // void fetchWallet() async {
+  //   await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
+  //   await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+  // }
 
 
   @override
   Widget build(BuildContext context) {
     var _lang = AppLocalizeService.of(context);
-    var balance = Provider.of<BalanceProvider>(context);
+    var _balance = Provider.of<BalanceProvider>(context);
     AppBar appBar = AppBar();
     appBarheight = appBar.preferredSize.height;
 
-    return WillPopScope(
-      onWillPop: redirectNavbar,
-      child: Scaffold(
-        key: _scaffoldKey,
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          elevation: 0,
-          centerTitle: true,
-          title: Text(
-            'JAAY',
-            style: GoogleFonts.robotoCondensed(
-              fontSize: 24,
-              fontStyle: FontStyle.italic,
-              fontWeight: FontWeight.w700,
-              color: Colors.black,
-            ),
+    return Scaffold(
+      // key: _scaffoldKey,
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
+        title: Text(
+          'Fi Wallet',
+          style: GoogleFonts.robotoCondensed(
+            fontSize: 24,
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.w700,
+            color: Colors.white,
           ),
-          backgroundColor: primaryColor.withOpacity(0.8), 
-          iconTheme: const IconThemeData(
-            color: Colors.black, //change your color here
-          ),
-          automaticallyImplyLeading: false,
         ),
-        body: RefreshIndicator(
-          onRefresh: () async {
-            await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
-            await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
-            await Provider.of<ContactListProvider>(context, listen: false).fetchContactList();
-          },
-          child: balance.balanceList.isNotEmpty ? SizedBox(
-            height: MediaQuery.of(context).size.height,
-            child: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  myBalance(context, showSnackBar, copyWallet),
-                  const SizedBox(
-                    height: 6,
-                  ),
-                  walletAccount(context),
-                ],
-              ),
+        backgroundColor: primaryColor.withOpacity(0.8), 
+        iconTheme: const IconThemeData(
+          color: Colors.black, //change your color here
+        ),
+        automaticallyImplyLeading: false,
+      ),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
+          await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+          await Provider.of<ContactListProvider>(context, listen: false).fetchContactList();
+        },
+        child: _balance.balanceList.isNotEmpty ? SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                myBalance(context, showSnackBar, copyWallet),
+                const SizedBox(
+                  height: 6,
+                ),
+                walletAccount(context),
+              ],
             ),
-          ) 
-          : 
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SvgPicture.asset('assets/images/server-down.svg', height: MediaQuery.of(context).size.height / 5,),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  'Something went wrong! Please try again later.',
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.robotoCondensed(
-                    fontSize: 21, 
-                    fontStyle: FontStyle.italic,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black,
-                  ),
+          ),
+        ) 
+        : 
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset('assets/images/server-down.svg', height: MediaQuery.of(context).size.height / 5,),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                'Something went wrong! Please try again later.',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.robotoCondensed(
+                  fontSize: 21, 
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.black,
                 ),
               ),
-            ],
-          )
-        ),
+            ),
+          ],
+        )
       ),
     );
   }
 
   Widget myBalance(BuildContext context, Function showSnackBar, Function copyAddress) {
-    var balance = Provider.of<BalanceProvider>(context);
+    var _balance = Provider.of<BalanceProvider>(context);
     return Container(
       decoration: BoxDecoration(
         color: primaryColor.withOpacity(0.8),
@@ -173,7 +169,7 @@ class _MyWalletState extends State<MyWallet> {
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: Text(
-              '${balance.balanceList[1].token!} ${balance.balanceList[1].symbol!}' ,
+              '${_balance.balanceList[0].token!} ${_balance.balanceList[0].symbol!}' ,
               style: GoogleFonts.robotoCondensed(
                 fontSize: 36,
                 fontWeight: FontWeight.w700,
@@ -183,26 +179,41 @@ class _MyWalletState extends State<MyWallet> {
             ),
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width / 2,
+            width: MediaQuery.of(context).size.width / 1.5,
             child: InkWell(
               onTap: () {
-                showSnackBar();
                 copyAddress(mData.wallet!);
+                showSnackBar();
+                
               },
               child: Container(
                 padding: const EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black),
+                  // border: Border.all(color: Colors.black),
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(25.0),
                 ),
-                child: Text(
-                  '${mData.wallet!.substring(0, 11)}'
-                  '\u2026'
-                  '${mData.wallet!.substring(mData.wallet!.length - 11)}',
-                  textAlign: TextAlign.center,
-                  maxLines: 1,
-                  style: GoogleFonts.roboto(color: Colors.black.withOpacity(0.5)),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      '${mData.wallet!.substring(0, 11)}'
+                      '\u2026'
+                      '${mData.wallet!.substring(mData.wallet!.length - 11)}',
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                      style: GoogleFonts.roboto(color: Colors.black.withOpacity(0.5)),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Icon(
+                      Icons.content_copy,
+                      color: primaryColor.withOpacity(0.8),
+                      size: 20,
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -221,7 +232,7 @@ class _MyWalletState extends State<MyWallet> {
                       },
                       child: Image.asset('assets/images/recieve.png', scale: 2),
                       style: ButtonStyle(
-                        shape: MaterialStateProperty.all(const CircleBorder(side: BorderSide(color: Colors.black))),
+                        shape: MaterialStateProperty.all(const CircleBorder()),
                         padding: MaterialStateProperty.all(const EdgeInsets.all(10)),
                         backgroundColor: MaterialStateProperty.all(Colors.white),
                       )
@@ -232,7 +243,7 @@ class _MyWalletState extends State<MyWallet> {
                         style: GoogleFonts.roboto(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
-                          color: Colors.black.withOpacity(0.75),
+                          color: Colors.white,
                         )
                       ),
                     )
@@ -246,7 +257,7 @@ class _MyWalletState extends State<MyWallet> {
                       },
                       child: Image.asset('assets/images/transfer.png', scale: 2),
                       style: ButtonStyle(
-                        shape: MaterialStateProperty.all(const CircleBorder(side: BorderSide(color: Colors.black))),
+                        shape: MaterialStateProperty.all(const CircleBorder()),
                         padding: MaterialStateProperty.all(const EdgeInsets.all(10)),
                         backgroundColor: MaterialStateProperty.all(Colors.white),
                       ),
@@ -257,7 +268,7 @@ class _MyWalletState extends State<MyWallet> {
                         style: GoogleFonts.roboto(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
-                          color: Colors.black.withOpacity(0.75),
+                          color: Colors.white,
                         )
                       ),
                     )
@@ -267,7 +278,7 @@ class _MyWalletState extends State<MyWallet> {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        commingSoonSnackBar();
+                        comingSoonSnackBar();
                         // Navigator.push(
                         //     context,
                         //     PageTransition(
@@ -278,7 +289,7 @@ class _MyWalletState extends State<MyWallet> {
                       },
                       child: Image.asset('assets/images/swap.png', scale: 2),
                       style: ButtonStyle(
-                        shape: MaterialStateProperty.all(const CircleBorder(side: BorderSide(color: Colors.black))),
+                        shape: MaterialStateProperty.all(const CircleBorder()),
                         padding: MaterialStateProperty.all(const EdgeInsets.all(10)),
                         backgroundColor: MaterialStateProperty.all(Colors.white),
                       ),
@@ -289,7 +300,7 @@ class _MyWalletState extends State<MyWallet> {
                         style: GoogleFonts.roboto(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
-                          color: Colors.black.withOpacity(0.75),
+                          color: Colors.white,
                         )
                       ),
                     )
@@ -304,7 +315,7 @@ class _MyWalletState extends State<MyWallet> {
   }
 
   Widget walletAccount(BuildContext context) {
-    var balance = Provider.of<BalanceProvider>(context);
+    var _balance = Provider.of<BalanceProvider>(context);
 
     return Padding(
       padding: const EdgeInsets.all(15.0),
@@ -312,7 +323,7 @@ class _MyWalletState extends State<MyWallet> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text('Wallet Account',
+          Text('Assets',
             style: GoogleFonts.robotoCondensed(
               fontSize: 25,
               fontWeight: FontWeight.w700,
@@ -334,9 +345,9 @@ class _MyWalletState extends State<MyWallet> {
                         topRight: Radius.circular(10),
                         topLeft: Radius.circular(10)),
                   ),
-                  leading: Image.asset('assets/images/rise-coin-icon.png', width: 40, height: 40,),
+                  leading: Image.asset('assets/images/sel-coin-icon.png', width: 40, height: 40,),
                   title: Text(
-                    balance.balanceList[0].symbol!,
+                    _balance.balanceList[0].symbol!,
                     style: GoogleFonts.roboto(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
@@ -344,7 +355,41 @@ class _MyWalletState extends State<MyWallet> {
                     ),
                   ),
                   trailing: Text(
-                    balance.balanceList[0].token!,
+                    _balance.balanceList[0].token!,
+                    style: GoogleFonts.roboto(
+                      fontSize: 20,
+                      fontStyle: FontStyle.italic,
+                      color: Colors.black,
+                    ),
+                  ),
+                  onTap: () async {
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                        type: PageTransitionType.rightToLeft,
+                        child: const TrxHistory(),
+                      ),
+                    );
+                  }
+                ),
+                _buildDivider(),
+                ListTile(
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(10),
+                        topLeft: Radius.circular(10)),
+                  ),
+                  leading: SvgPicture.asset('assets/images/Luy-coin.svg', width: 40, height: 40,),
+                  title: Text(
+                    _balance.balanceList[1].symbol!,
+                    style: GoogleFonts.roboto(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black,
+                    ),
+                  ),
+                  trailing: Text(
+                    _balance.balanceList[1].token!,
                     style: GoogleFonts.roboto(
                       fontSize: 20,
                       fontStyle: FontStyle.italic,
@@ -362,9 +407,9 @@ class _MyWalletState extends State<MyWallet> {
                         topRight: Radius.circular(10),
                         topLeft: Radius.circular(10)),
                   ),
-                  leading: Image.asset('assets/images/sel-coin-icon.png', width: 40, height: 40,),
+                  leading: Image.asset('assets/images/KSD-coin.png', width: 40, height: 40,),
                   title: Text(
-                    balance.balanceList[1].symbol!,
+                    _balance.balanceList[2].symbol!,
                     style: GoogleFonts.roboto(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
@@ -372,7 +417,7 @@ class _MyWalletState extends State<MyWallet> {
                     ),
                   ),
                   trailing: Text(
-                    balance.balanceList[1].token!,
+                    _balance.balanceList[2].token!,
                     style: GoogleFonts.roboto(
                       fontSize: 20,
                       fontStyle: FontStyle.italic,
@@ -380,13 +425,7 @@ class _MyWalletState extends State<MyWallet> {
                     ),
                   ),
                   onTap: () async {
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        type: PageTransitionType.rightToLeft,
-                        child: const TrxHistory(),
-                      ),
-                    );
+
                   }
                 ),
               ],
@@ -505,8 +544,8 @@ Widget _buildDivider() {
 
 void _qrBottomSheet(BuildContext context, Function showSnackBar, Function copyWallet) {
 
-  final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
-  final GlobalKey _keyQrShare = GlobalKey();
+  final GlobalKey<ScaffoldState> _modelScaffoldKey = GlobalKey<ScaffoldState>();
+  // final GlobalKey _keyQrShare = GlobalKey();
 
 
   void qrShare(GlobalKey globalKey, String _wallet) async {
@@ -534,9 +573,10 @@ void _qrBottomSheet(BuildContext context, Function showSnackBar, Function copyWa
     ),
     isScrollControlled: true,
     context: context,
-    builder: (BuildContext context) {
+    builder: (_) {
       var _lang = AppLocalizeService.of(context);
       return Container(
+        key: _modelScaffoldKey,
         height: MediaQuery.of(context).size.height * 0.75,
         // width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.all(20.0),
@@ -545,7 +585,6 @@ void _qrBottomSheet(BuildContext context, Function showSnackBar, Function copyWa
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             RepaintBoundary(
-              key: _keyQrShare,
               child: Container(
                 color: Colors.white,
                 child: Column(
@@ -587,7 +626,7 @@ void _qrBottomSheet(BuildContext context, Function showSnackBar, Function copyWa
                       ),
                     ),
                     Text(
-                      mData.fullname ?? '',
+                      mData.fullname ?? 'Guest',
                       style: GoogleFonts.roboto(
                           textStyle: TextStyle(
                               color: primaryColor,
@@ -618,41 +657,6 @@ void _qrBottomSheet(BuildContext context, Function showSnackBar, Function copyWa
                 ),
               ),
             ),
-            // Center(
-            //   child: InkWell(
-            //     child: Container(
-            //       width: MediaQuery.of(context).size.width,
-            //       height: 50,
-            //       decoration: BoxDecoration(
-            //         color: primaryColor.withOpacity(0.8),
-            //         borderRadius: BorderRadius.circular(12),
-            //       ),
-            //       child: Material(
-            //         color: Colors.transparent,
-            //         child: InkWell(
-            //           customBorder: RoundedRectangleBorder(
-            //             borderRadius: BorderRadius.circular(12),
-            //           ),
-            //           onTap: () async {
-            //             copyWallet(mData.wallet!);
-            //             showSnackBar();
-            //           },
-            //           child: Center(
-            //             child: Text(
-            //               _lang.translate('copy'),
-            //               style: GoogleFonts.nunito(
-            //                   textStyle: const TextStyle(
-            //                 color: Colors.white,
-            //                 fontWeight: FontWeight.w700,
-            //                 fontSize: 18,
-            //               )),
-            //             ),
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
             Center(
               child: InkWell(
                 child: Container(
@@ -679,7 +683,12 @@ void _qrBottomSheet(BuildContext context, Function showSnackBar, Function copyWa
                       ),
                       onTap: () async {
                         copyWallet(mData.wallet!);
-                        showSnackBar();
+                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                        // showSnackBar();
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text("Copied Address"),
+                          behavior: SnackBarBehavior.floating,
+                        ));
                       },
                       child: Center(
                         child: Text(
@@ -712,7 +721,7 @@ void _qrBottomSheet(BuildContext context, Function showSnackBar, Function copyWa
                   ),
                 ),
                 onPressed: () {
-                  qrShare(_keyQrShare, mData.wallet!);
+                  qrShare(_modelScaffoldKey, mData.wallet!);
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(

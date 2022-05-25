@@ -335,7 +335,7 @@ class _ChangePasswordState extends State<ChangePassword>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     const SizedBox(height: 16.0),
-                    Text(_lang.translate('current_password')),
+                    // Text(_lang.translate('current_password')),
                     const SizedBox(height: 10.0),
                     TextFormField(
                       obscureText: _obscureText,
@@ -385,7 +385,7 @@ class _ChangePasswordState extends State<ChangePassword>
                       ),
                     ),
                     const SizedBox(height: 16.0),
-                    Text(_lang.translate('new_password_tf')),
+                    // Text(_lang.translate('new_password_tf')),
                     const SizedBox(height: 10.0),
                     TextFormField(
                       obscureText: _obscureText2,
@@ -432,7 +432,7 @@ class _ChangePasswordState extends State<ChangePassword>
                       ),
                     ),
                     const SizedBox(height: 16.0),
-                    Text(_lang.translate('new_confirm_password_tf')),
+                    // Text(_lang.translate('new_confirm_password_tf')),
                     const SizedBox(height: 10.0),
                     TextFormField(
                       obscureText: _obscureText3,

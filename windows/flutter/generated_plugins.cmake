@@ -5,7 +5,6 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   connectivity_plus_windows
   geolocator_windows
-  sentry_flutter
   url_launcher_windows
 )
 

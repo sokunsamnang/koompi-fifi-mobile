@@ -7,7 +7,7 @@ Widget bodyPage(BuildContext context) {
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       // ===========Hotspot Plan Widget===========
-      const SizedBox(height: 10),
+      const SizedBox(height: 20),
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Text(
@@ -19,6 +19,7 @@ Widget bodyPage(BuildContext context) {
                   fontWeight: FontWeight.w700)),
         ),
       ),
+      const SizedBox(height: 10),
       mPlan.username == null ? noPlanView(context) : _planViewButton(context),
 
       // // ===========Account Balance Widget===========
@@ -49,6 +50,7 @@ Widget bodyPage(BuildContext context) {
                   fontWeight: FontWeight.w700)),
         ),
       ),
+      const SizedBox(height: 10),
       const PromotionCarousel(),
     ],
   );

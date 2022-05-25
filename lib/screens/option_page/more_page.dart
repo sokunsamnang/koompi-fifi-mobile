@@ -1,5 +1,6 @@
 import 'package:koompi_hotspot/all_export.dart';
-import 'package:koompi_hotspot/screens/web_view/webview.dart';
+import 'package:expansion_tile_card/expansion_tile_card.dart';
+import 'package:koompi_hotspot/screens/map/location.dart';
 
 class MorePage extends StatefulWidget {
   const MorePage({Key? key}) : super(key: key);
@@ -10,6 +11,9 @@ class MorePage extends StatefulWidget {
 
 class _MorePageState extends State<MorePage> {
   GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ExpansionTileCardState> cardAccountSettings = GlobalKey();
+  final GlobalKey<ExpansionTileCardState> cardFiFi = GlobalKey();
+  final GlobalKey<ExpansionTileCardState> cardReward = GlobalKey();
 
   String? name = mData.fullname;
 
@@ -60,7 +64,7 @@ class _MorePageState extends State<MorePage> {
                 padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 15.0, bottom: 10.0),
                 child: ListTile(
                   title: Text(
-                    name ?? 'KOOMPI',
+                    name ?? 'Guest',
                     style: const TextStyle(
                         color: Colors.black, fontFamily: "Poppins-Bold"),
                   ),
@@ -73,207 +77,220 @@ class _MorePageState extends State<MorePage> {
                 ),
               ),
               buildDivider(),
-              const SizedBox(height: 20.0),
+              const SizedBox(height: 10.0),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   // ==================== Account Settings ====================
-
                   Padding(
-                    padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                    child: Text('Account Settings', 
-                      style: GoogleFonts.roboto(
-                        fontSize: 20.0,
-                        color: Colors.grey,
-                      )
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: ExpansionTileCard(
+                      key: cardAccountSettings,
+                      borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                      leading: Icon(Icons.settings, color: primaryColor),
+                      title: Text('Account Settings', 
+                      style: GoogleFonts.robotoCondensed(
+                          fontSize: 20.0,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w700
+                        )
+                      ),
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, left: 10.0, right: 10.0),
+                          child: ListTile(
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
+                              borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                            ),
+                            leading: Icon(Icons.people_alt_outlined, color: primaryColor),
+                            title: const Text('Edit Profile'),
+                            trailing: const Icon(LineIcons.angleRight),
+                            onTap: () async {
+                              Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.rightToLeft,
+                                  child: const MyAccount(),
+                                ),
+                              );
+                            }
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, right: 10.0, left: 10.0),
+                          child: ListTile(
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
+                              borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                            ),
+                            leading: Icon(LineIcons.key, color: primaryColor),
+                            title: Text(_lang.translate('change_password')),
+                            trailing: const Icon(LineIcons.angleRight),
+                            onTap: () async {
+                              Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.rightToLeft,
+                                  child: const ChangePassword(),
+                                ),
+                              );
+                            }
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, right: 10.0, left: 10.0),
+                          child: ListTile(
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
+                              borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                            ),
+                            leading: Icon(LineIcons.language, color: primaryColor),
+                            title: Text(_lang.translate('language')),
+                            trailing: const Icon(LineIcons.angleRight),
+                            onTap: () async {
+                              Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.rightToLeft,
+                                  child: const LanguageView(),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(height: 10.0),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                    child: ListTile(
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
-                        borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-                      ),
-                      leading: Icon(Icons.people_alt_outlined, color: primaryColor),
-                      title: const Text('Edit Profile'),
-                      trailing: const Icon(LineIcons.angleRight),
-                      onTap: () async {
-                        Navigator.push(
-                          context,
-                          PageTransition(
-                            type: PageTransitionType.rightToLeft,
-                            child: const MyAccount(),
-                          ),
-                        );
-                      }
-                    ),
-                  ),
-                  const SizedBox(height: 10.0),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                    child: ListTile(
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
-                        borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-                      ),
-                      leading: Icon(LineIcons.key, color: primaryColor),
-                      title: Text(_lang.translate('change_password')),
-                      trailing: const Icon(LineIcons.angleRight),
-                      onTap: () async {
-                        Navigator.push(
-                          context,
-                          PageTransition(
-                            type: PageTransitionType.rightToLeft,
-                            child: const ChangePassword(),
-                          ),
-                        );
-                      }
-                    ),
-                  ),
-                  const SizedBox(height: 10.0),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                    child: ListTile(
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
-                        borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-                      ),
-                      leading: Icon(LineIcons.language, color: primaryColor),
-                      title: Text(_lang.translate('language')),
-                      trailing: const Icon(LineIcons.angleRight),
-                      onTap: () async {
-                        Navigator.push(
-                          context,
-                          PageTransition(
-                            type: PageTransitionType.rightToLeft,
-                            child: const LanguageView(),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 20.0),
-
                   // ==================== Fi-Fi ====================
                   buildDivider(),
-                  const SizedBox(height: 20.0),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                    child: Text('Fi-Fi', 
-                      style: GoogleFonts.roboto(
-                        fontSize: 20.0,
-                        color: Colors.grey,
-                      )
-                    ),
-                  ),
                   const SizedBox(height: 10.0),
                   Padding(
-                    padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                    child: ListTile(
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
-                        borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: ExpansionTileCard(
+                      key: cardFiFi,
+                      borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                      leading: Icon(Icons.network_wifi_outlined, color: primaryColor),
+                      title: Text('Fi-Fi', 
+                      style: GoogleFonts.robotoCondensed(
+                          fontSize: 20.0,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w700
+                        )
                       ),
-                      leading: Icon(LineIcons.wifi, color: primaryColor),
-                      title: Text(_lang.translate('login_hotspot')),
-                      trailing: const Icon(LineIcons.angleRight),
-                      onTap: () async {
-                        Navigator.push(
-                          context,
-                          PageTransition(
-                              type: PageTransitionType.rightToLeft,
-                              child: const CaptivePortalWeb()),
-                        );
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 10.0),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                    child: ListTile(
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
-                        borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-                      ),
-                      leading: Icon(Icons.devices_outlined, color: primaryColor),
-                      title: Text('Devices'),
-                      trailing: const Icon(LineIcons.angleRight),
-                      onTap: () async {
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, right: 10.0, left: 10.0),
+                          child: ListTile(
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
+                              borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                            ),
+                            leading: Icon(LineIcons.connectDevelop, color: primaryColor),
+                            title: Text(_lang.translate('login_hotspot')),
+                            trailing: const Icon(LineIcons.angleRight),
+                            onTap: () async {
+                              Navigator.push(
+                                context,
+                                PageTransition(
+                                    type: PageTransitionType.rightToLeft,
+                                    child: const CaptivePortalWeb()),
+                              );
+                            },
+                          ),
+                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, right: 10.0, left: 10.0),
+                        //   child: ListTile(
+                        //     shape: RoundedRectangleBorder(
+                        //       side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
+                        //       borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                        //     ),
+                        //     leading: Icon(Icons.devices_outlined, color: primaryColor),
+                        //     title: Text('Devices'),
+                        //     trailing: const Icon(LineIcons.angleRight),
+                        //     onTap: () async {
 
-                      },
+                        //     },
+                        //   ),
+                        // ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, right: 10.0, left: 10.0),
+                          child: ListTile(
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
+                              borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                            ),
+                            leading: Icon(LineIcons.mapAlt, color: primaryColor),
+                            title: Text('Fi-Fi Map'),
+                            trailing: const Icon(LineIcons.angleRight),
+                            onTap: () async {
+                              Navigator.push(
+                                context,
+                                PageTransition(
+                                    type: PageTransitionType.rightToLeft,
+                                    child: const LocationView()),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(height: 10.0),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                    child: ListTile(
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
-                        borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-                      ),
-                      leading: Icon(LineIcons.mapAlt, color: primaryColor),
-                      title: Text('Fi-Fi Map'),
-                      trailing: const Icon(LineIcons.angleRight),
-                      onTap: () async {
-                        Navigator.push(
-                          context,
-                          PageTransition(
-                              type: PageTransitionType.rightToLeft,
-                              child: const MyLocationView()),
-                        );
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 20.0),
 
-                  // ==================== Rewards ====================
+                  // ==================== Rewards ====================                
+                  // buildDivider(),
+                  // const SizedBox(height: 10.0),
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  //   child: ExpansionTileCard(
+                  //     key: cardReward,
+                  //     borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                  //     leading: Icon(Icons.wallet_giftcard_outlined, color: primaryColor),
+                  //     title: Text('Rewards', 
+                  //     style: GoogleFonts.robotoCondensed(
+                  //         fontSize: 20.0,
+                  //         color: Colors.black,
+                  //         fontWeight: FontWeight.w700
+                  //       )
+                  //     ),
+                  //     children: <Widget>[
+                  //       Padding(
+                  //         padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, right: 10.0, left: 10.0),
+                  //         child: ListTile(
+                  //           shape: RoundedRectangleBorder(
+                  //             side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
+                  //             borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                  //           ),
+                  //           leading: Icon(LineIcons.gifts, color: primaryColor),
+                  //           title: const Text('Rewards'),
+                  //           trailing: const Icon(LineIcons.angleRight),
+                  //           onTap: () async {
+                              
+                  //           },
+                  //         ),
+                  //       ),
+                  //       Padding(
+                  //         padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, right: 10.0, left: 10.0),
+                  //         child: ListTile(
+                  //           shape: RoundedRectangleBorder(
+                  //             side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
+                  //             borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                  //           ),
+                  //           leading: Icon(Icons.mail_outline_outlined, color: primaryColor),
+                  //           title: const Text('Earn a referral'),
+                  //           trailing: const Icon(LineIcons.angleRight),
+                  //           onTap: () async {
 
-                  buildDivider(),
-                  const SizedBox(height: 20.0),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                    child: Text('Rewards', 
-                      style: GoogleFonts.roboto(
-                        fontSize: 20.0,
-                        color: Colors.grey,
-                      )
-                    ),
-                  ),
-                  const SizedBox(height: 10.0),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                    child: ListTile(
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
-                        borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-                      ),
-                      leading: Icon(LineIcons.gifts, color: primaryColor),
-                      title: const Text('Rewards'),
-                      trailing: const Icon(LineIcons.angleRight),
-                      onTap: () async {
-                        
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 10.0),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                    child: ListTile(
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
-                        borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-                      ),
-                      leading: Icon(Icons.mail_outline_outlined, color: primaryColor),
-                      title: const Text('Earn a referral'),
-                      trailing: const Icon(LineIcons.angleRight),
-                      onTap: () async {
-
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 20.0),
+                  //           },
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  // const SizedBox(height: 10.0),
 
 
                   buildDivider(),
@@ -308,28 +325,6 @@ class _MorePageState extends State<MorePage> {
                             ),
                           ],
                         ),
-                        // Padding(
-                        //   padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                        //   child: ListTile(
-                        //     shape: RoundedRectangleBorder(
-                        //       side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
-                        //       borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-                        //     ),
-                        //     leading: const Icon(LineIcons.alternateSignOut, color: Colors.red),
-                        //     title: Text(_lang.translate('sign_out')),
-                        //     onTap: () async {
-                        //       await Components.dialogSignOut(
-                        //         context,
-                        //         Text(_lang.translate('sign_out_warn'),
-                        //             textAlign: TextAlign.center),
-                        //         Text(
-                        //           _lang.translate('warning'),
-                        //           style: const TextStyle(fontFamily: 'Poppins-Bold'),
-                        //         ),
-                        //       );
-                        //     },
-                        //   ),
-                        // ),
                         _infoApp('KOOMPI Fi-Fi: ', _packageInfo.version)
                       ],
                     ),

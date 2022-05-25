@@ -1,5 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'package:koompi_hotspot/all_export.dart';
+import 'package:koompi_hotspot/providers/contact_list_provider.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 class PinCodeVerificationScreen extends StatefulWidget {
   final String phone, password;
@@ -34,6 +36,8 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
       };
     errorController = StreamController<ErrorAnimationType>();
     super.initState();
+    print(widget.phone);
+    print(widget.password);
   }
 
   @override
@@ -43,6 +47,109 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
     super.dispose();
   }
 
+  String token = '';
+  String messageAlert = '';
+
+  //check connection and login
+  Future<void> login() async {
+    var _lang = AppLocalizeService.of(context);
+    var status = await OneSignal.shared.getDeviceState();
+    String? tokenId = status!.userId;
+
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        if (kDebugMode) {
+          print('Internet connected');
+        }
+        var response = await PostRequest().logInPhone(
+          widget.phone,
+          widget.password
+        );
+
+        var responseJson = json.decode(response.body);
+
+        if (response.statusCode == 200) {
+          token = responseJson['token'];
+          await PostRequest().addOnesignalId(token, tokenId!);
+          await GetRequest().getUserProfile(token).then((values) {
+            setState(() {
+              isLoading = true;
+            });
+          });
+          if (token != '') {
+            await PostRequest().addOnesignalId(token, tokenId);
+            await StorageServices().saveString('token', token);
+            widget.phone.startsWith("0") ? 
+            StorageServices().saveString('phone', '0${StorageServices.removeZero(widget.phone)}')
+            :
+            StorageServices().saveString('phone', StorageServices.removeZero(widget.phone));
+            await StorageServices().saveString('password', widget.password);
+            await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
+            await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+            await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
+            await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
+            await Provider.of<ContactListProvider>(context, listen: false).fetchContactList();
+            Navigator.pushAndRemoveUntil(
+              context,
+              PageTransition(
+                type: PageTransitionType.rightToLeft,
+                child: const Navbar(0),
+              ),
+              ModalRoute.withName('/navbar'),
+            );
+          } else {
+            Navigator.of(context).pop();
+            try {
+              messageAlert = responseJson['error']['message'];
+            } catch (e) {
+              messageAlert = responseJson['message'];
+            }
+          }
+        } else if (response.statusCode == 401) {
+          await Components.dialog(
+              context,
+              textAlignCenter(text: responseJson['message']),
+              warningTitleDialog());
+          Navigator.of(context).pop();
+        } else if (response.statusCode >= 500 && response.statusCode < 600) {
+          await Components.dialog(
+              context,
+              textAlignCenter(text: responseJson['message']),
+              warningTitleDialog());
+          Navigator.of(context).pop();
+        }
+      }
+    } on SocketException catch (_) {
+      if (kDebugMode) {
+        print('No network socket exception');
+      }
+      await Components.dialog(
+          context,
+          textAlignCenter(text: _lang.translate('no_internet_message')),
+          warningTitleDialog());
+      Navigator.of(context).pop();
+    } on TimeoutException catch (_) {
+      if (kDebugMode) {
+        print('Time out exception');
+      }
+      await Components.dialog(
+          context,
+          textAlignCenter(text: _lang.translate('request_timeout')),
+          warningTitleDialog());
+      Navigator.of(context).pop();
+    } on FormatException catch (_) {
+      if (kDebugMode) {
+        print('FormatException');
+      }
+      await Components.dialog(
+          context,
+          textAlignCenter(text: _lang.translate('server_error')),
+          warningTitleDialog());
+      Navigator.of(context).pop();
+    }
+  }
+  
   Future<void> _submitOtp(String vCode) async {
     var _lang = AppLocalizeService.of(context);
 
@@ -68,13 +175,14 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
         if (kDebugMode) {
           print(response.body);
         }
-        await Navigator.pushReplacement(
-          context,
-          PageTransition(
-            type: PageTransitionType.rightToLeft,
-            child: CompleteInfo(widget.phone),
-          ),
-        );
+        // await Navigator.pushReplacement(
+        //   context,
+        //   PageTransition(
+        //     type: PageTransitionType.rightToLeft,
+        //     child: CompleteInfo(widget.phone),
+        //   ),
+        // );
+        await login();
       } else {
         await Components.dialog(
             context,

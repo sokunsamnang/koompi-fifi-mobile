@@ -1,6 +1,5 @@
 import 'package:koompi_hotspot/all_export.dart';
-import 'package:koompi_hotspot/providers/contact_list_provider.dart';
-import 'package:koompi_hotspot/widgets/reuse_widgets/swap_token_widget.dart';
+import 'package:koompi_hotspot/utils/token.dart';
 class SwapToken extends StatefulWidget {
 
   const SwapToken({Key? key}) : super(key: key);
@@ -13,64 +12,18 @@ class _SwapTokenState extends State<SwapToken> {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  String asset = "";
+  late Map<String, String> _from;
+  late Map<String, String> _to;
 
-  final List<SwapTokenModel> _swapTokenModelList = [
-    SwapTokenModel(
-      tokenName: 'SEL',
-      imageToken: Image.asset(
-        'assets/images/sel-coin-icon.png',
-        width: 25,
-      )
-    ),
-    SwapTokenModel(
-      tokenName: 'LUY',
-      imageToken: Image.asset(
-        'assets/images/rise-coin-icon.png',
-        width: 25,
-      )
-    ),
-  ];
-
-  SwapTokenModel _swapTokenModel = SwapTokenModel();
-  List<DropdownMenuItem<SwapTokenModel>>? _swapTokenModelDropdownList;
-  List<DropdownMenuItem<SwapTokenModel>> _buildTokenTypeModelDropdown(
-      List tokenTypeModelList) {
-    List<DropdownMenuItem<SwapTokenModel>> items = [];
-    for (SwapTokenModel swapTokenModel in tokenTypeModelList) {
-      items.add(DropdownMenuItem(
-        value: swapTokenModel,
-        child: Row(
-          children: [
-            swapTokenModel.imageToken!,
-            const SizedBox(width: 10.0),
-            Text(swapTokenModel.tokenName!),
-          ],
-        ),
-      ));
-    }
-    return items;
-  }
-
-  _onChangetokenTypeModelDropdown(SwapTokenModel? swapTokenModel) {
-    setState(() {
-      _swapTokenModel = swapTokenModel!;
-    });
-  }
-
-  int index = 0;
 
 
   @override
   void initState() {
     super.initState();
-    // fetchWallet();
     AppServices.noInternetConnection(_scaffoldKey);
 
-    // Value Dropdown
-    _swapTokenModelDropdownList = _buildTokenTypeModelDropdown(_swapTokenModelList);
-    _swapTokenModel = _swapTokenModelList[0];
-    asset = _swapTokenModel.tokenName!;
+    _from = {"Name": "SEL", "icon": "assets/images/sel-coin-icon.png"};
+    _to = {"Name": "LUY", "icon": "assets/images/rise-coin-icon.png"};
 
   }
 
@@ -113,10 +66,6 @@ class _SwapTokenState extends State<SwapToken> {
           onRefresh: () async {
             await Provider.of<BalanceProvider>(context, listen: false)
                 .fetchPortfolio();
-            await Provider.of<TrxHistoryProvider>(context, listen: false)
-                .fetchTrxHistory();
-            await Provider.of<ContactListProvider>(context, listen: false)
-                .fetchContactList();
           },
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
@@ -125,15 +74,38 @@ class _SwapTokenState extends State<SwapToken> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(top: 50.0),
+                  padding: const EdgeInsets.only(top: 25.0),
                   child: swapFrom(context),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 50.0),
+                  padding: const EdgeInsets.only(top: 25.0),
+                  child: Center(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                        shadowColor: primaryColor,
+                        shape: const CircleBorder(),
+                        padding: const EdgeInsets.all(10),
+                      ),
+                      child: RotatedBox(quarterTurns: 1,
+                        child: Image.asset('assets/images/swap.png', width: 50, height: 50)
+                      ),
+                      onPressed: () {
+                        var temp = _from;
+                        setState(() {
+                          _from = _to;
+                          _to = temp;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 25.0),
                   child: swapTo(context),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 100.0),
+                  padding: const EdgeInsets.only(top: 50.0),
                   child: summarySwap(context),
                 ),
                 Padding(
@@ -180,7 +152,8 @@ class _SwapTokenState extends State<SwapToken> {
                           ),
                         ),
                         Text(
-                          'Balance: ${balance.balanceList[1].token!}',
+                          _from['Name'] == "SEL" ? 'Balance: ${balance.balanceList[1].token!}' :
+                          'Balance: ${balance.balanceList[0].token!}',
                           style: GoogleFonts.robotoCondensed(
                             textStyle: TextStyle(
                               color: HexColor('000000').withOpacity(0.5),
@@ -193,6 +166,7 @@ class _SwapTokenState extends State<SwapToken> {
                     ),
                   ),
                   const SizedBox(height: 25),
+                  // buildDivider(),
                   Row(
                     children: [
                       Expanded(
@@ -202,12 +176,13 @@ class _SwapTokenState extends State<SwapToken> {
                             FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,4}'))
                           ],
                           decoration: InputDecoration(
-                            hintText: 'Enter amount',
+                            hintText: '0.00',
                             hintStyle: GoogleFonts.robotoCondensed(
                               textStyle: TextStyle(
                                 color: HexColor('000000').withOpacity(0.5),
                                 fontSize: 20,
-                                fontStyle: FontStyle.italic
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.w700
                               )
                             ),
                             border: InputBorder.none,
@@ -222,45 +197,25 @@ class _SwapTokenState extends State<SwapToken> {
                           ),
                         ),
                       ),
-                      // Expanded(
-                      //   child: CustomBottomSheet(
-                      //     dropdownMenuItemList: _swapTokenModelDropdownList,
-                      //     onChanged: _onChangetokenTypeModelDropdown,
-                      //     value: _swapTokenModel,
-                      //     isEnabled: true,
-                      //   ),
-                      // ),
-
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: InkWell(
-                          child: Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              onTap: () async {
-                                _selectTokenBottomSheet(context);
-                              },
-                              child: Row(
-                                children: [
-                                  _swapTokenModel.imageToken!,
-                                  Text(
-                                    _swapTokenModel.tokenName!,
-                                    style: GoogleFonts.robotoCondensed(
-                                      textStyle: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 25,
-                                        fontStyle: FontStyle.italic,  
-                                        fontWeight: FontWeight.w700
-                                      )
-                                    ),
-                                  ),
-                                  const Icon(Icons.arrow_drop_down_sharp, color: Colors.black, size: 30),
-                                ],
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Row(
+                            children: [
+                              Image.asset("${_from["icon"]}",width: 22,),
+                              Text(
+                                "${_from["Name"]}",
+                                style: GoogleFonts.robotoCondensed(
+                                  textStyle: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 25,
+                                    fontStyle: FontStyle.italic,  
+                                    fontWeight: FontWeight.w700
+                                  )
+                                ),
                               ),
-                            ),
+                            ],
                           ),
                         ),
-                      ),
                     ],
                   ),
                 ],
@@ -307,42 +262,43 @@ class _SwapTokenState extends State<SwapToken> {
                     ),
                   ),
                   const SizedBox(height: 25),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(''),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: InkWell(
-                          child: Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              onTap: () async {
-                                _selectTokenBottomSheet(context);
-                              },
-                              child: Row(
-                                children: [
-                                  _swapTokenModel.imageToken!,
-                                  Text(
-                                    _swapTokenModel.tokenName!,
-                                    style: GoogleFonts.robotoCondensed(
-                                      textStyle: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 25,
-                                        fontStyle: FontStyle.italic,  
-                                        fontWeight: FontWeight.w700
-                                      )
-                                    ),
-                                  ),
-                                  const Icon(Icons.arrow_drop_down_sharp, color: Colors.black, size: 30),
-                                ],
-                              ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            '',
+                            style: GoogleFonts.robotoCondensed(
+                              textStyle: TextStyle(
+                                color: HexColor('000000').withOpacity(0.5),
+                                fontSize: 20,
+                                fontStyle: FontStyle.italic
+                              )
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Row(
+                            children: [
+                              Image.asset("${_to["icon"]}",width: 22,),
+                              Text(
+                                "${_to["Name"]}",
+                                style: GoogleFonts.robotoCondensed(
+                                  textStyle: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 25,
+                                    fontStyle: FontStyle.italic,  
+                                    fontWeight: FontWeight.w700
+                                  )
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               )
@@ -519,57 +475,6 @@ class _SwapTokenState extends State<SwapToken> {
           ),
         ),
       ),
-    );
-  }
-
-  void _selectTokenBottomSheet(BuildContext context) {
-
-    showModalBottomSheet(
-      backgroundColor: Colors.white,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(25)),
-      ),
-      isScrollControlled: true,
-      context: context,
-      builder: (BuildContext context) {
-        return Container(
-          height: MediaQuery.of(context).size.height / 2,
-          // width: MediaQuery.of(context).size.width,
-          padding: const EdgeInsets.all(20.0),
-          child: ListView.builder(
-            itemCount: _swapTokenModelList.length,
-            itemBuilder: (BuildContext context, int i) {  
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-                child: ListTile(
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
-                    borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-                  ),
-                  leading: _swapTokenModelList[i].imageToken!,
-                  title: Text(
-                    _swapTokenModelList[i].tokenName!, 
-                    style: GoogleFonts.robotoCondensed(
-                      textStyle: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.w700
-                      )
-                    ),
-                  ),
-                  onTap: () async {
-                    Navigator.pop(context);
-                    setState(() {
-                      _swapTokenModel = _swapTokenModelList[i];
-                    });
-                  },
-                ),
-              );
-            },
-          )
-        );
-      }
     );
   }
 
