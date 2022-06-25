@@ -178,12 +178,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
               );
             }),
         automaticallyImplyLeading: false,
-        // centerTitle: true,
         backgroundColor: Colors.white,
-        // title: Image.asset(
-        //   "assets/images/appbar_logo.png",
-        //   scale: 2,
-        // ),
         title: Text('Choose a Plan',
           style: GoogleFonts.robotoCondensed(
             fontSize: 24, 

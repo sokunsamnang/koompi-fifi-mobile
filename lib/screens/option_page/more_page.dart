@@ -96,68 +96,59 @@ class _MorePageState extends State<MorePage> {
                         )
                       ),
                       children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, left: 10.0, right: 10.0),
-                          child: ListTile(
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
-                              borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-                            ),
-                            leading: Icon(Icons.people_alt_outlined, color: primaryColor),
-                            title: const Text('Edit Profile'),
-                            trailing: const Icon(LineIcons.angleRight),
-                            onTap: () async {
-                              Navigator.push(
-                                context,
-                                PageTransition(
-                                  type: PageTransitionType.rightToLeft,
-                                  child: const MyAccount(),
-                                ),
-                              );
-                            }
-                          ),
+                        ListTile(
+                          // shape: RoundedRectangleBorder(
+                          //   side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
+                          //   borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                          // ),
+                          leading: Icon(Icons.people_alt_outlined, color: primaryColor),
+                          title: const Text('Edit Profile'),
+                          trailing: const Icon(LineIcons.angleRight),
+                          onTap: () async {
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                type: PageTransitionType.rightToLeft,
+                                child: const MyAccount(),
+                              ),
+                            );
+                          }
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, right: 10.0, left: 10.0),
-                          child: ListTile(
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
-                              borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-                            ),
-                            leading: Icon(LineIcons.key, color: primaryColor),
-                            title: Text(_lang.translate('change_password')),
-                            trailing: const Icon(LineIcons.angleRight),
-                            onTap: () async {
-                              Navigator.push(
-                                context,
-                                PageTransition(
-                                  type: PageTransitionType.rightToLeft,
-                                  child: const ChangePassword(),
-                                ),
-                              );
-                            }
-                          ),
+                        ListTile(
+                          // shape: RoundedRectangleBorder(
+                          //   side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
+                          //   borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                          // ),
+                          leading: Icon(LineIcons.key, color: primaryColor),
+                          title: Text(_lang.translate('change_password')),
+                          trailing: const Icon(LineIcons.angleRight),
+                          onTap: () async {
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                type: PageTransitionType.rightToLeft,
+                                child: const ChangePassword(),
+                              ),
+                            );
+                          }
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, right: 10.0, left: 10.0),
-                          child: ListTile(
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
-                              borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-                            ),
-                            leading: Icon(LineIcons.language, color: primaryColor),
-                            title: Text(_lang.translate('language')),
-                            trailing: const Icon(LineIcons.angleRight),
-                            onTap: () async {
-                              Navigator.push(
-                                context,
-                                PageTransition(
-                                  type: PageTransitionType.rightToLeft,
-                                  child: const LanguageView(),
-                                ),
-                              );
-                            },
-                          ),
+                        ListTile(
+                          // shape: RoundedRectangleBorder(
+                          //   side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
+                          //   borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                          // ),
+                          leading: Icon(LineIcons.language, color: primaryColor),
+                          title: Text(_lang.translate('language')),
+                          trailing: const Icon(LineIcons.angleRight),
+                          onTap: () async {
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                type: PageTransitionType.rightToLeft,
+                                child: const LanguageView(),
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),
@@ -180,25 +171,18 @@ class _MorePageState extends State<MorePage> {
                         )
                       ),
                       children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, right: 10.0, left: 10.0),
-                          child: ListTile(
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
-                              borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-                            ),
-                            leading: Icon(LineIcons.connectDevelop, color: primaryColor),
-                            title: Text(_lang.translate('login_hotspot')),
-                            trailing: const Icon(LineIcons.angleRight),
-                            onTap: () async {
-                              Navigator.push(
-                                context,
-                                PageTransition(
-                                    type: PageTransitionType.rightToLeft,
-                                    child: const CaptivePortalWeb()),
-                              );
-                            },
-                          ),
+                        ListTile(
+                          leading: Icon(LineIcons.connectDevelop, color: primaryColor),
+                          title: Text(_lang.translate('login_hotspot')),
+                          trailing: const Icon(LineIcons.angleRight),
+                          onTap: () async {
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                  type: PageTransitionType.rightToLeft,
+                                  child: const CaptivePortalWeb()),
+                            );
+                          },
                         ),
                         // Padding(
                         //   padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, right: 10.0, left: 10.0),
@@ -215,25 +199,18 @@ class _MorePageState extends State<MorePage> {
                         //     },
                         //   ),
                         // ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, right: 10.0, left: 10.0),
-                          child: ListTile(
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
-                              borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-                            ),
-                            leading: Icon(LineIcons.mapAlt, color: primaryColor),
-                            title: Text('Fi-Fi Map'),
-                            trailing: const Icon(LineIcons.angleRight),
-                            onTap: () async {
-                              Navigator.push(
-                                context,
-                                PageTransition(
-                                    type: PageTransitionType.rightToLeft,
-                                    child: const LocationView()),
-                              );
-                            },
-                          ),
+                        ListTile(
+                          leading: Icon(LineIcons.mapAlt, color: primaryColor),
+                          title: Text('Fi-Fi Map'),
+                          trailing: const Icon(LineIcons.angleRight),
+                          onTap: () async {
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                  type: PageTransitionType.rightToLeft,
+                                  child: const LocationView()),
+                            );
+                          },
                         ),
                       ],
                     ),

@@ -348,8 +348,7 @@ class _MyAccountState extends State<MyAccount>
                     const SizedBox(height: 16.0),
                     // Text(_lang.translate('dateofbirth')),
                     const SizedBox(height: 10.0),
-                    dateOfbirth(
-                        selectedDate, _selectDate, dateFormart, context),
+                    dateOfbirth(selectedDate, _selectDate, dateFormart, context),
                     const SizedBox(height: 16.0),
                     // Text(_lang.translate('locaton')),
                     const SizedBox(height: 10.0),

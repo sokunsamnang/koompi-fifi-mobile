@@ -4,14 +4,14 @@ import 'package:http/http.dart' as http;
 class BalanceProvider with ChangeNotifier {
   Backend? _backend;
 
-  List<BalanceModel> balanceList = [];
+  StorageServices _prefService = StorageServices();
 
+  List<BalanceModel> balanceList = [];
+  
   Future<void> fetchPortfolio() async {
     StorageServices _prefService = StorageServices();
-
     _backend = Backend();
-    balanceList = [];
-
+    
     try {
       await _prefService.read('token').then((onValue) async {
         http.Response response = await http.get(
@@ -27,6 +27,10 @@ class BalanceProvider with ChangeNotifier {
           for (var l in _backend!.listData!) {
             balanceList.add(BalanceModel(l));
           }
+          
+          
+          _prefService.saveString('selBalance', balanceList[0].token);
+
         } else {
           var responseBody = json.decode(response.body);
           if (kDebugMode) {

@@ -177,12 +177,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
               Navigator.of(context).pop();
             }),
         automaticallyImplyLeading: false,
-        // centerTitle: true,
         backgroundColor: Colors.white,
-        // title: Image.asset(
-        //   "assets/images/appbar_logo.png",
-        //   scale: 2,
-        // ),
         title: Text('Choose a Plan',
           style: GoogleFonts.robotoCondensed(
           textStyle: const TextStyle(

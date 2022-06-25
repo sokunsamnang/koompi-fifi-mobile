@@ -71,7 +71,6 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
 
         if (response.statusCode == 200) {
           token = responseJson['token'];
-          await PostRequest().addOnesignalId(token, tokenId!);
           await GetRequest().getUserProfile(token).then((values) {
             setState(() {
               isLoading = true;
