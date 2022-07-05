@@ -1,4 +1,4 @@
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+// import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/utils/auto_login_hotspot_constants.dart'
@@ -57,61 +57,61 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
     if (kDebugMode) {
       print('paused');
     }
-    return inputWeb();
+    // return inputWeb();
   }
 
-  final flutterWebViewPlugin = FlutterWebviewPlugin();
+  // final flutterWebViewPlugin = FlutterWebviewPlugin();
 
-  StreamSubscription<WebViewStateChanged>? _onchanged;
+  // StreamSubscription<WebViewStateChanged>? _onchanged;
 
-  Future inputWeb() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      global.phone = prefs.getString('phone')!;
-      global.password = prefs.getString('password')!;
+  // Future inputWeb() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   setState(() {
+  //     global.phone = prefs.getString('phone')!;
+  //     global.password = prefs.getString('password')!;
 
-      if (kDebugMode) {
-        print('Run web portal');
-      }
-      flutterWebViewPlugin.close();
-      flutterWebViewPlugin.launch(selectedUrl, hidden: true, withJavascript: true, ignoreSSLErrors: true);
-      _onchanged = flutterWebViewPlugin.onStateChanged
-          .listen((WebViewStateChanged state) {
-        if (mounted) {
-          if (state.type == WebViewState.finishLoad) {
-            // if the full website page loaded
-            if (kDebugMode) {
-              print('web laoded');
-            }
-            flutterWebViewPlugin.evalJavascript("""
-              var scopeUser = angular.element(document.getElementById('user')).scope();
-              scopeUser.\$apply('homeCtrl.formModel.username = "${global.phone}";');
-              var scopePass = angular.element(document.getElementById('password')).scope();
-              scopePass.\$apply('homeCtrl.formModel.password = "${global.password}";');
-              document.getElementById("btnlogin").click();
-            """);
-            // flutterWebViewPlugin.evalJavascript(
-            //     'document.getElementById("user").value="${global.phone}"'); // Replace with the id of username field
-            // flutterWebViewPlugin.evalJavascript(
-            //     'document.getElementById("password").value="${global.password}"'); // Replace with the id of password field
-            // flutterWebViewPlugin.evalJavascript(
-            //     'document.getElementById("btnlogin").click()'); // Replace with Submit button id
+  //     if (kDebugMode) {
+  //       print('Run web portal');
+  //     }
+  //     flutterWebViewPlugin.close();
+  //     flutterWebViewPlugin.launch(selectedUrl, hidden: true, withJavascript: true, ignoreSSLErrors: true);
+  //     _onchanged = flutterWebViewPlugin.onStateChanged
+  //         .listen((WebViewStateChanged state) {
+  //       if (mounted) {
+  //         if (state.type == WebViewState.finishLoad) {
+  //           // if the full website page loaded
+  //           if (kDebugMode) {
+  //             print('web laoded');
+  //           }
+  //           flutterWebViewPlugin.evalJavascript("""
+  //             var scopeUser = angular.element(document.getElementById('user')).scope();
+  //             scopeUser.\$apply('homeCtrl.formModel.username = "${global.phone}";');
+  //             var scopePass = angular.element(document.getElementById('password')).scope();
+  //             scopePass.\$apply('homeCtrl.formModel.password = "${global.password}";');
+  //             document.getElementById("btnlogin").click();
+  //           """);
+  //           // flutterWebViewPlugin.evalJavascript(
+  //           //     'document.getElementById("user").value="${global.phone}"'); // Replace with the id of username field
+  //           // flutterWebViewPlugin.evalJavascript(
+  //           //     'document.getElementById("password").value="${global.password}"'); // Replace with the id of password field
+  //           // flutterWebViewPlugin.evalJavascript(
+  //           //     'document.getElementById("btnlogin").click()'); // Replace with Submit button id
 
-          } else if (state.type == WebViewState.abortLoad) {
-            // if there is a problem with loading the url
-            if (kDebugMode) {
-              print("there is a problem...");
-            }
-          } else if (state.type == WebViewState.startLoad) {
-            // if the url started loading
-            if (kDebugMode) {
-              print("start loading...");
-            }
-          }
-        }
-      });
-    });
-  }
+  //         } else if (state.type == WebViewState.abortLoad) {
+  //           // if there is a problem with loading the url
+  //           if (kDebugMode) {
+  //             print("there is a problem...");
+  //           }
+  //         } else if (state.type == WebViewState.startLoad) {
+  //           // if the url started loading
+  //           if (kDebugMode) {
+  //             print("start loading...");
+  //           }
+  //         }
+  //       }
+  //     });
+  //   });
+  // }
 
   @override
   void initState() {
@@ -130,7 +130,7 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
     }
 
     // Data Connection AppLifecycleState
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
     DataConnectivityService()
         .connectivityStreamController
         .stream
@@ -151,7 +151,7 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
   @override
   void dispose() {
     // _onchanged.cancel();
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
