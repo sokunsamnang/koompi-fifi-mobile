@@ -47,9 +47,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        if (kDebugMode) {
-          print('Internet connected');
-        }
         var response = await PostRequest().forgotPasswordByPhone(
           StorageServices.removeZero(_phoneController.text),
         );

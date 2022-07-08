@@ -99,9 +99,6 @@ class _CompleteInfoState extends State<CompleteInfo> {
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        if (kDebugMode) {
-          print('Internet connected');
-        }
         var response = await PostRequest().completeInfoUser(
             _usernameController.text,
             widget.phone,
@@ -119,9 +116,6 @@ class _CompleteInfoState extends State<CompleteInfo> {
             ModalRoute.withName('/loginPhone'),
           );
         } else {
-          if (kDebugMode) {
-            print('register not Successful');
-          }
           await Components.dialog(
               context,
               textAlignCenter(text: _lang.translate('register_error')),

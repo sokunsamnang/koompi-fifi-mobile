@@ -97,8 +97,8 @@ class _SendRequestState extends State<SendRequest> {
             memo.text);
         var responseJson = json.decode(_backend.response!.body);
         if (_backend.response!.statusCode == 200) {
-          await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
-          await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+          // await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
+          // await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
           Navigator.pushAndRemoveUntil(
             context,
             PageTransition(

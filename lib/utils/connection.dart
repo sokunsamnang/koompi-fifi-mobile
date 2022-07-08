@@ -14,7 +14,6 @@ class AppServices {
 
       _connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
         if (result == ConnectivityResult.none) {
-          // print("Open Red snackbar");
           openSnackBar(globalKey, contentConnection);
         } else {
           // ignore: deprecated_member_use

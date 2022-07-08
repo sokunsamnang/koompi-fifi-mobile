@@ -28,10 +28,6 @@ class PostRequest with ChangeNotifier {
       headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"),
       body: _backend.bodyEncode
     );
-
-    if (kDebugMode) {
-      print(_backend.response!.body);
-    }
     return _backend.response!;
   }
 
@@ -53,10 +49,7 @@ class PostRequest with ChangeNotifier {
       headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"),
       body: _backend.bodyEncode
     );
-
-    if (kDebugMode) {
-      print(_backend.response!.body);
-    }
+    
     return _backend.response!;
   }
 
@@ -76,10 +69,7 @@ class PostRequest with ChangeNotifier {
       headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"),
       body: _backend.bodyEncode
     );
-
-    if (kDebugMode) {
-      print(_backend.response!.body);
-    }
+    
     return _backend.response!;
   }
 
@@ -98,9 +88,7 @@ class PostRequest with ChangeNotifier {
         headers: _backend.conceteHeader('', ''),
         body: _backend.bodyEncode);
 
-    if (kDebugMode) {
-      print(_backend.response!.body);
-    }
+
     return _backend.response!;
   }
 
@@ -116,9 +104,7 @@ class PostRequest with ChangeNotifier {
         headers: _backend.conceteHeader('', ''),
         body: _backend.bodyEncode);
 
-    if (kDebugMode) {
-      print(_backend.response!.body);
-    }
+
     return _backend.response!;
   }
 
@@ -141,24 +127,6 @@ class PostRequest with ChangeNotifier {
     return _backend.response!;
   }
 
-  /* one signal alert notification id Information */
-  Future<http.Response> addOnesignalId(String? token, String? playerid) async {
-    _backend.bodyEncode = json.encode({
-      /* Convert to Json String */
-      "player_id": playerid,
-    });
-
-    _backend.response = await http.put(
-      Uri.parse('${ApiService.url}/alert-notification'),
-      headers: _backend.conceteHeader("authorization", "Bearer $token"),
-      body: _backend.bodyEncode
-    );
-
-    if (kDebugMode) {
-      print(_backend.response!.body);
-    }
-    return _backend.response!;
-  }
 
   /* Update User Information */
   Future<http.Response> updateInfo(String name, String gender, String phone,
@@ -192,9 +160,7 @@ class PostRequest with ChangeNotifier {
         headers: _backend.conceteHeader('', ''),
         body: _backend.bodyEncode);
 
-    if (kDebugMode) {
-      print(_backend.response!.body);
-    }
+
     return _backend.response!;
   }
 
@@ -205,9 +171,7 @@ class PostRequest with ChangeNotifier {
       Uri.parse('${ApiService.url}/auth/confirm-phone'),
       headers: _backend.conceteHeader('', ''),
     );
-    if (kDebugMode) {
-      print(_backend.response!.body);
-    }
+    
     return _backend.response!;
   }
 
@@ -223,9 +187,7 @@ class PostRequest with ChangeNotifier {
         headers: _backend.conceteHeader('', ''),
         body: _backend.bodyEncode);
 
-    if (kDebugMode) {
-      print(_backend.response!.body);
-    }
+
     return _backend.response!;
   }
 
@@ -251,9 +213,7 @@ class PostRequest with ChangeNotifier {
             "authorization", "Bearer ${_backend.token['token']}"),
         body: _backend.bodyEncode);
 
-    if (kDebugMode) {
-      print(_backend.response!.body);
-    }
+
     return _backend.response!;
   }
 
@@ -278,9 +238,7 @@ class PostRequest with ChangeNotifier {
             "authorization", "Bearer ${_backend.token['token']}"),
         body: _backend.bodyEncode);
 
-    if (kDebugMode) {
-      print(_backend.response!.body);
-    }
+
     return _backend.response!;
   }
 
@@ -301,9 +259,7 @@ class PostRequest with ChangeNotifier {
             "authorization", "Bearer ${_backend.token['token']}"),
         body: _backend.bodyEncode);
 
-    if (kDebugMode) {
-      print(_backend.response!.body);
-    }
+
     return _backend.response!;
   }
 
@@ -323,9 +279,7 @@ class PostRequest with ChangeNotifier {
             "authorization", "Bearer ${_backend.token['token']}"),
         body: _backend.bodyEncode);
 
-    if (kDebugMode) {
-      print(_backend.response!.body);
-    }
+
     return _backend.response!;
   }
 
@@ -345,9 +299,7 @@ class PostRequest with ChangeNotifier {
             "authorization", "Bearer ${_backend.token['token']}"),
         body: _backend.bodyEncode);
 
-    if (kDebugMode) {
-      print(_backend.response!.body);
-    }
+
     return _backend.response!;
   }
 
@@ -368,9 +320,7 @@ class PostRequest with ChangeNotifier {
             "authorization", "Bearer ${_backend.token['token']}"),
         body: _backend.bodyEncode);
 
-    if (kDebugMode) {
-      print(_backend.response!.body);
-    }
+
     return _backend.response!;
   }
 
@@ -391,9 +341,7 @@ class PostRequest with ChangeNotifier {
             "authorization", "Bearer ${_backend.token['token']}"),
         body: _backend.bodyEncode);
 
-    if (kDebugMode) {
-      print(_backend.response!.body);
-    }
+
     return _backend.response!;
   }
 
@@ -414,9 +362,7 @@ class PostRequest with ChangeNotifier {
             "authorization", "Bearer ${_backend.token['token']}"),
         body: _backend.bodyEncode);
 
-    if (kDebugMode) {
-      print(_backend.response!.body);
-    }
+
     return _backend.response!;
   }
 

@@ -42,14 +42,10 @@ Widget formLoginPhone(
               InternationalPhoneNumberInput(
                 countries: const ['KH'],
                 onInputChanged: (PhoneNumber number) {
-                  if (kDebugMode) {
-                    print(number.phoneNumber);
-                  }
+                  
                 },
                 onInputValidated: (bool value) {
-                  if (kDebugMode) {
-                    print(value);
-                  }
+                  
                 },
                 errorMessage: _lang.translate('invalid_phone_number_validate'),
                 // selectorConfig: SelectorConfig(
@@ -90,9 +86,7 @@ Widget formLoginPhone(
                   ),
                 ),
                 onSaved: (PhoneNumber number) {
-                  if (kDebugMode) {
-                    print('On Saved: $number');
-                  }
+                  
                 },
               ),
               const SizedBox(

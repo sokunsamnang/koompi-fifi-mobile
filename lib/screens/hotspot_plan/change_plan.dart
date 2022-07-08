@@ -24,9 +24,6 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
 
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        if (kDebugMode) {
-          print('Internet connected');
-        }
         if (response.statusCode == 200) {
           await Provider.of<GetPlanProvider>(context, listen: false)
               .fetchHotspotPlan();

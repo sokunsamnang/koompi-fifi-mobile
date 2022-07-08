@@ -99,9 +99,6 @@ class _WalletChoiceState extends State<WalletChoice> {
                         var response = await GetRequest().getWallet();
                         var responseJson = json.decode(response.body);
                         if (response.statusCode == 200) {
-                          if (kDebugMode) {
-                            print(response.body);
-                          }
                           await Components.dialog(
                               context,
                               textAlignCenter(text: responseJson['message']),

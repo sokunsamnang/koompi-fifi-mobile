@@ -1,3 +1,4 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/providers/contact_list_provider.dart';
 
@@ -13,22 +14,20 @@ class StorageServices {
     return number;
   }
 
-  void clearPref() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    pref.remove('token');
-  }
+  // void clearPref() async {
+  //   SharedPreferences pref = await SharedPreferences.getInstance();
+  //   pref.remove('token');
+  // }
 
   checkUser(BuildContext context) async {
     var _lang = AppLocalizeService.of(context);
 
-    SharedPreferences? isToken = await SharedPreferences.getInstance();
-    String? token = isToken.getString('token');
+    const storage = FlutterSecureStorage();
+    final String? token = await storage.read(key: "token");
 
     if (JwtDecoder.isExpired(token) == true || token == '') {
-      if (kDebugMode) {
-        print('token expired');
-      }
-      clearToken('token');
+      // clearToken('token');
+      deleteAllKeys();
       Navigator.pushAndRemoveUntil(
         context,
         PageTransition(
@@ -38,16 +37,13 @@ class StorageServices {
         ModalRoute.withName('/loginPhone'),
       );
     } else if (JwtDecoder.isExpired(token) == false) {
-      if (kDebugMode) {
-        print('token not expire');
-      }
+      
       try {
         await GetRequest().getUserProfile(token).then((value) async {
           await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
           await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
-          // await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
-          // await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
-          // await Provider.of<ContactListProvider>(context, listen: false).fetchContactList();
+          await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
+          await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
         });
       }
       //  on SocketException catch (_) {
@@ -118,24 +114,34 @@ class StorageServices {
   }
 
   Future<String?> read(String? key) async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    String? value = pref.getString(key!);
+    const storage = FlutterSecureStorage();
+    final String? value = await storage.read(key: key!);
     return value;
+    // SharedPreferences pref = await SharedPreferences.getInstance();
+    // String? value = pref.getString(key!);
+    // return value;
   }
 
   Future<void> saveString(String? key, String? value) async {
-    try {
-      SharedPreferences pref = await SharedPreferences.getInstance();
-      pref.setString(key!, value!);
-    } catch (e) {
-      if (kDebugMode) {
-        print("error saveString $e");
-      }
-    }
+    const storage = FlutterSecureStorage();
+    await storage.write(key: key!, value: value!);
+    // try {
+    //   SharedPreferences pref = await SharedPreferences.getInstance();
+    //   pref.setString(key!, value!);
+    // } catch (e) {
+    //   if (kDebugMode) {
+    //     print("error saveString $e");
+    //   }
+    // }
   }
 
-  Future<void> clearToken(String? key) async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    pref.remove(key!);
-  }
+  Future<void> deleteAllKeys() async {
+    const storage = FlutterSecureStorage();
+    await storage.deleteAll();
+  }  
+
+  // Future<void> clearToken(String? key) async {
+  //   SharedPreferences pref = await SharedPreferences.getInstance();
+  //   pref.remove(key!);
+  // }
 }

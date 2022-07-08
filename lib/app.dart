@@ -1,11 +1,8 @@
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/providers/contact_list_provider.dart';
-import 'package:koompi_hotspot/screens/web_view/webview.dart';
 import 'package:koompi_hotspot/utils/auto_login_hotspot_constants.dart' as global;
-import 'package:koompi_hotspot/utils/firebase_dynamic_links.dart';
 import 'package:koompi_hotspot/utils/globals.dart' as globals;
-import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:dart_ping/dart_ping.dart';
 
 class App extends StatefulWidget {
@@ -149,10 +146,6 @@ class _SplashState extends State<Splash> {
       global.phone = prefs.getString('phone');
       global.password = prefs.getString('password');
     });
-    if (kDebugMode) {
-      print(global.phone);
-      print(global.password);
-    }
   }
 
 
@@ -160,7 +153,6 @@ class _SplashState extends State<Splash> {
   void initState() {
     super.initState();
     initDynamicLinks();
-    configOneSignal();
     setState(() {
       startTime();
       getValue();
@@ -239,14 +231,6 @@ class _SplashState extends State<Splash> {
     super.dispose();
   }
 
-  void configOneSignal() async {
-    OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
-
-    /// Set App Id.
-    OneSignal.shared.setAppId("05805743-ce69-4224-9afb-b2f36bf6c1db");
-
-    await OneSignal.shared.promptUserForPushNotificationPermission(fallbackToSettings: true);
-  }
 
   Future<void> isWifiAccess() async {
     var connectivityResult = await (Connectivity().checkConnectivity());

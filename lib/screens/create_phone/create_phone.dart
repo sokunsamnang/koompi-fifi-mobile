@@ -68,9 +68,6 @@ class _CreatePhoneState extends State<CreatePhone> {
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        if (kDebugMode) {
-          print('Internet connected');
-        }
         var response = await PostRequest().signUpWithPhone(
             StorageServices.removeZero(phoneController.text),
             passwordController.text);

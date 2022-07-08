@@ -100,9 +100,6 @@ class _CompletePaymentState extends State<CompletePayment> {
                                 await Provider.of<TrxHistoryProvider>(context,
                                         listen: false)
                                     .fetchTrxHistory();
-                                await Provider.of<TrxHistoryProvider>(context,
-                                        listen: false)
-                                    .fetchTrxHistory();
                                 Timer(
                                     const Duration(milliseconds: 500),
                                     () => Navigator.pushAndRemoveUntil(
