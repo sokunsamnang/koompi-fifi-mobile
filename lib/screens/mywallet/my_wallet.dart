@@ -1,10 +1,8 @@
 import 'dart:typed_data';
 import 'dart:ui';
-
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/providers/contact_list_provider.dart';
 import 'package:koompi_hotspot/screens/mywallet/quick_payment/contact_list.dart';
-import 'package:koompi_hotspot/screens/mywallet/swap.dart';
 import 'package:path_provider/path_provider.dart';
 
 class MyWallet extends StatefulWidget {
@@ -62,23 +60,27 @@ class _MyWalletState extends State<MyWallet> {
   void initState() {
     super.initState();
     // fetchWallet();
+    // Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
     AppServices.noInternetConnection(_scaffoldKey);
   }
 
   @override
   void dispose() {
+    if(mounted) {
+      fetchWallet();
+    }
     super.dispose();
   }
+  
 
-  // void fetchWallet() async {
-  //   await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
-  //   await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
-  // }
-
+  void fetchWallet() async {
+    await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
+    await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+    await Provider.of<ContactListProvider>(context, listen: false).fetchContactList();
+  }
 
   @override
   Widget build(BuildContext context) {
-    var _lang = AppLocalizeService.of(context);
     var _balance = Provider.of<BalanceProvider>(context);
     AppBar appBar = AppBar();
     appBarheight = appBar.preferredSize.height;
@@ -116,6 +118,7 @@ class _MyWalletState extends State<MyWallet> {
             physics: const AlwaysScrollableScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 myBalance(context, showSnackBar, copyWallet),
                 const SizedBox(
@@ -126,7 +129,7 @@ class _MyWalletState extends State<MyWallet> {
             ),
           ),
         ) 
-        : 
+        :
         Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -161,8 +164,8 @@ class _MyWalletState extends State<MyWallet> {
           bottomRight: Radius.circular(25),
         ),
       ),
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height / 3.25,
+      // width: MediaQuery.of(context).size.width,
+      // height: MediaQuery.of(context).size.height / 3.25,
       
       child: Column(
         children: [
@@ -322,6 +325,7 @@ class _MyWalletState extends State<MyWallet> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Text('Assets',
             style: GoogleFonts.robotoCondensed(
@@ -397,7 +401,7 @@ class _MyWalletState extends State<MyWallet> {
                     ),
                   ),
                   onTap: () async {
-
+                    comingSoonSnackBar();
                   }
                 ),
                 _buildDivider(),
@@ -425,7 +429,7 @@ class _MyWalletState extends State<MyWallet> {
                     ),
                   ),
                   onTap: () async {
-
+                    comingSoonSnackBar();
                   }
                 ),
               ],

@@ -1,6 +1,4 @@
-import 'package:intro_slider/dot_animation_enum.dart';
 import 'package:intro_slider/intro_slider.dart';
-import 'package:intro_slider/slide_object.dart';
 import 'package:koompi_hotspot/all_export.dart';
 
 class IntroScreen extends StatefulWidget {
@@ -153,9 +151,9 @@ class IntroScreenState extends State<IntroScreen> {
       doneButtonStyle: myButtonStyle(),
 
       // Dot indicator
-      colorDot: const Color(0xFFFFFFFF),
+      colorDot: HexColor("0F4471"),
       sizeDot: 13.0,
-      typeDotAnimation: dotSliderAnimation.SIZE_TRANSITION,
+      typeDotAnimation: DotSliderAnimation.SIZE_TRANSITION,
 
       // Tabs
       listCustomTabs: renderListCustomTabs(),

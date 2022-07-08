@@ -3,13 +3,12 @@ import 'package:http/http.dart' as http;
 
 class BalanceProvider with ChangeNotifier {
   Backend? _backend;
-
   List<BalanceModel> balanceList = [];
-
+  
   Future<void> fetchPortfolio() async {
     StorageServices _prefService = StorageServices();
-
     _backend = Backend();
+    
     balanceList = [];
 
     try {
@@ -29,9 +28,6 @@ class BalanceProvider with ChangeNotifier {
           }
         } else {
           var responseBody = json.decode(response.body);
-          if (kDebugMode) {
-            print(responseBody);
-          }
           return responseBody;
         }
       });

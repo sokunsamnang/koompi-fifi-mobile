@@ -45,14 +45,8 @@ Widget formCardPhoneNumbers(
             InternationalPhoneNumberInput(
               countries: const ['KH'],
               onInputChanged: (PhoneNumber number) {
-                if (kDebugMode) {
-                  print(number.phoneNumber);
-                }
               },
               onInputValidated: (bool value) {
-                if (kDebugMode) {
-                  print(value);
-                }
               },
               errorMessage: _lang.translate('invalid_phone_number_validate'),
               ignoreBlank: false,
@@ -89,9 +83,7 @@ Widget formCardPhoneNumbers(
                 ),
               ),
               onSaved: (PhoneNumber number) {
-                if (kDebugMode) {
-                  print('On Saved: $number');
-                }
+                
               },
             ),
             const SizedBox(

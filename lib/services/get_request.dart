@@ -10,7 +10,7 @@ class GetRequest with ChangeNotifier {
   final Backend _backend = Backend();
 
   Future<http.Response> getUserProfile(String? _token) async {
-    var response = await http.get(Uri.parse("${ApiService.url}/dashboard"),
+    var response = await http.get(Uri.parse("${ApiService.url}/dashboard/"),
         headers: <String, String>{
           "accept": "application/json",
           "authorization": "Bearer " + _token!,

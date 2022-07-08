@@ -1,7 +1,5 @@
 import 'package:in_app_update/in_app_update.dart';
 import 'package:koompi_hotspot/all_export.dart';
-import 'package:koompi_hotspot/providers/contact_list_provider.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 class LoginPhone extends StatefulWidget {
   const LoginPhone({Key? key}) : super(key: key);
@@ -51,9 +49,6 @@ class _LoginPhoneState extends State<LoginPhone> {
     AppServices.noInternetConnection(globalKey);
     // checkForUpdate();
     try {
-      if (kDebugMode) {
-        print('run version check');
-      }
       versionCheck(context);
     } catch (e) {
       if (kDebugMode) {
@@ -85,9 +80,6 @@ class _LoginPhoneState extends State<LoginPhone> {
   //check connection and login
   Future<void> login() async {
     var _lang = AppLocalizeService.of(context);
-    var status = await OneSignal.shared.getDeviceState();
-    String? tokenId = status!.userId;
-
     dialogLoading(context);
     try {
       final result = await InternetAddress.lookup('google.com');
@@ -103,14 +95,12 @@ class _LoginPhoneState extends State<LoginPhone> {
 
         if (response.statusCode == 200) {
           token = responseJson['token'];
-          await PostRequest().addOnesignalId(token, tokenId!);
           await GetRequest().getUserProfile(token).then((values) {
             setState(() {
               isLoading = true;
             });
           });
           if (token != '') {
-            await PostRequest().addOnesignalId(token, tokenId);
             await StorageServices().saveString('token', token);
             await StorageServices().saveString('phone', '0${StorageServices.removeZero(phoneController.text)}');
             await StorageServices().saveString('password', passwordController.text);
@@ -118,7 +108,6 @@ class _LoginPhoneState extends State<LoginPhone> {
             await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
             await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
             await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
-            await Provider.of<ContactListProvider>(context, listen: false).fetchContactList();
             Navigator.pushAndRemoveUntil(
               context,
               PageTransition(

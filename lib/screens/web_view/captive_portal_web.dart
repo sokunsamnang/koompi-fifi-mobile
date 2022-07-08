@@ -110,10 +110,7 @@ class _CaptivePortalWebState extends State<CaptivePortalWeb> {
                 action: ServerTrustAuthResponseAction.PROCEED);
           },
           onLoadResource: (controller, url) async {
-            print(controller);
             setState(() {
-              
-
               controller.evaluateJavascript(source: '''
                 document.getElementById("phonenumber").value="${global.phone}";
                 document.getElementById("userpassword").value="${global.password}";
@@ -130,10 +127,7 @@ class _CaptivePortalWebState extends State<CaptivePortalWeb> {
             });
           },
           onLoadStop: (controller, url) async {
-            print(url);
-            print(controller);
             setState(() {
-
               this.url = url.toString();
               urlController.text = this.url;
               controller.evaluateJavascript(source: '''
@@ -152,15 +146,6 @@ class _CaptivePortalWebState extends State<CaptivePortalWeb> {
               
             });
 
-            
-            // if(url == Uri.parse(selectedUrl)){
-            //   print('requesting');
-            //   requestTimer;
-            //   if(mData.fullname!.isNotEmpty){
-            //     print('request cancel');
-            //     requestTimer.cancel();
-            //   }
-            // }
             
           },
           onConsoleMessage: (controller, consoleMessage) {

@@ -64,12 +64,9 @@ class _HotspotPlanState extends State<HotspotPlan> {
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        if (kDebugMode) {
-          print('Internet connected');
-        }
         if (response.statusCode == 200) {
-          await Provider.of<BalanceProvider>(context, listen: false)
-              .fetchPortfolio();
+          // await Provider.of<BalanceProvider>(context, listen: false)
+          //     .fetchPortfolio();
           await Provider.of<GetPlanProvider>(context, listen: false)
               .fetchHotspotPlan();
           Navigator.pushAndRemoveUntil(
@@ -111,12 +108,9 @@ class _HotspotPlanState extends State<HotspotPlan> {
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        if (kDebugMode) {
-          print('Internet connected');
-        }
         if (response.statusCode == 200) {
-          await Provider.of<BalanceProvider>(context, listen: false)
-              .fetchPortfolio();
+          // await Provider.of<BalanceProvider>(context, listen: false)
+          //     .fetchPortfolio();
           await Provider.of<GetPlanProvider>(context, listen: false)
               .fetchHotspotPlan();
           Navigator.pushAndRemoveUntil(
@@ -178,12 +172,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
               );
             }),
         automaticallyImplyLeading: false,
-        // centerTitle: true,
         backgroundColor: Colors.white,
-        // title: Image.asset(
-        //   "assets/images/appbar_logo.png",
-        //   scale: 2,
-        // ),
         title: Text('Choose a Plan',
           style: GoogleFonts.robotoCondensed(
             fontSize: 24, 

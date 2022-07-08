@@ -5,11 +5,7 @@ Widget transaction(BuildContext context) {
   List<Widget> _buildList(
       List<TrxHistoryModel> history, BuildContext context, String userWallet) {
     List<Widget> listItems = [];
-    // List<Widget> listItems = List.filled(history.length, Container());
-
-    if (kDebugMode) {
-      print('My History: ${history.length}');
-    }
+    
     for (int i = 0; i < history.length; i++) {
       listItems.add(
         Column(

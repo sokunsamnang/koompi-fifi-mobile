@@ -1,7 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/providers/contact_list_provider.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 class PinCodeVerificationScreen extends StatefulWidget {
   final String phone, password;
@@ -36,8 +35,6 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
       };
     errorController = StreamController<ErrorAnimationType>();
     super.initState();
-    print(widget.phone);
-    print(widget.password);
   }
 
   @override
@@ -53,8 +50,6 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
   //check connection and login
   Future<void> login() async {
     var _lang = AppLocalizeService.of(context);
-    var status = await OneSignal.shared.getDeviceState();
-    String? tokenId = status!.userId;
 
     try {
       final result = await InternetAddress.lookup('google.com');
@@ -71,14 +66,12 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
 
         if (response.statusCode == 200) {
           token = responseJson['token'];
-          await PostRequest().addOnesignalId(token, tokenId!);
           await GetRequest().getUserProfile(token).then((values) {
             setState(() {
               isLoading = true;
             });
           });
           if (token != '') {
-            await PostRequest().addOnesignalId(token, tokenId);
             await StorageServices().saveString('token', token);
             widget.phone.startsWith("0") ? 
             StorageServices().saveString('phone', '0${StorageServices.removeZero(widget.phone)}')
@@ -172,16 +165,6 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
       var responseJson = json.decode(response.body);
 
       if (response.statusCode == 200 && response.body != "Incorrect Code!") {
-        if (kDebugMode) {
-          print(response.body);
-        }
-        // await Navigator.pushReplacement(
-        //   context,
-        //   PageTransition(
-        //     type: PageTransitionType.rightToLeft,
-        //     child: CompleteInfo(widget.phone),
-        //   ),
-        // );
         await login();
       } else {
         await Components.dialog(
@@ -352,22 +335,13 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                       controller: textEditingController,
                       onCompleted: (v) {
                         _submitOtp(currentText);
-                        if (kDebugMode) {
-                          print("Completed");
-                        }
                       },
                       onChanged: (value) {
-                        if (kDebugMode) {
-                          print(value);
-                        }
                         setState(() {
                           currentText = value;
                         });
                       },
                       beforeTextPaste: (text) {
-                        if (kDebugMode) {
-                          print("Allowing to paste $text");
-                        }
                         //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
                         //but you can show anything you want here, like your pop up saying wrong paste format or etc
                         return true;

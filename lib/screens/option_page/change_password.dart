@@ -210,9 +210,10 @@ class _ChangePasswordState extends State<ChangePassword>
 
       var responseJson = json.decode(response.body);
       if (response.statusCode == 200) {
-        await StorageServices().clearToken('token');
-        await StorageServices().clearToken('phone');
-        await StorageServices().clearToken('password');
+        await StorageServices().deleteAllKeys();
+        // await StorageServices().clearToken('token');
+        // await StorageServices().clearToken('phone');
+        // await StorageServices().clearToken('password');
         await Components.dialogResetPw(
           context,
           Text(_lang.translate('tf_change_password'),

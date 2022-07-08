@@ -99,9 +99,6 @@ class _CompleteInfoState extends State<CompleteInfo> {
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        if (kDebugMode) {
-          print('Internet connected');
-        }
         var response = await PostRequest().completeInfoUser(
             _usernameController.text,
             widget.phone,
@@ -119,9 +116,6 @@ class _CompleteInfoState extends State<CompleteInfo> {
             ModalRoute.withName('/loginPhone'),
           );
         } else {
-          if (kDebugMode) {
-            print('register not Successful');
-          }
           await Components.dialog(
               context,
               textAlignCenter(text: _lang.translate('register_error')),
@@ -272,48 +266,48 @@ class _CompleteInfoState extends State<CompleteInfo> {
                     const SizedBox(height: 10.0),
                     locationPicker(context),
                     const SizedBox(height: 10.0),
-                    FormBuilderChoiceChip(
-                      validator: (value) =>
-                          value == null ? 'Please select your gender' : null,
-                      onSaved: (newValue) => _gender = newValue.toString(),
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          labelText: _lang.translate('gender'),
-                          labelStyle: const TextStyle(
-                              color: Colors.black, fontSize: 20)),
-                      labelStyle: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontFamily: "Medium"),
-                      selectedColor: primaryColor,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.0)),
-                      elevation: 2,
-                      alignment: WrapAlignment.spaceBetween,
-                      labelPadding: const EdgeInsets.only(left: 35, right: 35),
-                      // attribute: "gender",
-                      options: [
-                        FormBuilderFieldOption(
-                            value: 'Male',
-                            child: Text(_lang.translate('male'))),
-                        FormBuilderFieldOption(
-                            value: 'Female',
-                            child: Text(_lang.translate('female')))
-                      ],
-                      onChanged: (value) {
-                        if (value == null) {
-                          //* If chip unselected, set value to last selection
-                          formKey.currentState!.fields['gender']!.value
-                              .didChange(lastChoiceChipSelection);
-                        } else {
-                          //* If chip selected, save the value and rebuild
-                          setState(() {
-                            lastChoiceChipSelection = value.toString();
-                          });
-                        }
-                      },
-                      name: 'gender',
-                    ),
+                    // FormBuilderChoiceChip(
+                    //   validator: (value) =>
+                    //       value == null ? 'Please select your gender' : null,
+                    //   onSaved: (newValue) => _gender = newValue.toString(),
+                    //   decoration: InputDecoration(
+                    //       border: InputBorder.none,
+                    //       labelText: _lang.translate('gender'),
+                    //       labelStyle: const TextStyle(
+                    //           color: Colors.black, fontSize: 20)),
+                    //   labelStyle: const TextStyle(
+                    //       color: Colors.black,
+                    //       fontSize: 18,
+                    //       fontFamily: "Medium"),
+                    //   selectedColor: primaryColor,
+                    //   shape: RoundedRectangleBorder(
+                    //       borderRadius: BorderRadius.circular(12.0)),
+                    //   elevation: 2,
+                    //   alignment: WrapAlignment.spaceBetween,
+                    //   labelPadding: const EdgeInsets.only(left: 35, right: 35),
+                    //   // attribute: "gender",
+                    //   options: [
+                    //     FormBuilderFieldOption(
+                    //         value: 'Male',
+                    //         child: Text(_lang.translate('male'))),
+                    //     FormBuilderFieldOption(
+                    //         value: 'Female',
+                    //         child: Text(_lang.translate('female')))
+                    //   ],
+                    //   onChanged: (value) {
+                    //     if (value == null) {
+                    //       //* If chip unselected, set value to last selection
+                    //       formKey.currentState!.fields['gender']!.value
+                    //           .didChange(lastChoiceChipSelection);
+                    //     } else {
+                    //       //* If chip selected, save the value and rebuild
+                    //       setState(() {
+                    //         lastChoiceChipSelection = value.toString();
+                    //       });
+                    //     }
+                    //   },
+                    //   name: 'gender',
+                    // ),
                   ],
                 ),
               ),

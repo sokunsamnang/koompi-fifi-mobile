@@ -181,9 +181,10 @@ class Components {
                               child: Text(firsTxtBtn),
                               onPressed: () async {
                                 dialogLoading(context);
-                                await StorageServices().clearToken('token');
-                                await StorageServices().clearToken('phone');
-                                await StorageServices().clearToken('password');
+                                await StorageServices().deleteAllKeys();
+                                // await StorageServices().clearToken('token');
+                                // await StorageServices().clearToken('phone');
+                                // await StorageServices().clearToken('password');
                                 Timer(
                                   const Duration(milliseconds: 500),
                                   () => Navigator.pushAndRemoveUntil(
