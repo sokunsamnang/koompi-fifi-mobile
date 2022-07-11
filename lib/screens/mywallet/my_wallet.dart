@@ -366,7 +366,7 @@ class _MyWalletState extends State<MyWallet> {
                       color: Colors.black,
                     ),
                   ),
-                  onTap: () async {
+                  onTap: () {
                     Navigator.push(
                       context,
                       PageTransition(

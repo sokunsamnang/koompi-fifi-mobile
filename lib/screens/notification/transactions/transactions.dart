@@ -187,16 +187,23 @@ Widget transaction(BuildContext context) {
                             listen: false)
                         .fetchTrxHistory();
                   },
-                  child: CustomScrollView(
-                    // shrinkWrap: true,
-                    slivers: [
-                      SliverList(
-                        delegate: SliverChildListDelegate(
-                          _buildList(
-                              history.trxHistoryList, context, mData.wallet!),
+                  child: Scrollbar(
+                    thickness: 7,
+                    thumbVisibility: true,
+                    interactive: true,
+                    radius: const Radius.circular(50),
+                    child: CustomScrollView(  
+                      // cacheExtent: double.maxFinite,
+                      // shrinkWrap: true,
+                      slivers: [
+                        SliverList(
+                          delegate: SliverChildListDelegate(
+                            _buildList(
+                                history.trxHistoryList, context, mData.wallet!),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

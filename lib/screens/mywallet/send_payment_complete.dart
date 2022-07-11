@@ -101,7 +101,7 @@ class _CompletePaymentState extends State<CompletePayment> {
                                         listen: false)
                                     .fetchTrxHistory();
                                 Timer(
-                                    const Duration(milliseconds: 500),
+                                    const Duration(milliseconds: 1),
                                     () => Navigator.pushAndRemoveUntil(
                                           context,
                                           PageTransition(

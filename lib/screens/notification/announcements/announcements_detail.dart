@@ -238,11 +238,15 @@ class _AnnouncementsDetailState extends State<AnnouncementsDetail> {
                             const SizedBox(
                               width: 5,
                             ),
+                            _notification.notificationList[widget.index].vote == null ?
+                            const Text(
+                              "0",
+                              style: TextStyle(color: Colors.grey)
+                            ):
                             Text(
-                                _notification
-                                    .notificationList[widget.index].vote
-                                    .toString(),
-                                style: const TextStyle(color: Colors.grey)),
+                              _notification.notificationList[widget.index].vote.toString(),
+                              style: const TextStyle(color: Colors.grey)
+                            ),
                             const SizedBox(
                               width: 5,
                             ),
@@ -301,8 +305,11 @@ class _AnnouncementsDetailState extends State<AnnouncementsDetail> {
                               icon: const Icon(Icons.share_outlined),
                               label: const Text('Share'),
                               onPressed: () {
-                                Share.share('https://koompi.com',
-                                    subject: 'HOT Promotion!');
+                                Share.share(
+                                  _notification.notificationList[widget.index].share == null 
+                                  ? 'https://koompi.com'
+                                  : _notification.notificationList[widget.index].share!
+                                );
                               },
                             ),
                           ],

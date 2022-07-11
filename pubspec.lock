@@ -1531,13 +1531,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.8.1"
-  wifi_connector:
-    dependency: "direct main"
-    description:
-      name: wifi_connector
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.0"
   wifi_iot:
     dependency: "direct main"
     description:

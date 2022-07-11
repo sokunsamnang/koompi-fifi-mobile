@@ -37,13 +37,13 @@ class StorageServices {
         ModalRoute.withName('/loginPhone'),
       );
     } else if (JwtDecoder.isExpired(token) == false) {
-      
       try {
         await GetRequest().getUserProfile(token).then((value) async {
           await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
           await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
           await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
           await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+          await Provider.of<ContactListProvider>(context, listen: false).fetchContactList();
         });
       }
       //  on SocketException catch (_) {
@@ -139,6 +139,12 @@ class StorageServices {
     const storage = FlutterSecureStorage();
     await storage.deleteAll();
   }  
+
+  Future<void> deleteKeys(String? key) async {
+    const storage = FlutterSecureStorage();
+    await storage.delete(key: key!);
+  }  
+
 
   // Future<void> clearToken(String? key) async {
   //   SharedPreferences pref = await SharedPreferences.getInstance();

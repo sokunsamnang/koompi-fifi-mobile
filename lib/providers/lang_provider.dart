@@ -14,7 +14,7 @@ class LangProvider with ChangeNotifier {
     _lang = languageCode;
 
     if (_lang == '') {
-      saveLang(languageCode!, context);
+      saveLang(languageCode, context);
     } else {
       switch (languageCode) {
         case 'KH':

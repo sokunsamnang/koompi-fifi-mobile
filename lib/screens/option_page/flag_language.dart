@@ -7,22 +7,16 @@ class LanguageView extends StatefulWidget {
   _LanguageViewState createState() => _LanguageViewState();
 }
 
-class _LanguageViewState extends State<LanguageView>
-    with SingleTickerProviderStateMixin {
-  AnimationController? _controller;
-
-  String? lang;
+class _LanguageViewState extends State<LanguageView>{
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this);
   }
 
   @override
   void dispose() {
     super.dispose();
-    _controller!.dispose();
   }
 
   @override
@@ -100,7 +94,7 @@ class _LanguageViewState extends State<LanguageView>
                         ),
                         trailing: Consumer<LangProvider>(
                           builder: (context, value, child) =>
-                              value.lang == 'EN' || value.lang == 'US'
+                              value.lang == 'EN' || value.lang == null
                                   ? Icon(
                                       Icons.check_circle,
                                       color: Colors.blue[700],
