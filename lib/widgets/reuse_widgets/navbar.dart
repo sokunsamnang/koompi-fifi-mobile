@@ -1,8 +1,6 @@
 // import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:koompi_hotspot/all_export.dart';
-import 'package:koompi_hotspot/utils/auto_login_hotspot_constants.dart'
-    as global;
 
 class Navbar extends StatefulWidget {
   final int selectedIndex;

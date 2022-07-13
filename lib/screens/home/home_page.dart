@@ -1,4 +1,3 @@
-import 'package:in_app_update/in_app_update.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/providers/contact_list_provider.dart';
 
@@ -35,7 +34,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    // configOneSignal();
     // checkForUpdate();
     AppServices.noInternetConnection(globalKey);
     versionCheck(context);
@@ -121,11 +119,13 @@ class _HomePageState extends State<HomePage> {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
-          await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
-          await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
-          await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
-          await Provider.of<ContactListProvider>(context, listen: false).fetchContactList();
+          if(mounted){
+            await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
+            await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+            await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
+            await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
+            await Provider.of<ContactListProvider>(context, listen: false).fetchContactList();
+          }
         },
         child: SizedBox(
           height: MediaQuery.of(context).size.height,

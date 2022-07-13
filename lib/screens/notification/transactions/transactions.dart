@@ -183,9 +183,7 @@ Widget transaction(BuildContext context) {
             : SafeArea(
                 child: RefreshIndicator(
                   onRefresh: () async {
-                    await Provider.of<TrxHistoryProvider>(context,
-                            listen: false)
-                        .fetchTrxHistory();
+                    await Provider.of<TrxHistoryProvider>(context,listen: false).fetchTrxHistory();
                   },
                   child: Scrollbar(
                     thickness: 7,

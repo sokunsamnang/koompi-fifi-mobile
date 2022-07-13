@@ -23,8 +23,9 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
     return Scaffold(
       body: RefreshIndicator(
         onRefresh: () async {
-          await Provider.of<NotificationProvider>(context, listen: false)
-              .fetchNotification();
+          if(mounted) {
+            await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
+          }
         },
         child: Container(
           child: announcementsList(context),

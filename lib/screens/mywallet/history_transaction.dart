@@ -30,6 +30,8 @@ class _TrxHistoryState extends State<TrxHistory> {
 
     List<Widget> _buildList(List<TrxHistoryModel> history, BuildContext context, String userWallet) {
       List<Widget> listItems = [];
+
+      print("trx history: ${history.length}");
       
       for (int i = 0; i < history.length; i++) {
         DateTime date = DateTime.parse(history[i].datetime!);
@@ -298,8 +300,9 @@ class _TrxHistoryState extends State<TrxHistory> {
       ),
       body: RefreshIndicator(
           onRefresh: () async {
-            await Provider.of<TrxHistoryProvider>(context, listen: false)
-                .fetchTrxHistory();
+            if(mounted){
+              await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+            }
           },
           child: trxHistory(context)));
   }

@@ -55,7 +55,8 @@ class _MyWalletState extends State<MyWallet> {
       ),
     );
   }
-  
+
+
   @override
   void initState() {
     super.initState();
@@ -66,14 +67,11 @@ class _MyWalletState extends State<MyWallet> {
 
   @override
   void dispose() {
-    if(mounted) {
-      fetchWallet();
-    }
     super.dispose();
   }
-  
 
-  void fetchWallet() async {
+
+  Future<void> fetchWallet() async {
     await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
     await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
     await Provider.of<ContactListProvider>(context, listen: false).fetchContactList();
@@ -86,7 +84,7 @@ class _MyWalletState extends State<MyWallet> {
     appBarheight = appBar.preferredSize.height;
 
     return Scaffold(
-      // key: _scaffoldKey,
+      key: _scaffoldKey,
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
@@ -107,10 +105,12 @@ class _MyWalletState extends State<MyWallet> {
         automaticallyImplyLeading: false,
       ),
       body: RefreshIndicator(
-        onRefresh: () async {
-          await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
-          await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
-          await Provider.of<ContactListProvider>(context, listen: false).fetchContactList();
+        onRefresh: () async{
+          if(mounted){
+            await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
+            await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+            await Provider.of<ContactListProvider>(context, listen: false).fetchContactList();
+          }
         },
         child: _balance.balanceList.isNotEmpty ? SizedBox(
           height: MediaQuery.of(context).size.height,
@@ -128,27 +128,33 @@ class _MyWalletState extends State<MyWallet> {
               ],
             ),
           ),
-        ) 
+        )
         :
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.asset('assets/images/server-down.svg', height: MediaQuery.of(context).size.height / 5,),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                'Something went wrong! Please try again later.',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.robotoCondensed(
-                  fontSize: 21, 
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.black,
+        SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height / 1.5,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SvgPicture.asset('assets/images/server-down.svg', height: MediaQuery.of(context).size.height / 5,),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    'Something went wrong! Please try again later.',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.robotoCondensed(
+                      fontSize: 21, 
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black,
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         )
       ),
     );
@@ -383,7 +389,7 @@ class _MyWalletState extends State<MyWallet> {
                         topRight: Radius.circular(10),
                         topLeft: Radius.circular(10)),
                   ),
-                  leading: SvgPicture.asset('assets/images/Luy-coin.svg', width: 40, height: 40,),
+                  leading: Image.asset('assets/images/Luy-coin.png', width: 40, height: 40,),
                   title: Text(
                     _balance.balanceList[1].symbol!,
                     style: GoogleFonts.roboto(

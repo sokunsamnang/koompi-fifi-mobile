@@ -94,12 +94,8 @@ class _CompletePaymentState extends State<CompletePayment> {
                               ),
                               onTap: () async {
                                 dialogLoading(context);
-                                await Provider.of<BalanceProvider>(context,
-                                          listen: false)
-                                      .fetchPortfolio();
-                                await Provider.of<TrxHistoryProvider>(context,
-                                        listen: false)
-                                    .fetchTrxHistory();
+                                await Provider.of<BalanceProvider>(context,listen: false).fetchPortfolio();
+                                await Provider.of<TrxHistoryProvider>(context,listen: false).fetchTrxHistory();
                                 Timer(
                                     const Duration(milliseconds: 1),
                                     () => Navigator.pushAndRemoveUntil(
