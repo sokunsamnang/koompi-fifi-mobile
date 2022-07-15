@@ -48,14 +48,6 @@ class _LoginPhoneState extends State<LoginPhone> {
   void initState() {
     super.initState();
     AppServices.noInternetConnection(globalKey);
-    // checkForUpdate();
-    try {
-      versionCheck(context);
-    } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
-    }
   }
 
   @override

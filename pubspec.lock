@@ -350,7 +350,7 @@ packages:
       name: firebase_core_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.6.6"
+    version: "1.7.0"
   firebase_dynamic_links:
     dependency: "direct main"
     description:
@@ -358,27 +358,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.11"
-  firebase_remote_config:
-    dependency: "direct main"
-    description:
-      name: firebase_remote_config
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.11"
-  firebase_remote_config_platform_interface:
-    dependency: transitive
-    description:
-      name: firebase_remote_config_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.1.10"
-  firebase_remote_config_web:
-    dependency: transitive
-    description:
-      name: firebase_remote_config_web
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.16"
   fixnum:
     dependency: transitive
     description:
@@ -1210,7 +1189,7 @@ packages:
       name: responsive_framework
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.9"
+    version: "0.2.0"
   rflutter_alert:
     dependency: "direct main"
     description:
@@ -1218,13 +1197,48 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.4"
-  share:
+  share_plus:
     dependency: "direct main"
     description:
-      name: share
+      name: share_plus
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.4"
+    version: "4.0.10"
+  share_plus_linux:
+    dependency: transitive
+    description:
+      name: share_plus_linux
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.0"
+  share_plus_macos:
+    dependency: transitive
+    description:
+      name: share_plus_macos
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.1"
+  share_plus_platform_interface:
+    dependency: transitive
+    description:
+      name: share_plus_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.3"
+  share_plus_web:
+    dependency: transitive
+    description:
+      name: share_plus_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.1"
+  share_plus_windows:
+    dependency: transitive
+    description:
+      name: share_plus_windows
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.1"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -1538,13 +1552,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.16"
-  wifi_scan:
-    dependency: "direct main"
-    description:
-      name: wifi_scan
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.0"
   win32:
     dependency: transitive
     description:

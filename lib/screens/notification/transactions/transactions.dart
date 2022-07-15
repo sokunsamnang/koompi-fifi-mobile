@@ -185,23 +185,17 @@ Widget transaction(BuildContext context) {
                   onRefresh: () async {
                     await Provider.of<TrxHistoryProvider>(context,listen: false).fetchTrxHistory();
                   },
-                  child: Scrollbar(
-                    thickness: 7,
-                    thumbVisibility: true,
-                    interactive: true,
-                    radius: const Radius.circular(50),
-                    child: CustomScrollView(  
-                      // cacheExtent: double.maxFinite,
-                      // shrinkWrap: true,
-                      slivers: [
-                        SliverList(
-                          delegate: SliverChildListDelegate(
-                            _buildList(
-                                history.trxHistoryList, context, mData.wallet!),
-                          ),
+                  child: CustomScrollView(  
+                    // cacheExtent: double.maxFinite,
+                    // shrinkWrap: true,
+                    slivers: [
+                      SliverList(
+                        delegate: SliverChildListDelegate(
+                          _buildList(
+                              history.trxHistoryList, context, mData.wallet!),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),

@@ -18,8 +18,7 @@ class _MyAccountState extends State<MyAccount>
   String? imageUrl;
 
   Future pickImage() async {
-    final pickedFile =
-        await ImagePicker.platform.pickImage(source: ImageSource.gallery);
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
       setState(() {

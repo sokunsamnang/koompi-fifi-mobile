@@ -36,7 +36,6 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     // checkForUpdate();
     AppServices.noInternetConnection(globalKey);
-    versionCheck(context);
   }
 
   @override

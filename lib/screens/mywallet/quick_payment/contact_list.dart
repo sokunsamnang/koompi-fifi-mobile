@@ -1,6 +1,5 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:koompi_hotspot/all_export.dart';
-import 'package:koompi_hotspot/models/contact_list_model.dart';
 import 'package:koompi_hotspot/providers/contact_list_provider.dart';
 import 'package:koompi_hotspot/screens/mywallet/quick_payment/edit_contact.dart';
 import 'package:koompi_hotspot/screens/mywallet/quick_payment/save_contact.dart';

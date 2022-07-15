@@ -127,15 +127,20 @@ class _SplashState extends State<Splash> {
     var _lang = Provider.of<LangProvider>(context, listen: false);
     StorageServices().read('lang').then(
       (value) {
-        String? _value = value;
-
+        print("value $value");
         if (value == null) {
           setState(() {
-            _lang.setLocal(_value, context);
+            _lang.setLocal("EN", context);
           });
-        } else {
+        }
+        else if(value == 'EN') {
           setState(() {
-            _lang.setLocal(_value, context);
+            _lang.setLocal("EN", context);
+          });
+        }
+        else if(value == 'KH') {
+          setState(() {
+            _lang.setLocal("KH", context);
           });
         }
       },
@@ -155,19 +160,19 @@ class _SplashState extends State<Splash> {
   void initState() {
     super.initState();
 
-    //Set Language
-    setDefaultLang();
-  
-    setState(() {
-      startTime();
-      getValue();
-      // hasInternetInternetConnection();
-      isWifiAccess();
+    if(mounted){
+      setState(() {
+        //Set Language
+        setDefaultLang();
       
-      
-    });
-    initQuickActions();
-    initDynamicLinks();
+        startTime();
+        getValue();
+        // hasInternetInternetConnection();
+        isWifiAccess();
+        initQuickActions();
+        initDynamicLinks();
+      });
+    }
 
   }
 
