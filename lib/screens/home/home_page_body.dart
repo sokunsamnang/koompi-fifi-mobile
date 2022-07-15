@@ -468,7 +468,6 @@ Widget _planViewButton(context) {
 }
 
 Widget _planExpire(context) {
-  var _lang = AppLocalizeService.of(context);
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 15),
     child: Center(

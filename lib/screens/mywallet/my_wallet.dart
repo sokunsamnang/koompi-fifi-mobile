@@ -55,7 +55,8 @@ class _MyWalletState extends State<MyWallet> {
       ),
     );
   }
-  
+
+
   @override
   void initState() {
     super.initState();
@@ -66,14 +67,11 @@ class _MyWalletState extends State<MyWallet> {
 
   @override
   void dispose() {
-    if(mounted) {
-      fetchWallet();
-    }
     super.dispose();
   }
-  
 
-  void fetchWallet() async {
+
+  Future<void> fetchWallet() async {
     await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
     await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
     await Provider.of<ContactListProvider>(context, listen: false).fetchContactList();
@@ -86,7 +84,7 @@ class _MyWalletState extends State<MyWallet> {
     appBarheight = appBar.preferredSize.height;
 
     return Scaffold(
-      // key: _scaffoldKey,
+      key: _scaffoldKey,
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
@@ -107,10 +105,16 @@ class _MyWalletState extends State<MyWallet> {
         automaticallyImplyLeading: false,
       ),
       body: RefreshIndicator(
-        onRefresh: () async {
+        onRefresh: () async{
+          if(!mounted) return;
           await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
           await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
           await Provider.of<ContactListProvider>(context, listen: false).fetchContactList();
+          // if(mounted){
+          //   await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
+          //   await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+          //   await Provider.of<ContactListProvider>(context, listen: false).fetchContactList();
+          // }
         },
         child: _balance.balanceList.isNotEmpty ? SizedBox(
           height: MediaQuery.of(context).size.height,
@@ -128,27 +132,33 @@ class _MyWalletState extends State<MyWallet> {
               ],
             ),
           ),
-        ) 
+        )
         :
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.asset('assets/images/server-down.svg', height: MediaQuery.of(context).size.height / 5,),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                'Something went wrong! Please try again later.',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.robotoCondensed(
-                  fontSize: 21, 
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.black,
+        SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height / 1.5,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SvgPicture.asset('assets/images/server-down.svg', height: MediaQuery.of(context).size.height / 5,),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    'Something went wrong! Please try again later.',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.robotoCondensed(
+                      fontSize: 21, 
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black,
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         )
       ),
     );
@@ -366,7 +376,7 @@ class _MyWalletState extends State<MyWallet> {
                       color: Colors.black,
                     ),
                   ),
-                  onTap: () async {
+                  onTap: () {
                     Navigator.push(
                       context,
                       PageTransition(
@@ -383,7 +393,7 @@ class _MyWalletState extends State<MyWallet> {
                         topRight: Radius.circular(10),
                         topLeft: Radius.circular(10)),
                   ),
-                  leading: SvgPicture.asset('assets/images/Luy-coin.svg', width: 40, height: 40,),
+                  leading: Image.asset('assets/images/Luy-coin.png', width: 40, height: 40,),
                   title: Text(
                     _balance.balanceList[1].symbol!,
                     style: GoogleFonts.roboto(
@@ -440,414 +450,320 @@ class _MyWalletState extends State<MyWallet> {
     );
   }
 
-  // Widget getTotalBalance(BuildContext context) {
-  //   var balance = Provider.of<BalanceProvider>(context);
-  //   var _lang = AppLocalizeService.of(context);
-  //   return Container(
-  //     padding: const EdgeInsets.only(right: 20, left: 20, top: 22, bottom: 22),
-  //     decoration: BoxDecoration(
-  //         borderRadius: BorderRadius.circular(12.0),
-  //         // color: Colors.grey[900],
-  //         gradient: LinearGradient(
-  //             begin: Alignment.centerLeft,
-  //             end: Alignment.centerRight,
-  //             colors: [HexColor('0F4471'), HexColor('083358')])),
-  //     child: Column(
-  //       crossAxisAlignment: CrossAxisAlignment.start,
-  //       children: [
-  //         Text(
-  //           _lang.translate('total_balance'),
-  //           style: GoogleFonts.nunito(
-  //               textStyle: const TextStyle(
-  //                   color: Colors.white, fontWeight: FontWeight.w700)),
-  //         ),
-  //         const SizedBox(height: 5),
-  //         Row(
-  //           children: [
-  //             Image.asset('assets/images/rise-coin-icon.png', width: 20),
-  //             const SizedBox(width: 10),
-  //             balance.balanceList[0].token == "Token Suspended" ||
-  //                     balance.balanceList[0].token!.isEmpty
-  //                 ? Text(
-  //                     balance.balanceList[0].token!,
-  //                     style: GoogleFonts.nunito(
-  //                         fontSize: 18.0,
-  //                         textStyle: const TextStyle(
-  //                             color: Colors.red, fontWeight: FontWeight.w700)),
-  //                   )
-  //                 : Flexible(
-  //                   child: Text(
-  //                       balance.balanceList[0].token!,
-  //                       overflow: TextOverflow.ellipsis,
-  //                       style: GoogleFonts.nunito(
-  //                           fontSize: 18.0,
-  //                           textStyle: const TextStyle(
-  //                               color: Colors.white,
-  //                               fontWeight: FontWeight.w700)),
-  //                     ),
-  //                 ),
-  //             Text(
-  //               ' ${balance.balanceList[0].symbol}',
-  //               style: GoogleFonts.nunito(
-  //                   fontSize: 18.0,
-  //                   textStyle: const TextStyle(
-  //                       color: Colors.white, fontWeight: FontWeight.w700)),
-  //             )
-  //           ],
-  //         ),
-  //         const SizedBox(height: 7),
-  //         Row(
-  //           children: [
-  //             Image.asset('assets/images/sel-coin-icon.png', width: 22),
-  //             const SizedBox(width: 10),
-  //             balance.balanceList[1].token == "Token Suspended" ||
-  //                     balance.balanceList[1].token!.isEmpty
-  //                 ? Text(
-  //                     balance.balanceList[1].token!,
-  //                     overflow: TextOverflow.ellipsis,
-  //                     style: GoogleFonts.nunito(
-  //                         fontSize: 18.0,
-  //                         textStyle: const TextStyle(
-  //                             color: Colors.red, fontWeight: FontWeight.w700)),
-  //                   )
-  //                 : Flexible(
-  //                   child: Text(
-  //                       balance.balanceList[1].token!,
-  //                       overflow: TextOverflow.ellipsis,
-  //                       style: GoogleFonts.nunito(
-  //                           fontSize: 18.0,
-  //                           textStyle: const TextStyle(
-  //                               color: Colors.white,
-  //                               fontWeight: FontWeight.w700)),
-  //                     ),
-  //                 ),
-  //             Text(
-  //               ' ${balance.balanceList[1].symbol}',
-  //               overflow: TextOverflow.ellipsis,
-  //               style: GoogleFonts.nunito(
-  //                   fontSize: 18.0,
-  //                   textStyle: const TextStyle(
-  //                       color: Colors.white, fontWeight: FontWeight.w700)),
-  //             )
-  //           ],
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
 
-}
-
-Widget _buildDivider() {
-  return Container(
-    width: double.infinity,
-    height: 1.5,
-    color: primaryColor.withOpacity(0.8),
-  );
-}
-
-void _qrBottomSheet(BuildContext context, Function showSnackBar, Function copyWallet) {
-
-  final GlobalKey<ScaffoldState> _modelScaffoldKey = GlobalKey<ScaffoldState>();
-  // final GlobalKey _keyQrShare = GlobalKey();
-
-
-  void qrShare(GlobalKey globalKey, String _wallet) async {
-    try {
-      RenderRepaintBoundary? boundary = globalKey.currentContext
-          ?.findRenderObject() as RenderRepaintBoundary?;
-      var image = await boundary?.toImage(pixelRatio: 5.0);
-      ByteData? byteData = await image?.toByteData(format: ImageByteFormat.png);
-      Uint8List? pngBytes = byteData?.buffer.asUint8List();
-      final tempDir = await getTemporaryDirectory();
-      final file = await File("${tempDir.path}/KOOMPI_HOTSPOT.png").create();
-      await file.writeAsBytes(pngBytes!);
-      Share.shareFiles([(file.path)], text: _wallet);
-    } catch (e) {
-      if (kDebugMode) {
-        print(e.toString());
-      }
-    }
+  Widget _buildDivider() {
+    return Container(
+      width: double.infinity,
+      height: 1.5,
+      color: primaryColor.withOpacity(0.8),
+    );
   }
 
-  showModalBottomSheet(
-    backgroundColor: Colors.white,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(25)),
-    ),
-    isScrollControlled: true,
-    context: context,
-    builder: (_) {
-      var _lang = AppLocalizeService.of(context);
-      return Container(
-        key: _modelScaffoldKey,
-        height: MediaQuery.of(context).size.height * 0.75,
-        // width: MediaQuery.of(context).size.width,
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            RepaintBoundary(
-              child: Container(
-                color: Colors.white,
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      'RECEIVE',
-                      style: GoogleFonts.robotoCondensed(
-                        textStyle: const TextStyle(
-                          color: Colors.black,
-                          fontStyle: FontStyle.italic,
-                          fontSize: 25,
-                          fontWeight: FontWeight.w700
-                        )
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      'Scan address to receive payment',
-                      style: GoogleFonts.roboto(
-                        textStyle: TextStyle(
-                          color: Colors.black.withOpacity(0.5),
-                          fontSize: 14,
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
-                    ),
-                    QrImage(
-                      data: mData.wallet ?? '',
-                      version: QrVersions.auto,
-                      embeddedImage: const AssetImage('assets/images/SelendraQr.png'),
-                      size: 250.0,
-                      embeddedImageStyle: QrEmbeddedImageStyle(
-                        size: const Size(50, 50),
-                      ),
-                    ),
-                    Text(
-                      mData.fullname ?? 'Guest',
-                      style: GoogleFonts.roboto(
-                          textStyle: TextStyle(
-                              color: primaryColor,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700)),
-                    ),
-                    const SizedBox(
-                      height: 10.0,
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      padding: const EdgeInsets.all(8.0),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black),
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(25.0),
-                      ),
-                      child: Text(
-                        mData.wallet!,
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.roboto(fontSize: 12, color: Colors.black.withOpacity(0.5)),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Center(
-              child: InkWell(
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 50,
-                  decoration: BoxDecoration(
-                      gradient: const LinearGradient(colors: [
-                        Color(0xFF17ead9),
-                        Color(0xFF6078ea)
-                      ]),
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                            color:
-                                const Color(0xFF6078ea).withOpacity(.3),
-                            offset: const Offset(0.0, 8.0),
-                            blurRadius: 8.0)
-                      ]),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      customBorder: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      onTap: () async {
-                        copyWallet(mData.wallet!);
-                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                        // showSnackBar();
-                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content: Text("Copied Address"),
-                          behavior: SnackBarBehavior.floating,
-                        ));
-                      },
-                      child: Center(
-                        child: Text(
-                          _lang.translate('copy'),
-                          style: GoogleFonts.nunito(
-                              textStyle: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 18,
-                          )),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20.0,
-            ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  onPrimary: Colors.black87,
-                  primary: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: const BorderRadius.all(Radius.circular(12)),
-                    side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
-                  ),
-                ),
-                onPressed: () {
-                  qrShare(_modelScaffoldKey, mData.wallet!);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 30, vertical: 15),
-                  child: Text(
-                    _lang.translate('share'),
-                    style: GoogleFonts.nunito(
-                        textStyle: const TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 18,
-                    )),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-    }
-  );
-}
+  void _qrBottomSheet(BuildContext context, Function showSnackBar, Function copyWallet) {
 
-void _sendWalletBottomSheet(BuildContext context, String walletKey) {
-  showModalBottomSheet(
+    final GlobalKey<ScaffoldState> _modelScaffoldKey = GlobalKey<ScaffoldState>();
+    // final GlobalKey _keyQrShare = GlobalKey();
+
+
+    void qrShare(GlobalKey globalKey, String _wallet) async {
+      try {
+        RenderRepaintBoundary? boundary = globalKey.currentContext
+            ?.findRenderObject() as RenderRepaintBoundary?;
+        var image = await boundary?.toImage(pixelRatio: 5.0);
+        ByteData? byteData = await image?.toByteData(format: ImageByteFormat.png);
+        Uint8List? pngBytes = byteData?.buffer.asUint8List();
+        final tempDir = await getTemporaryDirectory();
+        final file = await File("${tempDir.path}/KOOMPI_HOTSPOT.png").create();
+        await file.writeAsBytes(pngBytes!);
+        Share.shareFiles([(file.path)], text: _wallet);
+      } catch (e) {
+        if (kDebugMode) {
+          print(e.toString());
+        }
+      }
+    }
+
+    showModalBottomSheet(
+      backgroundColor: Colors.white,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(25)),
       ),
       isScrollControlled: true,
       context: context,
-      builder: (BuildContext context) {
+      builder: (_) {
         var _lang = AppLocalizeService.of(context);
         return Container(
-          height: 153,
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(12), topRight: Radius.circular(12)),
-          ),
+          key: _modelScaffoldKey,
+          padding: const EdgeInsets.all(20.0),
           child: Column(
-            children: <Widget>[
-              Align(
-                alignment: Alignment.center,
-                child: MyText(
-                  top: 20,
-                  bottom: 20,
-                  text: _lang.translate('transaction_options'),
-                  color: '#000000',
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              RepaintBoundary(
+                child: Container(
+                  color: Colors.white,
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'RECEIVE',
+                        style: GoogleFonts.robotoCondensed(
+                          textStyle: const TextStyle(
+                            color: Colors.black,
+                            fontStyle: FontStyle.italic,
+                            fontSize: 25,
+                            fontWeight: FontWeight.w700
+                          )
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        'Scan address to receive payment',
+                        style: GoogleFonts.roboto(
+                          textStyle: TextStyle(
+                            color: Colors.black.withOpacity(0.5),
+                            fontSize: 14,
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                      ),
+                      QrImage(
+                        data: mData.wallet ?? '',
+                        version: QrVersions.auto,
+                        embeddedImage: const AssetImage('assets/images/SelendraQr.png'),
+                        size: 250.0,
+                        embeddedImageStyle: QrEmbeddedImageStyle(
+                          size: const Size(50, 50),
+                        ),
+                      ),
+                      Text(
+                        mData.fullname ?? 'Guest',
+                        style: GoogleFonts.roboto(
+                            textStyle: TextStyle(
+                                color: primaryColor,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700)),
+                      ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        padding: const EdgeInsets.all(8.0),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(25.0),
+                        ),
+                        child: Text(
+                          mData.wallet!,
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.roboto(fontSize: 12, color: Colors.black.withOpacity(0.5)),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              Row(
-                children: [
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () async {
-                        await Navigator.push(
-                                context,
-                                PageTransition(
-                                    type: PageTransitionType.bottomToTop,
-                                    child: const QrScanner(navigator: true)));
-                      },
-                      child: Column(
-                        children: [
-                          Icon(Icons.qr_code_scanner_outlined,
-                              size: 35, color: primaryColor),
-                          MyText(
-                            top: 6,
-                            text: _lang.translate('scan_qr'),
-                            fontSize: 12,
-                            color: '#000000',
-                          )
-                        ],
+              Center(
+                child: InkWell(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 50,
+                    decoration: BoxDecoration(
+                        gradient: const LinearGradient(colors: [
+                          Color(0xFF17ead9),
+                          Color(0xFF6078ea)
+                        ]),
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                              color:
+                                  const Color(0xFF6078ea).withOpacity(.3),
+                              offset: const Offset(0.0, 8.0),
+                              blurRadius: 8.0)
+                        ]),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        customBorder: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        onTap: () async {
+                          copyWallet(mData.wallet!);
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                          // showSnackBar();
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            content: Text("Copied Address"),
+                            behavior: SnackBarBehavior.floating,
+                          ));
+                        },
+                        child: Center(
+                          child: Text(
+                            _lang.translate('copy'),
+                            style: GoogleFonts.nunito(
+                                textStyle: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 18,
+                            )),
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () async {
-                        await Navigator.push(
-                            context,
-                            PageTransition(
-                                type: PageTransitionType.bottomToTop,
-                                child: SendRequest(walletKey, "", "")));
-                      },
-                      child: Column(
-                        children: [
-                          Icon(Icons.description_outlined,
-                              size: 35, color: primaryColor),
-                          MyText(
-                              top: 6,
-                              text: _lang.translate('fill_address'),
-                              fontSize: 12,
-                              color: '#000000')
-                        ],
-                      ),
+                ),
+              ),
+              const SizedBox(
+                height: 20.0,
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    onPrimary: Colors.black87,
+                    primary: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: const BorderRadius.all(Radius.circular(12)),
+                      side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
                     ),
                   ),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () async {
-                        await Navigator.push(
-                            context,
-                            PageTransition(
-                                type: PageTransitionType.bottomToTop,
-                                child: const ContactListScreen()));
-                      },
-                      child: Column(
-                        children: [
-                          Icon(Icons.payments_outlined,
-                              size: 35, color: primaryColor),
-                          const MyText(
-                              top: 6,
-                              text: 'Quick Transfer',
-                              fontSize: 12,
-                              color: '#000000')
-                        ],
-                      ),
+                  onPressed: () {
+                    qrShare(_modelScaffoldKey, mData.wallet!);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 30, vertical: 15),
+                    child: Text(
+                      _lang.translate('share'),
+                      style: GoogleFonts.nunito(
+                          textStyle: const TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18,
+                      )),
                     ),
                   ),
-                ],
+                ),
               ),
             ],
           ),
         );
-      });
+      }
+    );
+  }
+
+  void _sendWalletBottomSheet(BuildContext context, String walletKey) {
+    showModalBottomSheet(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+        ),
+        isScrollControlled: true,
+        context: context,
+        builder: (BuildContext context) {
+          var _lang = AppLocalizeService.of(context);
+          return Container(
+            height: 153,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(12), topRight: Radius.circular(12)),
+            ),
+            child: Column(
+              children: <Widget>[
+                Align(
+                  alignment: Alignment.center,
+                  child: MyText(
+                    top: 20,
+                    bottom: 20,
+                    text: _lang.translate('transaction_options'),
+                    color: '#000000',
+                  ),
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () async {
+                          await Navigator.push(
+                                  context,
+                                  PageTransition(
+                                      type: PageTransitionType.bottomToTop,
+                                      child: const QrScanner(navigator: true)));
+                        },
+                        child: Column(
+                          children: [
+                            Icon(Icons.qr_code_scanner_outlined,
+                                size: 35, color: primaryColor),
+                            MyText(
+                              top: 6,
+                              text: _lang.translate('scan_qr'),
+                              fontSize: 12,
+                              color: '#000000',
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () async {
+                          await Navigator.push(
+                              context,
+                              PageTransition(
+                                  type: PageTransitionType.bottomToTop,
+                                  child: SendRequest(walletKey, "", "")));
+                        },
+                        child: Column(
+                          children: [
+                            Icon(Icons.description_outlined,
+                                size: 35, color: primaryColor),
+                            MyText(
+                                top: 6,
+                                text: _lang.translate('fill_address'),
+                                fontSize: 12,
+                                color: '#000000')
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () async {
+                          await Navigator.push(
+                              context,
+                              PageTransition(
+                                  type: PageTransitionType.bottomToTop,
+                                  child: const ContactListScreen()));
+                        },
+                        child: Column(
+                          children: [
+                            Icon(Icons.payments_outlined,
+                                size: 35, color: primaryColor),
+                            const MyText(
+                                top: 6,
+                                text: 'Quick Transfer',
+                                fontSize: 12,
+                                color: '#000000')
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        }
+      );
+    }
 }
+
+

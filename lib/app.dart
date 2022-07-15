@@ -1,4 +1,5 @@
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/providers/contact_list_provider.dart';
 import 'package:koompi_hotspot/utils/auto_login_hotspot_constants.dart' as global;
@@ -126,14 +127,20 @@ class _SplashState extends State<Splash> {
     var _lang = Provider.of<LangProvider>(context, listen: false);
     StorageServices().read('lang').then(
       (value) {
+        print("value $value");
         if (value == null) {
           setState(() {
-            StorageServices().saveString('lang', 'EN');
-            _lang.setLocal(value, context);
+            _lang.setLocal("EN", context);
           });
-        } else {
+        }
+        else if(value == 'EN') {
           setState(() {
-            _lang.setLocal(value, context);
+            _lang.setLocal("EN", context);
+          });
+        }
+        else if(value == 'KH') {
+          setState(() {
+            _lang.setLocal("KH", context);
           });
         }
       },
@@ -141,10 +148,10 @@ class _SplashState extends State<Splash> {
   }
 
   getValue() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    const storage = FlutterSecureStorage();
     setState(() {
-      global.phone = prefs.getString('phone');
-      global.password = prefs.getString('password');
+      global.phone = storage.read(key: 'phone').toString();
+      global.password = storage.read(key: 'password').toString();
     });
   }
 
@@ -152,19 +159,21 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
-    initDynamicLinks();
-    setState(() {
-      startTime();
-      getValue();
-      // hasInternetInternetConnection();
-      isWifiAccess();
-      
-      
-    });
-    initQuickActions();
 
-    //Set Language
-    setDefaultLang();
+    if(mounted){
+      setState(() {
+        //Set Language
+        setDefaultLang();
+      
+        startTime();
+        getValue();
+        // hasInternetInternetConnection();
+        isWifiAccess();
+        initQuickActions();
+        initDynamicLinks();
+      });
+    }
+
   }
 
   String url = '';
@@ -185,14 +194,15 @@ class _SplashState extends State<Splash> {
         handleDynamicLink(deepLink);
       }
     }, onError: (OnLinkErrorException e) async {
-      print(e.message);
+      if (kDebugMode) {
+        print(e.message);
+      }
     });
   }
 
   handleDynamicLink(Uri url) {
     List<String> separatedString = [];
     separatedString.addAll(url.path.split('/'));
-    print("route url: ${separatedString[1]}");
     if (separatedString[1] == "startapp") {
       Navigator.push(
         context,

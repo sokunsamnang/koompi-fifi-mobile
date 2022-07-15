@@ -97,7 +97,6 @@ class _EditContactState extends State<EditContact> {
 
   @override
   Widget build(BuildContext context) {
-    var _lang = AppLocalizeService.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
       key: globalKey,

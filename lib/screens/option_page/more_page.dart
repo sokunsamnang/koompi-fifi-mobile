@@ -201,7 +201,7 @@ class _MorePageState extends State<MorePage> {
                         // ),
                         ListTile(
                           leading: Icon(LineIcons.mapAlt, color: primaryColor),
-                          title: Text('Fi-Fi Map'),
+                          title: const Text('Fi-Fi Map'),
                           trailing: const Icon(LineIcons.angleRight),
                           onTap: () async {
                             Navigator.push(

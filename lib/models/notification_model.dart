@@ -7,6 +7,7 @@ class NotificationModel {
   String? image;
   String? accId;
   int? vote;
+  String? share;
 
   NotificationModel(Map<String, dynamic> data) {
     _fromJson(data);
@@ -21,5 +22,6 @@ class NotificationModel {
     image = data['image'];
     accId = data['accId'];
     vote = data['vote'];
+    share = data['share'];
   }
 }

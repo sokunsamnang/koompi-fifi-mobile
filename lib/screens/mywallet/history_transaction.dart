@@ -9,22 +9,31 @@ class TrxHistory extends StatefulWidget {
 }
 
 class _TrxHistoryState extends State<TrxHistory> {
+
+  @override
+  void initState(){
+    super.initState();
+  }
+
+  @override 
+  void dispose(){
+    super.dispose();
+  }
+
   Widget trxHistory(BuildContext context) {
     DateTime now = DateTime.now();
     String? prevDay;
     String today = DateFormat("EEEE, d MMMM, y").format(now.toLocal());
-    String yesterday = DateFormat("EEEE, d MMMM, y")
-        .format(now.toLocal().add(const Duration(days: -1)));
+    String yesterday = DateFormat("EEEE, d MMMM, y").format(now.toLocal().add(const Duration(days: -1)));
 
     var _lang = AppLocalizeService.of(context);
-    List<Widget> _buildList(List<TrxHistoryModel> history, BuildContext context,
-        String userWallet) {
+
+    List<Widget> _buildList(List<TrxHistoryModel> history, BuildContext context, String userWallet) {
       List<Widget> listItems = [];
       
       for (int i = 0; i < history.length; i++) {
         DateTime date = DateTime.parse(history[i].datetime!);
-        String dateString =
-            DateFormat("EEEE, d MMMM, y").format(date.toLocal());
+        String dateString = DateFormat("EEEE, d MMMM, y").format(date.toLocal());
 
         if (today == dateString) {
           dateString = "Today";
@@ -240,18 +249,24 @@ class _TrxHistoryState extends State<TrxHistory> {
                 )
               // Display History List
               : SafeArea(
-                  child: SizedBox(
-                    height: MediaQuery.of(context).size.height,
-                    child: CustomScrollView(
-                      shrinkWrap: true,
-                      slivers: [
-                        SliverList(
-                          delegate: SliverChildListDelegate(
-                            _buildList(
-                                history.trxHistoryList, context, mData.wallet!),
+                  child: Scrollbar(
+                    thickness: 7,
+                    thumbVisibility: true,
+                    interactive: true,
+                    radius: const Radius.circular(50),
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height,
+                      child: CustomScrollView(
+                        // cacheExtent: double.maxFinite,
+                        // shrinkWrap: true,
+                        slivers: [
+                          SliverList(
+                            delegate: SliverChildListDelegate(
+                              _buildList(history.trxHistoryList, context, mData.wallet!),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -283,8 +298,9 @@ class _TrxHistoryState extends State<TrxHistory> {
       ),
       body: RefreshIndicator(
           onRefresh: () async {
-            await Provider.of<TrxHistoryProvider>(context, listen: false)
-                .fetchTrxHistory();
+            if(mounted){
+              await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+            }
           },
           child: trxHistory(context)));
   }

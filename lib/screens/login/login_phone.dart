@@ -1,5 +1,6 @@
 import 'package:in_app_update/in_app_update.dart';
 import 'package:koompi_hotspot/all_export.dart';
+import 'package:koompi_hotspot/providers/contact_list_provider.dart';
 
 class LoginPhone extends StatefulWidget {
   const LoginPhone({Key? key}) : super(key: key);
@@ -47,14 +48,6 @@ class _LoginPhoneState extends State<LoginPhone> {
   void initState() {
     super.initState();
     AppServices.noInternetConnection(globalKey);
-    // checkForUpdate();
-    try {
-      versionCheck(context);
-    } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
-    }
   }
 
   @override
@@ -108,6 +101,7 @@ class _LoginPhoneState extends State<LoginPhone> {
             await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
             await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
             await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
+            await Provider.of<ContactListProvider>(context, listen: false).fetchContactList();
             Navigator.pushAndRemoveUntil(
               context,
               PageTransition(

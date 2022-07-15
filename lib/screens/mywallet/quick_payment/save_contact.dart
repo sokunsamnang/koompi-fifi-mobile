@@ -91,7 +91,6 @@ class _SaveContactState extends State<SaveContact> {
 
   @override
   Widget build(BuildContext context) {
-    var _lang = AppLocalizeService.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
       key: globalKey,

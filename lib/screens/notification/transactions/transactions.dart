@@ -183,11 +183,10 @@ Widget transaction(BuildContext context) {
             : SafeArea(
                 child: RefreshIndicator(
                   onRefresh: () async {
-                    await Provider.of<TrxHistoryProvider>(context,
-                            listen: false)
-                        .fetchTrxHistory();
+                    await Provider.of<TrxHistoryProvider>(context,listen: false).fetchTrxHistory();
                   },
-                  child: CustomScrollView(
+                  child: CustomScrollView(  
+                    // cacheExtent: double.maxFinite,
                     // shrinkWrap: true,
                     slivers: [
                       SliverList(

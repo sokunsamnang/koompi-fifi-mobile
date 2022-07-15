@@ -24,12 +24,8 @@ class TrxHistoryProvider with ChangeNotifier {
         if (response.statusCode == 200) {
           var responseBody = json.decode(response.body);
           _backend!.listData = responseBody;
-          if (_backend!.listData!.isEmpty) {
-            return null;
-          } else {
-            for (var l in _backend!.listData!) {
-              trxHistoryList.add(TrxHistoryModel(l));
-            }
+          for (var l in _backend!.listData!) {
+            trxHistoryList.add(TrxHistoryModel(l));
           }
         } else {
           var responseBody = json.decode(response.body);

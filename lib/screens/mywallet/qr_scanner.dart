@@ -49,15 +49,7 @@ class QrScannerState extends State<QrScanner> {
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(
           color: Colors.black, //change your color here
-        ),
-        // actions: <Widget>[
-        //   IconButton(
-        //     icon: const Icon(Icons.camera_alt),
-        //     onPressed: () {
-        //       controller!.toggleFlash();
-        //     },
-        //   ),
-        // ],
+        ), 
       ),
       body: Column(
         children: <Widget>[
@@ -89,6 +81,7 @@ class QrScannerState extends State<QrScanner> {
   }
 
   void _onQRViewCreated(QRViewController controller) {
+    controller.resumeCamera();
     setState(() {
       this.controller = controller;
     });

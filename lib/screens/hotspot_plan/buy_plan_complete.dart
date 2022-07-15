@@ -92,7 +92,7 @@ class _CompletePlanState extends State<CompletePlan> {
                                           listen: false)
                                       .fetchHotspotPlan();
                                   Timer(
-                                    const Duration(milliseconds: 500),
+                                    const Duration(milliseconds: 1),
                                     () => Navigator.pushAndRemoveUntil(
                                           context,
                                           PageTransition(

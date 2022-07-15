@@ -63,8 +63,9 @@ class _SwapTokenState extends State<SwapToken> {
       ),
       body: RefreshIndicator(
           onRefresh: () async {
-            await Provider.of<BalanceProvider>(context, listen: false)
-                .fetchPortfolio();
+            if(mounted){
+              await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
+            }
           },
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),

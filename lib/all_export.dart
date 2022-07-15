@@ -21,7 +21,6 @@ export 'package:internet_connection_checker/internet_connection_checker.dart';
 export 'package:koompi_hotspot/utils/data_connectiviy_service.dart';
 export 'package:url_launcher/url_launcher.dart';
 export 'package:package_info/package_info.dart';
-export 'package:firebase_remote_config/firebase_remote_config.dart';
 export 'package:flutter_launcher_icons/custom_exceptions.dart';
 export 'package:badges/badges.dart';
 export 'package:linkable/linkable.dart';
@@ -62,7 +61,7 @@ export 'package:qr_code_scanner/qr_code_scanner.dart';
 export 'package:qr_flutter/qr_flutter.dart';
 
 // Share to other platform
-export 'package:share/share.dart';
+export 'package:share_plus/share_plus.dart';
 
 // Map
 export 'package:flutter_localizations/flutter_localizations.dart';
@@ -102,7 +101,6 @@ export 'package:koompi_hotspot/services/get_request.dart';
 
 // Service
 export 'package:koompi_hotspot/utils/services.dart';
-export 'package:koompi_hotspot/utils/updater.dart';
 
 // Component
 export 'package:koompi_hotspot/services/component.dart';
@@ -135,9 +133,6 @@ export 'package:koompi_hotspot/screens/home/home_page.dart';
 export 'package:koompi_hotspot/screens/option_page/more_page.dart';
 export 'package:koompi_hotspot/screens/home/home_page_body.dart';
 
-// Map Page
-export 'package:koompi_hotspot/screens/map/location_view.dart';
-
 // Speed Test Page
 export 'package:koompi_hotspot/screens/speedtest/speedtest.dart';
 
@@ -167,7 +162,6 @@ export 'package:koompi_hotspot/screens/promotion/promotion_detail.dart';
 // Wallet Page
 export 'package:koompi_hotspot/screens/mywallet/wallet_choice.dart';
 export 'package:koompi_hotspot/screens/mywallet/history_transaction.dart';
-export 'package:koompi_hotspot/screens/mywallet/receive_request.dart';
 export 'package:koompi_hotspot/screens/mywallet/send_request.dart';
 export 'package:koompi_hotspot/screens/mywallet/qr_scanner.dart';
 export 'package:koompi_hotspot/screens/mywallet/send_payment_complete.dart';

@@ -1,9 +1,7 @@
 import 'package:koompi_hotspot/all_export.dart';
-import 'package:koompi_hotspot/providers/contact_list_provider.dart';
 import 'package:koompi_hotspot/utils/auto_login_hotspot_constants.dart'
     as global;
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:path/path.dart';
 
 String selectedUrl = 'http://connectivitycheck.android.com/generate_204';
 // String selectedUrl = 'https://unifi.koompi.org/guest/s/srdd5hh7/#/';
@@ -51,11 +49,6 @@ class _CaptivePortalWebState extends State<CaptivePortalWeb> {
   @override
   Widget build(BuildContext context) {
     var _lang = AppLocalizeService.of(context);
-
-    Timer requestTimer = Timer(const Duration(seconds: 5), () async {
-      StorageServices().checkUser(context);
-    });
-
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
