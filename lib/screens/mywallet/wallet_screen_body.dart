@@ -8,18 +8,10 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  final GetRequest _getRequest = GetRequest();
-
-  void fetchHistory() async {
-    await _getRequest.getTrxHistory();
-  }
 
   @override
   void initState() {
     super.initState();
-    setState(() {
-      fetchHistory();
-    });
   }
 
   @override
@@ -29,7 +21,7 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    return mData.wallet == null
+    return mData.wallet != null
         ? const WalletChoice()
         : const MyWallet(walletKey: '',);
   }

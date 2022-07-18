@@ -16,7 +16,8 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
 
   final List<Widget> _widgetOptions = <Widget>[
     const HomePage(),
-    const MyWallet(walletKey: ''),
+    // const MyWallet(walletKey: ''),
+    const WalletScreen(),
     const WifiConnect(),
     const MorePage(),
   ];

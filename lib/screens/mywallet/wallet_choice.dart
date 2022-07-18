@@ -1,4 +1,5 @@
 import 'package:koompi_hotspot/all_export.dart';
+import 'package:koompi_hotspot/screens/mywallet/wallet_settings/restore_key.dart';
 
 class WalletChoice extends StatefulWidget {
   const WalletChoice({Key? key}) : super(key: key);
@@ -22,15 +23,15 @@ class _WalletChoiceState extends State<WalletChoice> {
 
   @override
   Widget build(BuildContext context) {
-    var _lang = AppLocalizeService.of(context);
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
         backgroundColor: Colors.white,
         // brightness: Brightness.light,
         title: Text(
-          _lang.translate('my_wallet'),
+          'Fi Wallet',
           style: GoogleFonts.robotoCondensed(
             textStyle: const TextStyle(
               color: Colors.black,
@@ -58,17 +59,6 @@ class _WalletChoiceState extends State<WalletChoice> {
                     width: MediaQuery.of(context).size.height * 0.2,
                     placeholderBuilder: (context) => const Center(),
                   ),
-                  const SizedBox(height: 20),
-                  Text(
-                    "Generate new address wallet.",
-                    style: GoogleFonts.nunito(
-                      textStyle: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -79,15 +69,10 @@ class _WalletChoiceState extends State<WalletChoice> {
                   width: MediaQuery.of(context).size.width,
                   height: 50,
                   decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                          colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                            color: const Color(0xFF6078ea).withOpacity(.3),
-                            offset: const Offset(0.0, 8.0),
-                            blurRadius: 8.0)
-                      ]),
+                    gradient: const LinearGradient(
+                        colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
+                    borderRadius: BorderRadius.circular(12),  
+                  ),
                   child: Material(
                     color: Colors.transparent,
                     child: InkWell(
@@ -95,51 +80,132 @@ class _WalletChoiceState extends State<WalletChoice> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       onTap: () async {
-                        dialogLoading(context);
-                        var response = await GetRequest().getWallet();
-                        var responseJson = json.decode(response.body);
-                        if (response.statusCode == 200) {
-                          await Components.dialog(
-                              context,
-                              textAlignCenter(text: responseJson['message']),
-                              titleDialog());
-                          await Provider.of<BalanceProvider>(context,
-                                  listen: false)
-                              .fetchPortfolio();
-                          await Provider.of<TrxHistoryProvider>(context,
-                                  listen: false)
-                              .fetchTrxHistory();
-                          StorageServices().read('token').then((value) async {
-                            String _token = value!;
-                            await GetRequest().getUserProfile(_token);
-                          });
-                          Timer(
-                            const Duration(milliseconds: 500),
-                            () => Navigator.pushAndRemoveUntil(
-                                  context,
-                                  PageTransition(
-                                    type: PageTransitionType
-                                        .bottomToTop,
-                                    child: const Navbar(0),
-                                  ),
-                                  ModalRoute.withName('/navbar'),
-                                ));
-                        } else {
-                          await Components.dialog(
-                              context,
-                              textAlignCenter(text: responseJson['message']),
-                              warningTitleDialog());
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                        }
+                        // dialogLoading(context);
+                        // var response = await GetRequest().getWallet();
+                        // var responseJson = json.decode(response.body);
+                        // if (response.statusCode == 200) {
+                        //   await Components.dialog(
+                        //       context,
+                        //       textAlignCenter(text: responseJson['message']),
+                        //       titleDialog());
+                        //   await Provider.of<BalanceProvider>(context,
+                        //           listen: false)
+                        //       .fetchPortfolio();
+                        //   await Provider.of<TrxHistoryProvider>(context,
+                        //           listen: false)
+                        //       .fetchTrxHistory();
+                        //   StorageServices().read('token').then((value) async {
+                        //     String _token = value!;
+                        //     await GetRequest().getUserProfile(_token);
+                        //   });
+                        //   Timer(
+                        //     const Duration(milliseconds: 500),
+                        //     () => Navigator.pushAndRemoveUntil(
+                        //           context,
+                        //           PageTransition(
+                        //             type: PageTransitionType
+                        //                 .bottomToTop,
+                        //             child: const Navbar(0),
+                        //           ),
+                        //           ModalRoute.withName('/navbar'),
+                        //         ));
+                        // } else {
+                        //   await Components.dialog(
+                        //       context,
+                        //       textAlignCenter(text: responseJson['message']),
+                        //       warningTitleDialog());
+                        //   Navigator.pop(context);
+                        //   Navigator.pop(context);
+                        // }
+                      },
+                      child: const Center(
+                        child: Text('Generate Wallet',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: "Poppins-Bold",
+                            fontSize: 18,
+                            letterSpacing: 1.0)
+                          ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 10),
+
+            Center(
+              child: InkWell(
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),  
+                  ),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      customBorder: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      onTap: () async {
+
+                        Navigator.push(
+                          context,
+                          PageTransition(
+                            type: PageTransitionType.bottomToTop,
+                            child: const RestoreKey(title: "Import",)
+                          )
+                        );
+                        
+                        // dialogLoading(context);
+                        // var response = await GetRequest().getWallet();
+                        // var responseJson = json.decode(response.body);
+                        // if (response.statusCode == 200) {
+                        //   await Components.dialog(
+                        //       context,
+                        //       textAlignCenter(text: responseJson['message']),
+                        //       titleDialog());
+                        //   await Provider.of<BalanceProvider>(context,
+                        //           listen: false)
+                        //       .fetchPortfolio();
+                        //   await Provider.of<TrxHistoryProvider>(context,
+                        //           listen: false)
+                        //       .fetchTrxHistory();
+                        //   StorageServices().read('token').then((value) async {
+                        //     String _token = value!;
+                        //     await GetRequest().getUserProfile(_token);
+                        //   });
+                        //   Timer(
+                        //     const Duration(milliseconds: 500),
+                        //     () => Navigator.pushAndRemoveUntil(
+                        //           context,
+                        //           PageTransition(
+                        //             type: PageTransitionType
+                        //                 .bottomToTop,
+                        //             child: const Navbar(0),
+                        //           ),
+                        //           ModalRoute.withName('/navbar'),
+                        //         ));
+                        // } else {
+                        //   await Components.dialog(
+                        //       context,
+                        //       textAlignCenter(text: responseJson['message']),
+                        //       warningTitleDialog());
+                        //   Navigator.pop(context);
+                        //   Navigator.pop(context);
+                        // }
                       },
                       child: Center(
-                        child: Text(_lang.translate('get_wallet'),
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontFamily: "Poppins-Bold",
-                                fontSize: 18,
-                                letterSpacing: 1.0)),
+                        child: Text('Import Wallet',
+                          style: TextStyle(
+                            color: primaryColor,
+                            fontFamily: "Poppins-Bold",
+                            fontSize: 18,
+                            letterSpacing: 1.0
+                          )
+                        ),
                       ),
                     ),
                   ),

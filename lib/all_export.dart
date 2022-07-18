@@ -74,7 +74,7 @@ export 'package:app_settings/app_settings.dart';
 export 'package:google_fonts/google_fonts.dart';
 export 'package:font_awesome_flutter/font_awesome_flutter.dart';
 export 'package:line_icons/line_icons.dart';
-
+export 'package:iconsax/iconsax.dart';
 /* Local File */
 
 // App unit

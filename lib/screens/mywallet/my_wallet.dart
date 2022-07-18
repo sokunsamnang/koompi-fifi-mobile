@@ -1,8 +1,10 @@
 import 'dart:typed_data';
 import 'dart:ui';
+import 'package:iconsax/iconsax.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/providers/contact_list_provider.dart';
 import 'package:koompi_hotspot/screens/mywallet/quick_payment/contact_list.dart';
+import 'package:koompi_hotspot/screens/mywallet/wallet_settings/wallet_settings.dart';
 import 'package:path_provider/path_provider.dart';
 
 class MyWallet extends StatefulWidget {
@@ -98,6 +100,23 @@ class _MyWalletState extends State<MyWallet> {
             color: Colors.white,
           ),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Iconsax.setting_2,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                PageTransition(
+                  type: PageTransitionType.leftToRight,
+                  child: const WalletSettingsPage(),
+                ),
+              );
+            },
+          ),
+        ],
         backgroundColor: primaryColor.withOpacity(0.8), 
         iconTheme: const IconThemeData(
           color: Colors.black, //change your color here
