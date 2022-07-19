@@ -1,4 +1,5 @@
 import 'package:koompi_hotspot/all_export.dart';
+import 'package:lottie/lottie.dart';
 
 class CompletePlan extends StatefulWidget {
   const CompletePlan({Key? key}) : super(key: key);
@@ -36,12 +37,12 @@ class _CompletePlanState extends State<CompletePlan> {
                 children: <Widget>[
                   Column(
                     children: <Widget>[
-                      const SizedBox(
+                      SizedBox(
                         width: 300,
                         height: 300,
-                        child: FlareActor(
-                          'assets/animations/success.flr',
-                          animation: 'play',
+                        child: Lottie.asset(
+                          'assets/animations/check-animation.json',
+                          repeat: false,
                         ),
                       ),
                       Center(

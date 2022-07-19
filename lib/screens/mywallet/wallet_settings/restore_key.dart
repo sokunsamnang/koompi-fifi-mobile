@@ -117,7 +117,7 @@ class _RestoreKeyState extends State<RestoreKey> {
                 },
                 child: Center(
                   child: Text(
-                    'Next',
+                    'Confirm',
                     style: GoogleFonts.nunito(
                       textStyle: const TextStyle(
                         color: Colors.white,

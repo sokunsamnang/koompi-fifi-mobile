@@ -53,11 +53,8 @@ class _WalletChoiceState extends State<WalletChoice> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SvgPicture.asset(
-                    'assets/images/wallet.svg',
-                    height: MediaQuery.of(context).size.height * 0.2,
-                    width: MediaQuery.of(context).size.height * 0.2,
-                    placeholderBuilder: (context) => const Center(),
+                  Image.asset(
+                    'assets/images/wallet.png',
                   ),
                 ],
               ),

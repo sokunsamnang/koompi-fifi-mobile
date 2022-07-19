@@ -1,5 +1,6 @@
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/providers/contact_list_provider.dart';
+import 'package:lottie/lottie.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -86,12 +87,11 @@ class _HomePageState extends State<HomePage> {
               badgeColor: Colors.transparent,
               toAnimate: false,
               position: BadgePosition.topEnd(top: 0, end: -2.5),
-              badgeContent: const SizedBox(
+              badgeContent: SizedBox(
                 height: 20,
                 width: 20,
-                child: FlareActor(
-                  'assets/animations/notification_badge.flr',
-                  animation: 'hasNotification',
+                child: Lottie.asset(
+                  'assets/animations/notification_badge.json',
                 ),
               ),
               child: IconButton(

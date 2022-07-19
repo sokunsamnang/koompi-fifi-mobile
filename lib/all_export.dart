@@ -53,9 +53,6 @@ export 'package:intl_phone_number_input/intl_phone_number_input.dart';
 export 'package:flutter_svg/flutter_svg.dart';
 export 'package:flutter_image_compress/flutter_image_compress.dart';
 
-// Animation
-export 'package:flare_flutter/flare_actor.dart';
-
 // QR
 export 'package:qr_code_scanner/qr_code_scanner.dart';
 export 'package:qr_flutter/qr_flutter.dart';

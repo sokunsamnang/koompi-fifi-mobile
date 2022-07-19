@@ -21,7 +21,7 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    return mData.wallet != null
+    return mData.wallet == null
         ? const WalletChoice()
         : const MyWallet(walletKey: '',);
   }

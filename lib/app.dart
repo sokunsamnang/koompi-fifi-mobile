@@ -5,6 +5,7 @@ import 'package:koompi_hotspot/providers/contact_list_provider.dart';
 import 'package:koompi_hotspot/utils/auto_login_hotspot_constants.dart' as global;
 import 'package:koompi_hotspot/utils/globals.dart' as globals;
 import 'package:dart_ping/dart_ping.dart';
+import 'package:rive/rive.dart';
 
 class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);
@@ -274,9 +275,9 @@ class _SplashState extends State<Splash> {
     return const Scaffold(
       backgroundColor: Color(0xff0caddb),
       body: Center(
-        child: FlareActor(
-          'assets/animations/koompi_splash_screen.flr',
-          animation: 'Splash_Loop',
+        child: RiveAnimation.asset(
+          'assets/animations/koompi_splash_screen.riv',
+          animations: ['Splash_Loop'],
         ),
       ),
     );

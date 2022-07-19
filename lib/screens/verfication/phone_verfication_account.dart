@@ -1,6 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/providers/contact_list_provider.dart';
+import 'package:lottie/lottie.dart';
 
 class PinCodeVerificationScreen extends StatefulWidget {
   final String phone, password;
@@ -254,9 +255,8 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
               const SizedBox(height: 30),
               SizedBox(
                 height: MediaQuery.of(context).size.height / 3,
-                child: const FlareActor(
-                  "assets/animations/otp.flr",
-                  animation: "otp",
+                child: Lottie.asset(
+                  "assets/animations/otp.json",
                   fit: BoxFit.fitHeight,
                   alignment: Alignment.center,
                 ),
