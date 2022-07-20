@@ -207,6 +207,83 @@ class Components {
     return result;
   }
 
+  static Future confirmMnemonicDialog(BuildContext context, var text, var title,
+      {Widget? action,
+      String firsTxtBtn = "OK",
+      String secTxtBtn = "CANCEL",
+      Color bgColor = Colors.white,
+      bool removeBtn = false,
+      double pLeft = 10,
+      double pRight = 10,
+      double pTop = 15.0,
+      double pBottom = 5}) async {
+    var result = await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return StatefulBuilder(builder: (context2, setState) {
+            return AlertDialog(
+              backgroundColor: bgColor,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0)),
+              contentPadding: EdgeInsets.only(
+                  left: pLeft, top: pTop, right: pRight, bottom: pBottom),
+              title: title != null
+                  ? Align(
+                      alignment: Alignment.center,
+                      child: title,
+                    )
+                  : null,
+              content: text,
+              actions: !removeBtn
+                  ? <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TextButton(
+                            style: ButtonStyle(
+                              foregroundColor: MaterialStateProperty.all<Color>(
+                                  HexColor('0CACDA')),
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.white),
+                              padding: MaterialStateProperty.all(
+                                  const EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 35)),
+                            ),
+                            child: Text(secTxtBtn),
+                            onPressed: () => Navigator.of(context).pop(text),
+                          ),
+                          TextButton(
+                              style: ButtonStyle(
+                                foregroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Colors.white),
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        HexColor('0CACDA')),
+                                shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                )),
+                                padding: MaterialStateProperty.all(
+                                    const EdgeInsets.symmetric(
+                                        vertical: 10, horizontal: 50)),
+                              ),
+                              child: Text(firsTxtBtn),
+                              onPressed: () async {
+                                Navigator.of(context).pop(text);
+                              }),
+                        ],
+                      ),
+                      action ?? Container()
+                    ]
+                  : null,
+            );
+          });
+        });
+    return result;
+  }
+
   static Future dialogResetPw(BuildContext context, var text, var title,
       {Widget? action,
       String firsTxtBtn = "OK",

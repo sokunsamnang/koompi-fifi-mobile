@@ -183,19 +183,19 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
                 tabBackgroundColor: primaryColor,
                 tabs: [
                   GButton(
-                    icon: LineIcons.home,
+                    icon: Iconsax.home_1,
                     text: _lang.translate('home'),
                   ),
                   const GButton(
-                    icon: LineIcons.wallet,
+                    icon: Iconsax.wallet_2,
                     text: 'Fi Wallet',
                   ),
                   GButton(
-                    icon: Icons.wifi_outlined,
+                    icon: Iconsax.wifi,
                     text: _lang.translate('wifi'),
                   ),
                   GButton(
-                    icon: LineIcons.bars,
+                    icon: Iconsax.menu,
                     text: _lang.translate('more'),
                   ),
                 ],

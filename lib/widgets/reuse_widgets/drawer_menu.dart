@@ -28,7 +28,7 @@ class SideMenu extends StatelessWidget {
           buildDivider(),
           DrawerListTile(
             title: "Home",
-            iconSrc: LineIcons.home,
+            iconSrc: Iconsax.home_1,
             press: () {
               Navigator.pushAndRemoveUntil(
                 context,
@@ -42,7 +42,7 @@ class SideMenu extends StatelessWidget {
           ),
           DrawerListTile(
             title: "Fi Wallet",
-            iconSrc: LineIcons.wallet,
+            iconSrc: Iconsax.wallet_2,
             press: () {
               Navigator.pushAndRemoveUntil(
                 context,
@@ -56,7 +56,7 @@ class SideMenu extends StatelessWidget {
           ),
           DrawerListTile(
             title: "Fi-Fi Maps",
-            iconSrc: LineIcons.map,
+            iconSrc: Iconsax.map,
             press: () {
               Navigator.push(
                 context,
@@ -69,7 +69,7 @@ class SideMenu extends StatelessWidget {
           ),
           DrawerListTile(
             title: "Wi-Fi",
-            iconSrc: Icons.wifi_outlined,
+            iconSrc: Iconsax.wifi,
             press: () {
               Navigator.pushAndRemoveUntil(
                 context,
@@ -83,7 +83,7 @@ class SideMenu extends StatelessWidget {
           ),
           DrawerListTile(
             title: "More",
-            iconSrc: LineIcons.bars,
+            iconSrc: Iconsax.menu,
             press: () {
               Navigator.pushAndRemoveUntil(
                 context,
@@ -97,7 +97,7 @@ class SideMenu extends StatelessWidget {
           ),
           DrawerListTile(
             title: "Sign Out",
-            iconSrc: LineIcons.alternateSignOut,
+            iconSrc: Iconsax.logout_1,
             iconColor: Colors.red,
             press: () async {
               await Components.dialogSignOut(

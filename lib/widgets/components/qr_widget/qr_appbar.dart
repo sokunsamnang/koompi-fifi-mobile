@@ -33,7 +33,7 @@ class MyAppBar extends StatelessWidget {
               /* Menu Icon */
               alignment: Alignment.center,
               iconSize: 40.0,
-              icon: const Icon(Icons.arrow_back, color: Colors.black, size: 30),
+              icon: const Icon(Iconsax.arrow_left_2, color: Colors.black, size: 30),
               onPressed: onPressed(),
             ),
             MyText(

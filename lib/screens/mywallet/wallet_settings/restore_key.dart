@@ -113,7 +113,14 @@ class _RestoreKeyState extends State<RestoreKey> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 onTap: () async {
-                  
+                  Components.confirmMnemonicDialog(
+                    context,
+                    const Text('Are you sure to restore this wallet?', textAlign: TextAlign.center),
+                    const Text(
+                      "Warning!!!",
+                      style: TextStyle(fontFamily: 'Poppins-Bold'),
+                    ),
+                  );
                 },
                 child: Center(
                   child: Text(

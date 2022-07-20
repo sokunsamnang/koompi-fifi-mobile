@@ -67,7 +67,7 @@ class _CaptivePortalWebState extends State<CaptivePortalWeb> {
         leading: Builder(builder: (BuildContext context) {
           return IconButton(
               icon: const Icon(
-                Icons.arrow_back,
+                Iconsax.arrow_left_2,
                 color: Colors.black,
               ),
               onPressed: () {

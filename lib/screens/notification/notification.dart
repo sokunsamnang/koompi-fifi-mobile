@@ -23,6 +23,13 @@ class _NotificationsState extends State<Notifications>
 
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Iconsax.arrow_left_2),
+          color: Colors.black,
+          onPressed: () {
+            Navigator.pop(context);
+          }
+        ),
         elevation: 0,
         centerTitle: true,
         backgroundColor: Colors.white,

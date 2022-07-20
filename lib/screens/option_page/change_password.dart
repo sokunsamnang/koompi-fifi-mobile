@@ -287,7 +287,7 @@ class _ChangePasswordState extends State<ChangePassword>
         leading: Builder(builder: (BuildContext context) {
           return IconButton(
               icon: const Icon(
-                Icons.arrow_back,
+                Iconsax.arrow_left_2,
                 color: Colors.black,
               ),
               onPressed: () {
@@ -348,7 +348,7 @@ class _ChangePasswordState extends State<ChangePassword>
                       keyboardType: TextInputType.visiblePassword,
                       decoration: InputDecoration(
                         prefixIcon: Icon(
-                          LineIcons.unlock,
+                          Iconsax.unlock,
                           color: primaryColor,
                         ),
                         suffixIcon: GestureDetector(
@@ -396,7 +396,7 @@ class _ChangePasswordState extends State<ChangePassword>
                       validator: validateNewPass,
                       onChanged: onChanged,
                       decoration: InputDecoration(
-                        prefixIcon: Icon(LineIcons.alternateUnlock,
+                        prefixIcon: Icon(Iconsax.unlock,
                             color: primaryColor),
                         suffixIcon: GestureDetector(
                           onTap: () {
@@ -443,7 +443,7 @@ class _ChangePasswordState extends State<ChangePassword>
                       validator: validateConfirmPass,
                       onChanged: onChanged,
                       decoration: InputDecoration(
-                        prefixIcon: Icon(LineIcons.alternateUnlock,
+                        prefixIcon: Icon(Iconsax.unlock,
                             color: primaryColor),
                         suffixIcon: GestureDetector(
                           onTap: () {

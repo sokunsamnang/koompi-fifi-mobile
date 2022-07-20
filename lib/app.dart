@@ -46,6 +46,9 @@ class _AppState extends State<App> {
       ],
       child: Consumer<LangProvider>(
         builder: (context, value, child) => MaterialApp(
+          theme: ThemeData(
+            useMaterial3: true
+          ),
           builder: (context, widget) => ResponsiveWrapper.builder(
             BouncingScrollWrapper.builder(context, widget!),
             maxWidth: 2460,

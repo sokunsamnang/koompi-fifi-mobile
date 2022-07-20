@@ -21,7 +21,7 @@ class LocationViewState extends State<LocationView> with TickerProviderStateMixi
   LocationData? _currentLocation;
   late final MapController _mapController;
 
-  final double _outZoom = 3.0;
+  // final double _outZoom = 3.0;
   final double _inZoom = 15.0;
   final double _maxZoom = 18.0;
   final double _minZoom = 5.0;
@@ -29,7 +29,7 @@ class LocationViewState extends State<LocationView> with TickerProviderStateMixi
   bool _liveUpdate = false;
   bool _permission = false;
 
-  String? _serviceError = '';
+  String? serviceError = '';
 
   var interActiveFlags = InteractiveFlag.all;
 
@@ -117,9 +117,9 @@ class LocationViewState extends State<LocationView> with TickerProviderStateMixi
     } on PlatformException catch (e) {
       debugPrint(e.toString());
       if (e.code == 'PERMISSION_DENIED') {
-        _serviceError = e.message;
+        serviceError = e.message;
       } else if (e.code == 'SERVICE_STATUS_ERROR') {
-        _serviceError = e.message;
+        serviceError = e.message;
       }
       location = null;
     }

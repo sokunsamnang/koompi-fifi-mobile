@@ -277,6 +277,13 @@ class _TrxHistoryState extends State<TrxHistory> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Iconsax.arrow_left_2),
+          color: Colors.black,
+          onPressed: () {
+            Navigator.pop(context);
+          }
+        ),
         elevation: 0,
         centerTitle: true,
         backgroundColor: Colors.white,

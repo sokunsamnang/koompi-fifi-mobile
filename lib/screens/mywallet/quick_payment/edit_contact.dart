@@ -104,7 +104,7 @@ class _EditContactState extends State<EditContact> {
         elevation: 0,
         centerTitle: true,
         leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.black),
+            icon: const Icon(Iconsax.arrow_left_2, color: Colors.black),
             onPressed: () {
               Navigator.pop(context);
             }),
@@ -157,7 +157,7 @@ class _EditContactState extends State<EditContact> {
                       controller: usernameController,
                       decoration: InputDecoration(
                         prefixIcon:
-                            Icon(Icons.contact_page, color: HexColor('0CACDA')),
+                            Icon(Iconsax.user_add, color: HexColor('0CACDA')),
                         hintText: 'Name',
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
@@ -200,7 +200,7 @@ class _EditContactState extends State<EditContact> {
                             controller: addressWalletController,
                             decoration: InputDecoration(
                               prefixIcon:
-                                  Icon(Icons.contact_page, color: HexColor('0CACDA')),
+                                  Icon(Iconsax.document_text, color: HexColor('0CACDA')),
                               hintText: 'Receiver Address',
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(12.0),
@@ -227,7 +227,7 @@ class _EditContactState extends State<EditContact> {
                         ),
                         IconButton(
                           splashRadius: 30.0,
-                          icon: Icon(Icons.qr_code_2_outlined, color: primaryColor),
+                          icon: Icon(Iconsax.scan_barcode, color: primaryColor),
                           iconSize: 50,
                           onPressed: () async {
                             try {

@@ -71,7 +71,7 @@ class _SendRequestState extends State<SendRequest> {
 
     if (form!.validate()) {
       form.save();
-      _showDialogPassword(context, recieveWallet!, amount!, memo);
+      _showDialogPassword(context);
     } else {
       setState(() {
         autovalidateMode = AutovalidateMode.always;
@@ -90,11 +90,12 @@ class _SendRequestState extends State<SendRequest> {
           print('Internet connected');
         }
         _backend.response = await PostRequest().sendPayment(
-            _passwordController.text,
-            recieveWallet!.text,
-            asset,
-            amount!.text,
-            memo.text);
+          _passwordController.text,
+          recieveWallet!.text,
+          asset,
+          amount!.text,
+          memo.text
+        );
         var responseJson = json.decode(_backend.response!.body);
         if (_backend.response!.statusCode == 200) {
           Navigator.pushAndRemoveUntil(
@@ -131,12 +132,7 @@ class _SendRequestState extends State<SendRequest> {
     }
   }
 
-  Future _showDialogPassword(
-    BuildContext context,
-    TextEditingController recieveWallet,
-    TextEditingController amount,
-    TextEditingController memo,
-  ) {
+  Future _showDialogPassword(BuildContext context) {
     var _lang = AppLocalizeService.of(context);
     return showDialog(
       context: context,
@@ -281,7 +277,7 @@ class _SendRequestState extends State<SendRequest> {
         elevation: 0,
         centerTitle: true,
         leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.black),
+            icon: const Icon(Iconsax.arrow_left_2, color: Colors.black),
             onPressed: () {
               Navigator.pop(context);
             }),
@@ -388,7 +384,7 @@ class _SendRequestState extends State<SendRequest> {
                       controller: amount,
                       decoration: InputDecoration(
                         prefixIcon: Icon(
-                          FontAwesomeIcons.coins,
+                          Icons.attach_money,
                           color: primaryColor,
                         ),
                         hintText: _lang.translate('amount'),

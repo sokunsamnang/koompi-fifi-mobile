@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 import 'dart:ui';
-import 'package:iconsax/iconsax.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/providers/contact_list_provider.dart';
 import 'package:koompi_hotspot/screens/mywallet/quick_payment/contact_list.dart';
@@ -104,7 +103,7 @@ class _MyWalletState extends State<MyWallet> {
           IconButton(
             icon: const Icon(
               Iconsax.setting_2,
-              color: Colors.black,
+              color: Colors.white,
             ),
             onPressed: () {
               Navigator.push(
@@ -241,7 +240,7 @@ class _MyWalletState extends State<MyWallet> {
                       width: 10,
                     ),
                     Icon(
-                      Icons.content_copy,
+                      Iconsax.copy,
                       color: primaryColor.withOpacity(0.8),
                       size: 20,
                     ),
@@ -719,7 +718,7 @@ class _MyWalletState extends State<MyWallet> {
                         },
                         child: Column(
                           children: [
-                            Icon(Icons.qr_code_scanner_outlined,
+                            Icon(Iconsax.scan_barcode,
                                 size: 35, color: primaryColor),
                             MyText(
                               top: 6,
@@ -742,7 +741,7 @@ class _MyWalletState extends State<MyWallet> {
                         },
                         child: Column(
                           children: [
-                            Icon(Icons.description_outlined,
+                            Icon(Iconsax.document_text,
                                 size: 35, color: primaryColor),
                             MyText(
                                 top: 6,
@@ -764,7 +763,7 @@ class _MyWalletState extends State<MyWallet> {
                         },
                         child: Column(
                           children: [
-                            Icon(Icons.payments_outlined,
+                            Icon(Iconsax.dollar_square,
                                 size: 35, color: primaryColor),
                             const MyText(
                                 top: 6,

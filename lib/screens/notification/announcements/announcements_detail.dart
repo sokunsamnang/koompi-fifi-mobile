@@ -166,7 +166,7 @@ class _AnnouncementsDetailState extends State<AnnouncementsDetail> {
           ),
         ),
         leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.black),
+            icon: const Icon(Iconsax.arrow_left_2, color: Colors.black),
             onPressed: () {
               Navigator.pop(context);
             }),
@@ -354,7 +354,7 @@ class _AnnouncementsDetailState extends State<AnnouncementsDetail> {
                   child: Row(
                     children: <Widget>[
                       const Icon(
-                        FontAwesomeIcons.info,
+                        Iconsax.information,
                         size: 12.5,
                         color: Colors.black,
                       ),

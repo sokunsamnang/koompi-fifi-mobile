@@ -451,7 +451,7 @@
 //         return Row(
 //           children: <Widget>[
 //             IconButton(
-//               icon: const Icon(Icons.arrow_back_ios),
+//               icon: const Icon(Iconsax.arrow_left_2_ios),
 //               onPressed: !webViewReady
 //                   ? null
 //                   : () async {
@@ -467,7 +467,7 @@
 //                     },
 //             ),
 //             IconButton(
-//               icon: const Icon(Icons.arrow_forward_ios),
+//               icon: const Icon(Iconsax.arrow_left_2_forward_ios),
 //               onPressed: !webViewReady
 //                   ? null
 //                   : () async {

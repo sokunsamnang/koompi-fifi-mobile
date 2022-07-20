@@ -26,7 +26,7 @@ Widget formLoginPhone(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Center(
-                child: Text(_lang.translate('welcome_back'),
+                child: Text(_lang.translate('welcome'),
                     style: const TextStyle(
                         fontSize: 24,
                         fontFamily: "Poppins-Bold",
@@ -89,6 +89,44 @@ Widget formLoginPhone(
                   
                 },
               ),
+              // IntlPhoneField(
+              //   disableLengthCheck: true,
+              //   showDropdownIcon: false,
+              //   countries: const ["KH"],
+              //   flagsButtonPadding: const EdgeInsets.all(12),
+              //   decoration: InputDecoration(
+              //     fillColor: Colors.grey[100],
+              //     filled: true,
+              //     hintText: _lang.translate('phone_number_tf'),
+              //     hintStyle: const TextStyle(color: Colors.black, fontSize: 12.0),
+              //     focusedBorder: OutlineInputBorder(
+              //       borderRadius: BorderRadius.circular(12.0),
+              //       borderSide: BorderSide(
+              //         color: primaryColor,
+              //       ),
+              //     ),
+              //     enabledBorder: OutlineInputBorder(
+              //       borderRadius: BorderRadius.circular(12.0),
+              //       borderSide: BorderSide(
+              //         color: primaryColor,
+              //       ),
+              //     ),
+              //     errorBorder: OutlineInputBorder(
+              //       borderRadius: BorderRadius.circular(12.0),
+              //       borderSide: const BorderSide(color: Colors.red),
+              //     ),
+              //     focusedErrorBorder: OutlineInputBorder(
+              //       borderRadius: BorderRadius.circular(12.0),
+              //       borderSide: const BorderSide(color: Colors.red),
+              //     ),
+              //   ),
+              //   onChanged: (phone) {
+              //     print(phone.completeNumber);
+              //   },
+              //   onCountryChanged: (country) {
+              //     print('Country changed to: ' + country.name);
+              //   },
+              // ),
               const SizedBox(
                 height: 20,
               ),

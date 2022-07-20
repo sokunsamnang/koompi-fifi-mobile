@@ -56,7 +56,7 @@ class _SwapTokenState extends State<SwapToken> {
         ),
         automaticallyImplyLeading: true,
         leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
+            icon: const Icon(Iconsax.arrow_left_2),
             onPressed: () {
               Navigator.pop(context);
             }),

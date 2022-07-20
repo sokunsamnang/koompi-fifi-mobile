@@ -61,18 +61,24 @@ class _MorePageState extends State<MorePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 15.0, bottom: 10.0),
-                child: ListTile(
-                  title: Text(
-                    name ?? 'Guest',
-                    style: const TextStyle(
-                        color: Colors.black, fontFamily: "Poppins-Bold"),
+                padding: const EdgeInsets.all(12.0),
+                child: Card(
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
-                  leading: CircleAvatar(
-                    backgroundImage: mData.image == null
-                        ? const AssetImage('assets/images/avatar.png')
-                        : NetworkImage("${ApiService.getAvatar}/${mData.image}")
-                            as ImageProvider<Object>,
+                  child: ListTile(
+                    title: Text(
+                      name ?? 'Guest',
+                      style: const TextStyle(
+                          color: Colors.black, fontFamily: "Poppins-Bold"),
+                    ),
+                    leading: CircleAvatar(
+                      backgroundImage: mData.image == null
+                          ? const AssetImage('assets/images/avatar.png')
+                          : NetworkImage("${ApiService.getAvatar}/${mData.image}")
+                              as ImageProvider<Object>,
+                    ),
                   ),
                 ),
               ),
@@ -101,9 +107,9 @@ class _MorePageState extends State<MorePage> {
                           //   side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
                           //   borderRadius: const BorderRadius.all(Radius.circular(12.0)),
                           // ),
-                          leading: Icon(Icons.people_alt_outlined, color: primaryColor),
+                          leading: Icon(Iconsax.edit_2, color: primaryColor),
                           title: const Text('Edit Profile'),
-                          trailing: const Icon(LineIcons.angleRight),
+                          trailing: const Icon(Iconsax.arrow_right_3),
                           onTap: () async {
                             Navigator.push(
                               context,
@@ -119,9 +125,9 @@ class _MorePageState extends State<MorePage> {
                           //   side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
                           //   borderRadius: const BorderRadius.all(Radius.circular(12.0)),
                           // ),
-                          leading: Icon(LineIcons.key, color: primaryColor),
+                          leading: Icon(Iconsax.key, color: primaryColor),
                           title: Text(_lang.translate('change_password')),
-                          trailing: const Icon(LineIcons.angleRight),
+                          trailing: const Icon(Iconsax.arrow_right_3),
                           onTap: () async {
                             Navigator.push(
                               context,
@@ -137,9 +143,9 @@ class _MorePageState extends State<MorePage> {
                           //   side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
                           //   borderRadius: const BorderRadius.all(Radius.circular(12.0)),
                           // ),
-                          leading: Icon(LineIcons.language, color: primaryColor),
+                          leading: Icon(Iconsax.language_square, color: primaryColor),
                           title: Text(_lang.translate('language')),
-                          trailing: const Icon(LineIcons.angleRight),
+                          trailing: const Icon(Iconsax.arrow_right_3),
                           onTap: () async {
                             Navigator.push(
                               context,
@@ -172,9 +178,9 @@ class _MorePageState extends State<MorePage> {
                       ),
                       children: <Widget>[
                         ListTile(
-                          leading: Icon(LineIcons.connectDevelop, color: primaryColor),
+                          leading: Icon(Iconsax.wifi_square, color: primaryColor),
                           title: Text(_lang.translate('login_hotspot')),
-                          trailing: const Icon(LineIcons.angleRight),
+                          trailing: const Icon(Iconsax.arrow_right_3),
                           onTap: () async {
                             Navigator.push(
                               context,
@@ -200,9 +206,9 @@ class _MorePageState extends State<MorePage> {
                         //   ),
                         // ),
                         ListTile(
-                          leading: Icon(LineIcons.mapAlt, color: primaryColor),
+                          leading: Icon(Iconsax.map, color: primaryColor),
                           title: const Text('Fi-Fi Map'),
-                          trailing: const Icon(LineIcons.angleRight),
+                          trailing: const Icon(Iconsax.arrow_right_3),
                           onTap: () async {
                             Navigator.push(
                               context,
@@ -279,7 +285,7 @@ class _MorePageState extends State<MorePage> {
                       children: [
                         Row(
                           children: [
-                            const Icon(LineIcons.alternateSignOut, color: Colors.red),
+                            const Icon(Iconsax.logout_1, color: Colors.red),
                             TextButton(
                               onPressed: () async {
                                 await Components.dialogSignOut(

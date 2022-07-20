@@ -1,8 +1,6 @@
 import 'package:koompi_hotspot/all_export.dart';
-import 'package:koompi_hotspot/screens/mywallet/wallet_settings/backup_key.dart';
+import 'package:koompi_hotspot/screens/confirm_password/confirm_password.dart';
 import 'package:koompi_hotspot/screens/mywallet/wallet_settings/restore_key.dart';
-import 'package:polkawallet_sdk/polkawallet_sdk.dart';
-import 'package:polkawallet_sdk/storage/keyring.dart';
 
 class WalletSettingsPage extends StatefulWidget {
   const WalletSettingsPage({Key? key}) : super(key: key);
@@ -12,10 +10,6 @@ class WalletSettingsPage extends StatefulWidget {
 }
 
 class _WalletSettingsPageState extends State<WalletSettingsPage> {
-
-  final WalletSDK sdk = WalletSDK();
-  final Keyring keyring = Keyring();
-
 
   @override
   Widget build(BuildContext context) {
@@ -50,15 +44,23 @@ class _WalletSettingsPageState extends State<WalletSettingsPage> {
       children: [
         _getBackupKey(),
         _getRestoreKey(),
-        const Padding(
-          padding: EdgeInsets.all(20),
-          child: MyText(
-            text: "Powered By Selendra Chain",
-            fontSize: 18,
-            color: '#000000',
-            fontWeight: FontWeight.w700,
-          ),
-        )
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const MyText(
+              text: "Powerd By",
+              color: "#000000",
+              fontSize: 18,
+            ),
+            Image.asset("assets/images/sld.png", width: 25, height: 25),
+            const MyText(
+              text: "Selendra Chain",
+              color: "#000000",
+              fontSize: 18,
+            ),
+          ],
+        ),
       ],
     );
   }
@@ -70,7 +72,7 @@ class _WalletSettingsPageState extends State<WalletSettingsPage> {
           context,
           PageTransition(
             type: PageTransitionType.bottomToTop,
-            child: const BackUpKey()
+            child: const ConfirmPassword()
           )
         );
       },

@@ -34,6 +34,12 @@ class QrScannerState extends State<QrScanner> {
     var _lang = AppLocalizeService.of(context);
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Iconsax.arrow_left_2, color: Colors.black),
+          onPressed: () {
+            Navigator.pop(context);
+          }
+        ),
         elevation: 0,
         centerTitle: true,
         title: Text(_lang.translate('qr_scanner'),

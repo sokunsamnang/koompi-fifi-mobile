@@ -160,7 +160,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
         elevation: 0,
         centerTitle: true,
         leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.black),
+            icon: const Icon(Iconsax.arrow_left_2, color: Colors.black),
             onPressed: () {
               Navigator.pushAndRemoveUntil(
                 context,

@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
         elevation: 0,
         automaticallyImplyLeading: false,
         leading: IconButton(
-          icon: const Icon(LineIcons.bars),
+          icon: const Icon(Iconsax.menu_1),
           color: primaryColor,
           onPressed: () => Scaffold.of(context).openDrawer(),
         ),

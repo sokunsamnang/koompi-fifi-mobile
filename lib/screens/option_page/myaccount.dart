@@ -186,7 +186,7 @@ class _MyAccountState extends State<MyAccount>
         leading: Builder(builder: (BuildContext context) {
           return IconButton(
               icon: const Icon(
-                Icons.arrow_back,
+                Iconsax.arrow_left_2,
                 color: Colors.black,
               ),
               onPressed: () {
@@ -284,7 +284,7 @@ class _MyAccountState extends State<MyAccount>
                       controller: fullnameController,
                       decoration: InputDecoration(
                         prefixIcon: Icon(
-                          LineIcons.user,
+                          Iconsax.user,
                           color: primaryColor,
                         ),
                         hintText: _lang.translate('fullname'),
@@ -318,7 +318,7 @@ class _MyAccountState extends State<MyAccount>
                       controller: phoneController,
                       decoration: InputDecoration(
                         prefixIcon: Icon(
-                          LineIcons.phone,
+                          Iconsax.call,
                           color: primaryColor,
                         ),
                         hintText: _lang.translate('phone_number_tf'),
@@ -376,7 +376,7 @@ class _MyAccountState extends State<MyAccount>
                                 ),
                                 child: Row(
                                   children: [
-                                    const Icon(FontAwesomeIcons.male),
+                                    const Icon(Iconsax.man),
                                     Text(_lang.translate('male'),
                                         style: TextStyle(
                                             fontFamily: "Medium",
@@ -407,7 +407,7 @@ class _MyAccountState extends State<MyAccount>
                                 ),
                                 child: Row(
                                   children: [
-                                    const Icon(FontAwesomeIcons.female),
+                                    const Icon(Iconsax.woman),
                                     Text(_lang.translate('female'),
                                         style: TextStyle(
                                             fontFamily: "Medium",

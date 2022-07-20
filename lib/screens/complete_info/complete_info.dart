@@ -197,7 +197,7 @@ class _CompleteInfoState extends State<CompleteInfo> {
                       onSaved: (val) => _usernameController.text = val!,
                       autovalidateMode: AutovalidateMode.always,
                       decoration: InputDecoration(
-                          prefixIcon: Icon(LineIcons.user, color: primaryColor),
+                          prefixIcon: Icon(Iconsax.user, color: primaryColor),
                           hintText: _lang.translate('fullname'),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12.0),
@@ -230,7 +230,7 @@ class _CompleteInfoState extends State<CompleteInfo> {
                       readOnly: true,
                       decoration: InputDecoration(
                           hintText: _lang.translate('phone_number_tf'),
-                          prefixIcon: Icon(Icons.phone, color: primaryColor),
+                          prefixIcon: Icon(Iconsax.call, color: primaryColor),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12.0),
                             borderSide: BorderSide(

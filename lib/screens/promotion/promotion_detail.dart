@@ -158,7 +158,7 @@ class _PromotionScreenState extends State<PromotionScreen> {
           ),
         ),
         leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.black),
+            icon: const Icon(Iconsax.arrow_left_2, color: Colors.black),
             onPressed: () {
               Navigator.pop(context);
             }),
@@ -300,8 +300,8 @@ class _PromotionScreenState extends State<PromotionScreen> {
                                 shadowColor: MaterialStateProperty.all<Color>(
                                     Colors.transparent),
                               ),
-                              icon: const Icon(Icons.share_outlined),
-                              label: const Text('Share'),
+                              icon: const Icon(Iconsax.share, color: Colors.white),
+                              label: const MyText(text: 'Share'),
                               onPressed: () {
                                 Share.share('https://koompi.com',
                                     subject: 'HOT Promotion!');
@@ -348,7 +348,7 @@ class _PromotionScreenState extends State<PromotionScreen> {
                       Row(
                         children: <Widget>[
                           const Icon(
-                            FontAwesomeIcons.info,
+                            Icons.info,
                             size: 12.5,
                             color: Colors.black,
                           ),

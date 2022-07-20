@@ -76,7 +76,7 @@ Widget announcementsList(BuildContext context) {
                                   index: index,
                                 )));
                       },
-                      trailing: const Icon(Icons.arrow_forward_ios_outlined),
+                      trailing: const Icon(Iconsax.arrow_left_2),
                       leading: SizedBox(
                         height: 50,
                         width: 50,

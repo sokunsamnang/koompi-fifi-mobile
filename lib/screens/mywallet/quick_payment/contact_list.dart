@@ -27,22 +27,6 @@ class _ContactListScreenState extends State<ContactListScreen> {
 
   @override
   Widget build(BuildContext context) {
-  // var contact = [ 
-  //   ContactListModel({'id': 1, "contact_name": "user1", "contact_wallet": "s1"}),
-  //   ContactListModel({'id': 1, "contact_name": "user1", "contact_wallet": "s1"}),
-  //   ContactListModel({'id': 1, "contact_name": "user1", "contact_wallet": "s1"}),
-  //   ContactListModel({'id': 1, "contact_name": "user1", "contact_wallet": "s1"}),
-  //   ContactListModel({'id': 1, "contact_name": "user1", "contact_wallet": "s1"}),
-  //   ContactListModel({'id': 1, "contact_name": "user1", "contact_wallet": "s1"}),
-  //   ContactListModel({'id': 1, "contact_name": "user1", "contact_wallet": "s1"}),
-  //   ContactListModel({'id': 1, "contact_name": "user1", "contact_wallet": "s1"}),
-  //   ContactListModel({'id': 1, "contact_name": "user1", "contact_wallet": "s1"}),
-  //   ContactListModel({'id': 1, "contact_name": "user1", "contact_wallet": "s1"}),
-  //   ContactListModel({'id': 1, "contact_name": "user1", "contact_wallet": "s1"}),
-  //   ContactListModel({'id': 1, "contact_name": "user1", "contact_wallet": "s1"}),
-  //   ContactListModel({'id': 1, "contact_name": "user1", "contact_wallet": "s1"}),
-  //   ContactListModel({'id': 1, "contact_name": "user1", "contact_wallet": "s1"}),
-  // ]; 
   var contact = Provider.of<ContactListProvider>(context);
   const duration = Duration(milliseconds: 300);
 
@@ -52,7 +36,7 @@ class _ContactListScreenState extends State<ContactListScreen> {
       elevation: 0,
       centerTitle: true,
       leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Iconsax.arrow_left_2, color: Colors.black),
           onPressed: () {
             Navigator.pop(context);
           }),
@@ -157,8 +141,7 @@ class _ContactListScreenState extends State<ContactListScreen> {
                       trailing: DropdownButtonHideUnderline(
                         child: DropdownButton2(
                           customButton: const Icon(
-                            Icons.more_vert_rounded,
-                            size: 36,
+                            Iconsax.more,
                             color: Colors.black,
                           ), 
                           items: [
@@ -221,7 +204,7 @@ class _ContactListScreenState extends State<ContactListScreen> {
           opacity: _showFab ? 1 : 0,
           child: FloatingActionButton(
             backgroundColor: primaryColor,
-            child: const Icon(Icons.add),
+            child: const Icon(Iconsax.add_square),
             onPressed: () => {
               Navigator.push(
                 context,

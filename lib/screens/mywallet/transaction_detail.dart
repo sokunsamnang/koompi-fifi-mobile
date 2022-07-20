@@ -39,11 +39,12 @@ class _TransactionDetailState extends State<TransactionDetail> {
         shadowColor: primaryColor.withOpacity(0.8),
         automaticallyImplyLeading: true,
         leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            color: Colors.white,
-            onPressed: () {
-              Navigator.pop(context);
-            }),
+          icon: const Icon(Iconsax.arrow_left_2),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.pop(context);
+          }
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
