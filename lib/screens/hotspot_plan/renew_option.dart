@@ -4,10 +4,10 @@ class RenewOption extends StatefulWidget {
   const RenewOption({Key? key}) : super(key: key);
 
   @override
-  _RenewOptionState createState() => _RenewOptionState();
+  RenewOptionState createState() => RenewOptionState();
 }
 
-class _RenewOptionState extends State<RenewOption>
+class RenewOptionState extends State<RenewOption>
     with SingleTickerProviderStateMixin {
   AnimationController? _controller;
   GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
@@ -35,7 +35,7 @@ class _RenewOptionState extends State<RenewOption>
   }
 
   Future<void> renewPlanOption() async {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
 
     dialogLoading(context);
     var response = await PostRequest().renewOption(
@@ -50,8 +50,10 @@ class _RenewOptionState extends State<RenewOption>
           print('Internet connected');
         }
         if (response.statusCode == 200) {
-          await Provider.of<GetPlanProvider>(context, listen: false)
-              .fetchHotspotPlan();
+          if (!mounted) return;
+          await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
+
+          if (!mounted) return;
           Navigator.pushAndRemoveUntil(
             context,
             PageTransition(
@@ -61,25 +63,34 @@ class _RenewOptionState extends State<RenewOption>
             ModalRoute.withName('/navbar'),
           );
         } else {
+
+          if (!mounted) return;
           await Components.dialog(
-              context,
-              textAlignCenter(text: responseJson['message']),
-              warningTitleDialog());
+            context,
+            textAlignCenter(text: responseJson['message']),
+            warningTitleDialog()
+          );
+
+          if (!mounted) return;
           Navigator.of(context).pop();
         }
       }
     } on SocketException catch (_) {
+      if (!mounted) return;
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('no_internet_message')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('no_internet_message')),
+        warningTitleDialog()
+      );
+      
+      if (!mounted) return;
       Navigator.of(context).pop();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
       key: globalKey,
@@ -87,7 +98,7 @@ class _RenewOptionState extends State<RenewOption>
         elevation: 0,
         centerTitle: true,
         backgroundColor: Colors.white,
-        title: Text(_lang.translate('renew_option'),
+        title: Text(lang.translate('renew_option'),
           style: GoogleFonts.robotoCondensed(
             textStyle: const TextStyle(
               color: Colors.black,
@@ -143,7 +154,7 @@ class _RenewOptionState extends State<RenewOption>
                       onTap: () => setState(() => changeIndex(true)),
                       child: ListTile(
                           leading: Icon(Icons.autorenew, color: primaryColor),
-                          title: Text(_lang.translate('auto')),
+                          title: Text(lang.translate('auto')),
                           trailing: renewOption == true
                               ? Icon(
                                   Icons.check_circle,
@@ -181,7 +192,7 @@ class _RenewOptionState extends State<RenewOption>
                                     Icons.check_circle,
                                     color: Colors.transparent,
                                   ),
-                            title: Text(_lang.translate('manual')),
+                            title: Text(lang.translate('manual')),
                             onTap: () {
                               setState(() => changeIndex(false));
                               changeIndex(false) == false

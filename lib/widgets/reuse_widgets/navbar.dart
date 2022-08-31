@@ -7,10 +7,10 @@ class Navbar extends StatefulWidget {
 
   const Navbar(this.selectedIndex, {Key? key}) : super(key: key);
   @override
-  _NavbarState createState() => _NavbarState();
+  NavbarState createState() => NavbarState();
 }
 
-class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
+class NavbarState extends State<Navbar> with WidgetsBindingObserver {
   int _selectedIndex = 0;
 
 
@@ -156,7 +156,7 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
     return Scaffold(
       drawer: const SideMenu(),
       body: Center(
@@ -184,7 +184,7 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
                 tabs: [
                   GButton(
                     icon: Iconsax.home_1,
-                    text: _lang.translate('home'),
+                    text: lang.translate('home'),
                   ),
                   const GButton(
                     icon: Iconsax.wallet_2,
@@ -192,11 +192,11 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
                   ),
                   GButton(
                     icon: Iconsax.wifi,
-                    text: _lang.translate('wifi'),
+                    text: lang.translate('wifi'),
                   ),
                   GButton(
-                    icon: Iconsax.menu,
-                    text: _lang.translate('more'),
+                    icon: Iconsax.menu_1,
+                    text: lang.translate('more'),
                   ),
                 ],
                 selectedIndex: _selectedIndex,

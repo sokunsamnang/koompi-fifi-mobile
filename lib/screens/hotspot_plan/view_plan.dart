@@ -5,16 +5,16 @@ class PlanView extends StatefulWidget {
   const PlanView({Key? key}) : super(key: key);
 
   @override
-  _PlanViewState createState() => _PlanViewState();
+  PlanViewState createState() => PlanViewState();
 }
 
-class _PlanViewState extends State<PlanView> {
+class PlanViewState extends State<PlanView> {
   GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
 
   final TextEditingController _passwordController = TextEditingController();
 
   Future<void> renewPlan() async {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
 
     var response =
         await PostRequest().renewPlanHotspot(_passwordController.text);
@@ -28,8 +28,10 @@ class _PlanViewState extends State<PlanView> {
         }
 
         if (response.statusCode == 200) {
-          await Provider.of<GetPlanProvider>(context, listen: false)
-              .fetchHotspotPlan();
+          if (!mounted) return;
+          await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
+
+          if (!mounted) return;
           Navigator.pushAndRemoveUntil(
             context,
             PageTransition(
@@ -39,40 +41,57 @@ class _PlanViewState extends State<PlanView> {
             ModalRoute.withName('/navbar'),
           );
         } else {
+          if (!mounted) return;
           await Components.dialog(
-              context,
-              textAlignCenter(text: responseJson['message']),
-              warningTitleDialog());
+            context,
+            textAlignCenter(text: responseJson['message']),
+            warningTitleDialog()
+          );
           _passwordController.clear();
+
+          if (!mounted) return;
           Navigator.of(context).pop();
         }
       }
     } on SocketException catch (_) {
+      if (!mounted) return;
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('no_internet_message')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('no_internet_message')),
+        warningTitleDialog()
+      );
       _passwordController.clear();
+
+      if (!mounted) return;
       Navigator.of(context).pop();
     } on FormatException catch (_) {
       if (kDebugMode) {
         print('FormatException');
       }
+
+      if (!mounted) return;
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('server_error')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('server_error')),
+        warningTitleDialog()
+      );
       _passwordController.clear();
+
+      if (!mounted) return;
       Navigator.of(context).pop();
     } on TimeoutException catch (_) {
       if (kDebugMode) {
         print('Time out exception');
       }
+      if (!mounted) return;
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('request_timeout')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('request_timeout')),
+        warningTitleDialog()
+      );
       _passwordController.clear();
+
+      if (!mounted) return;
       Navigator.of(context).pop();
     }
   }
@@ -90,7 +109,7 @@ class _PlanViewState extends State<PlanView> {
 
   @override
   Widget build(BuildContext context) {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
       key: globalKey,
@@ -104,7 +123,7 @@ class _PlanViewState extends State<PlanView> {
             }),
         backgroundColor: Colors.white,
         title: Text(
-          _lang.translate('my_plan'),
+          lang.translate('my_plan'),
           style: GoogleFonts.robotoCondensed(
             textStyle: const TextStyle(
               color: Colors.black,
@@ -179,7 +198,7 @@ class _PlanViewState extends State<PlanView> {
                   },
                   child: Center(
                     child: Text(
-                      _lang.translate('change_plan'),
+                      lang.translate('change_plan'),
                       style: GoogleFonts.nunito(
                           textStyle: const TextStyle(
                               color: Colors.white,
@@ -201,7 +220,7 @@ class _PlanViewState extends State<PlanView> {
     final DateTime now = DateTime.now();
     final DateTime toDayDate = DateTime(now.year, now.month, now.day);
     var different = datePlan.difference(toDayDate).inDays;
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
 
     return InkWell(
       onTap: () {
@@ -233,7 +252,7 @@ class _PlanViewState extends State<PlanView> {
                     width: MediaQuery.of(context).size.width / 0.25,
                     child: Center(
                       child: Text(
-                        _lang.translate('hotspot'),
+                        lang.translate('hotspot'),
                         style: GoogleFonts.nunito(
                             textStyle: TextStyle(
                                 color: primaryColor,
@@ -254,7 +273,7 @@ class _PlanViewState extends State<PlanView> {
                 child: Row(
                   children: [
                     Text(
-                      '${_lang.translate('device')}:',
+                      '${lang.translate('device')}:',
                       style: GoogleFonts.nunito(
                           textStyle: const TextStyle(
                               color: Colors.black,
@@ -263,7 +282,7 @@ class _PlanViewState extends State<PlanView> {
                     ),
                     Expanded(child: Container()),
                     Text(
-                      '${mPlan.device} ${_lang.translate('devices')}',
+                      '${mPlan.device} ${lang.translate('devices')}',
                       style: GoogleFonts.nunito(
                           textStyle: const TextStyle(
                               color: Colors.black,
@@ -279,7 +298,7 @@ class _PlanViewState extends State<PlanView> {
                 child: Row(
                   children: [
                     Text(
-                      '${_lang.translate('speed')}:',
+                      '${lang.translate('speed')}:',
                       style: GoogleFonts.nunito(
                           textStyle: const TextStyle(
                               color: Colors.black,
@@ -288,7 +307,7 @@ class _PlanViewState extends State<PlanView> {
                     ),
                     Expanded(child: Container()),
                     Text(
-                      '5 ${_lang.translate('mb')}',
+                      '5 ${lang.translate('mb')}',
                       style: GoogleFonts.nunito(
                           textStyle: const TextStyle(
                               color: Colors.black,
@@ -304,7 +323,7 @@ class _PlanViewState extends State<PlanView> {
                 child: Row(
                   children: [
                     Text(
-                      '${_lang.translate('plan')}:',
+                      '${lang.translate('plan')}:',
                       style: GoogleFonts.nunito(
                           textStyle: const TextStyle(
                               color: Colors.black,
@@ -313,7 +332,7 @@ class _PlanViewState extends State<PlanView> {
                     ),
                     Expanded(child: Container()),
                     Text(
-                      '${mPlan.plan} ${_lang.translate('day')}',
+                      '${mPlan.plan} ${lang.translate('day')}',
                       style: GoogleFonts.nunito(
                           textStyle: const TextStyle(
                               color: Colors.black,
@@ -329,7 +348,7 @@ class _PlanViewState extends State<PlanView> {
                 child: Row(
                   children: [
                     Text(
-                      '${_lang.translate('expire')}:',
+                      '${lang.translate('expire')}:',
                       style: GoogleFonts.nunito(
                           textStyle: const TextStyle(
                               color: Colors.black,
@@ -351,7 +370,7 @@ class _PlanViewState extends State<PlanView> {
                                     fontWeight: FontWeight.w700)),
                           )
                         : Text(
-                            _lang.translate('expired'),
+                            lang.translate('expired'),
                             style: GoogleFonts.nunito(
                                 textStyle: const TextStyle(
                                     color: Colors.black,
@@ -367,7 +386,7 @@ class _PlanViewState extends State<PlanView> {
                 child: Row(
                   children: [
                     Text(
-                      '${_lang.translate('valid_until')}:',
+                      '${lang.translate('valid_until')}:',
                       style: GoogleFonts.nunito(
                           textStyle: const TextStyle(
                               color: Colors.black,
@@ -407,7 +426,7 @@ class _PlanViewState extends State<PlanView> {
                         const SizedBox(width: 10),
                         mPlan.automatically == true
                             ? Text(
-                                '${_lang.translate('auto_renew_every')} \n${mPlan.plan} ${_lang.translate('day')}',
+                                '${lang.translate('auto_renew_every')} \n${mPlan.plan} ${lang.translate('day')}',
                                 style: GoogleFonts.nunito(
                                     textStyle: const TextStyle(
                                         color: Colors.black,
@@ -415,7 +434,7 @@ class _PlanViewState extends State<PlanView> {
                                         fontWeight: FontWeight.w700)),
                               )
                             : Text(
-                                _lang.translate('manual_renew'),
+                                lang.translate('manual_renew'),
                                 style: GoogleFonts.nunito(
                                     textStyle: const TextStyle(
                                         color: Colors.black,
@@ -477,7 +496,7 @@ class _PlanViewState extends State<PlanView> {
   }
 
   Widget renewButton(BuildContext context) {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
     return Column(
       children: [
         Padding(
@@ -504,7 +523,7 @@ class _PlanViewState extends State<PlanView> {
                   },
                   child: Center(
                     child: Text(
-                      _lang.translate('renew'),
+                      lang.translate('renew'),
                       style: GoogleFonts.nunito(
                           textStyle: const TextStyle(
                               color: Colors.white,
@@ -523,7 +542,7 @@ class _PlanViewState extends State<PlanView> {
   }
 
   Future<void> _showDialogRenewPlan(BuildContext context) async {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -547,7 +566,7 @@ class _PlanViewState extends State<PlanView> {
               decoration: InputDecoration(
                 fillColor: Colors.grey[100],
                 filled: true,
-                hintText: _lang.translate('password_tf'),
+                hintText: lang.translate('password_tf'),
                 hintStyle: const TextStyle(color: Colors.black, fontSize: 12.0),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.0),

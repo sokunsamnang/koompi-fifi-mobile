@@ -369,7 +369,7 @@ class Components {
       double pTop = 15.0,
       double pBottom = 5,
       CallbackAction? callbackAction}) async {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
     var result = await showDialog(
         context: context,
         barrierDismissible: false,
@@ -412,7 +412,7 @@ class Components {
                                       const EdgeInsets.symmetric(
                                           vertical: 10, horizontal: 50)),
                                 ),
-                                child: Text(_lang.translate('btn_update')),
+                                child: Text(lang.translate('btn_update')),
                                 onPressed: () => {callbackAction}),
                           ],
                         ),
@@ -647,8 +647,8 @@ Widget progress({String? content}) {
             content == null
                 ? Container()
                 : Padding(
-                    child: textScale(text: content, hexaColor: "#FFFFFF"),
-                    padding: const EdgeInsets.only(bottom: 10.0, top: 10.0)),
+                    padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
+                    child: textScale(text: content, hexaColor: "#FFFFFF")),
           ],
         )
       ],

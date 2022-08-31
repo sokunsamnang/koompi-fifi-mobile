@@ -8,7 +8,7 @@ Widget shortTrxHistory(BuildContext context) {
   String yesterday = DateFormat("EEEE, d MMMM, y")
       .format(now.toLocal().add(const Duration(days: -1)));
 
-  var _lang = AppLocalizeService.of(context);
+  var lang = AppLocalizeService.of(context);
   List<Widget> _buildList(
       List<TrxHistoryModel> history, BuildContext context, String? userWallet) {
     List<Widget> listItems = [];
@@ -135,8 +135,8 @@ Widget shortTrxHistory(BuildContext context) {
                                     )
                                   : Text(
                                       userWallet == history[i].destination
-                                          ? _lang.translate('recieved')
-                                          : _lang.translate('sent'),
+                                          ? lang.translate('recieved')
+                                          : lang.translate('sent'),
                                       style: GoogleFonts.nunito(
                                           textStyle: const TextStyle(
                                               color: Colors.black,

@@ -7,10 +7,10 @@ class TransactionDetail extends StatefulWidget {
       {Key? key, required this.history, required this.index})
       : super(key: key);
   @override
-  _TransactionDetailState createState() => _TransactionDetailState();
+  TransactionDetailState createState() => TransactionDetailState();
 }
 
-class _TransactionDetailState extends State<TransactionDetail> {
+class TransactionDetailState extends State<TransactionDetail> {
   final double circleRadius = 100.0;
   final double circleBorderWidth = 8.0;
 
@@ -18,7 +18,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
   Widget build(BuildContext context) {
     var history = widget.history;
     var i = widget.index;
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -67,7 +67,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                     ),
                     mData.wallet == history[i].destination
                         ? Text(
-                            _lang.translate('recieved'),
+                            lang.translate('recieved'),
                             style: GoogleFonts.nunito(
                                 textStyle: const TextStyle(
                                     fontSize: 16,
@@ -75,7 +75,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                                     fontWeight: FontWeight.w700)),
                           )
                         : Text(
-                            _lang.translate('sent'),
+                            lang.translate('sent'),
                             style: GoogleFonts.nunito(
                                 textStyle: const TextStyle(
                                     fontSize: 16,

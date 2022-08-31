@@ -5,10 +5,10 @@ class TrxHistory extends StatefulWidget {
   const TrxHistory({Key? key}) : super(key: key);
 
   @override
-  _TrxHistoryState createState() => _TrxHistoryState();
+  TrxHistoryState createState() => TrxHistoryState();
 }
 
-class _TrxHistoryState extends State<TrxHistory> {
+class TrxHistoryState extends State<TrxHistory> {
 
   @override
   void initState(){
@@ -26,7 +26,7 @@ class _TrxHistoryState extends State<TrxHistory> {
     String today = DateFormat("EEEE, d MMMM, y").format(now.toLocal());
     String yesterday = DateFormat("EEEE, d MMMM, y").format(now.toLocal().add(const Duration(days: -1)));
 
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
 
     List<Widget> _buildList(List<TrxHistoryModel> history, BuildContext context, String userWallet) {
       List<Widget> listItems = [];
@@ -155,8 +155,8 @@ class _TrxHistoryState extends State<TrxHistory> {
                                       )
                                     : Text(
                                         userWallet == history[i].destination
-                                            ? _lang.translate('recieved')
-                                            : _lang.translate('sent'),
+                                            ? lang.translate('recieved')
+                                            : lang.translate('sent'),
                                         style: GoogleFonts.nunito(
                                             textStyle: const TextStyle(
                                                 color: Colors.black,

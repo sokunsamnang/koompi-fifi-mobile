@@ -9,10 +9,10 @@ class PromotionScreen extends StatefulWidget {
       : super(key: key);
 
   @override
-  _PromotionScreenState createState() => _PromotionScreenState();
+  PromotionScreenState createState() => PromotionScreenState();
 }
 
-class _PromotionScreenState extends State<PromotionScreen> {
+class PromotionScreenState extends State<PromotionScreen> {
   bool isUpVoted = false;
   bool isDownVoted = false;
 
@@ -29,7 +29,7 @@ class _PromotionScreenState extends State<PromotionScreen> {
   }
 
   Future<void> _onSubmitUpVoteAdsPost() async {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
 
     dialogLoading(context);
     try {
@@ -42,30 +42,39 @@ class _PromotionScreenState extends State<PromotionScreen> {
             await PostRequest().upVoteAdsPost(widget.promotion.id.toString());
         var responseJson = json.decode(_backend.response!.body);
         if (_backend.response!.statusCode == 200) {
-          await Provider.of<VoteResultProvider>(context, listen: false)
-              .fetchVoteResult(widget.promotion.id!);
-          await Provider.of<NotificationProvider>(context, listen: false)
-              .fetchNotification();
+          if (!mounted) return;
+          await Provider.of<VoteResultProvider>(context, listen: false).fetchVoteResult(widget.promotion.id!);
+
+          if (!mounted) return;
+          await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
+          
+          if (!mounted) return;
           Navigator.of(context).pop();
         } else {
+          if (!mounted) return;
           await Components.dialog(
-              context,
-              textAlignCenter(text: responseJson['message']),
-              warningTitleDialog());
+            context,
+            textAlignCenter(text: responseJson['message']),
+            warningTitleDialog()
+          );
+
+          if (!mounted) return;
           Navigator.of(context).pop();
         }
       }
     } on SocketException catch (_) {
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('no_internet_message')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('no_internet_message')),
+        warningTitleDialog()
+      );
+      if (!mounted) return;
       Navigator.of(context).pop();
     }
   }
 
   Future<void> _onSubmitDownVoteAdsPost() async {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
 
     dialogLoading(context);
     try {
@@ -78,30 +87,40 @@ class _PromotionScreenState extends State<PromotionScreen> {
             await PostRequest().downVoteAdsPost(widget.promotion.id.toString());
         var responseJson = json.decode(_backend.response!.body);
         if (_backend.response!.statusCode == 200) {
-          await Provider.of<VoteResultProvider>(context, listen: false)
-              .fetchVoteResult(widget.promotion.id!);
-          await Provider.of<NotificationProvider>(context, listen: false)
-              .fetchNotification();
+          if (!mounted) return;
+          await Provider.of<VoteResultProvider>(context, listen: false).fetchVoteResult(widget.promotion.id!);
+          
+          if (!mounted) return;
+          await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
+          
+          if (!mounted) return;
           Navigator.of(context).pop();
         } else {
+          if (!mounted) return;
           await Components.dialog(
-              context,
-              textAlignCenter(text: responseJson['message']),
-              warningTitleDialog());
+            context,
+            textAlignCenter(text: responseJson['message']),
+            warningTitleDialog()
+          );
+
+          if (!mounted) return;
           Navigator.of(context).pop();
         }
       }
     } on SocketException catch (_) {
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('no_internet_message')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('no_internet_message')),
+        warningTitleDialog()
+      );
+      
+      if (!mounted) return;
       Navigator.of(context).pop();
     }
   }
 
   Future<void> _onSubmitUnVoteAdsPut() async {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
     dialogLoading(context);
     // dialogLoading(context);
     try {
@@ -114,32 +133,42 @@ class _PromotionScreenState extends State<PromotionScreen> {
             await PostRequest().unVoteAdsPut(widget.promotion.id.toString());
         var responseJson = json.decode(_backend.response!.body);
         if (_backend.response!.statusCode == 200) {
-          await Provider.of<VoteResultProvider>(context, listen: false)
-              .fetchVoteResult(widget.promotion.id!);
-          await Provider.of<NotificationProvider>(context, listen: false)
-              .fetchNotification();
+          if (!mounted) return;
+          await Provider.of<VoteResultProvider>(context, listen: false).fetchVoteResult(widget.promotion.id!);
+
+          if (!mounted) return;
+          await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
+
+          if (!mounted) return;
           Navigator.of(context).pop();
         } else {
+          if (!mounted) return;
           await Components.dialog(
-              context,
-              textAlignCenter(text: responseJson['message']),
-              warningTitleDialog());
+            context,
+            textAlignCenter(text: responseJson['message']),
+            warningTitleDialog()
+          );
+
+          if (!mounted) return;
           Navigator.of(context).pop();
         }
       }
     } on SocketException catch (_) {
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('no_internet_message')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('no_internet_message')),
+        warningTitleDialog()
+      );
+      
+      if (!mounted) return;
       Navigator.of(context).pop();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    var _lang = AppLocalizeService.of(context);
-    var _notification = Provider.of<NotificationProvider>(context);
+    var lang = AppLocalizeService.of(context);
+    var notification = Provider.of<NotificationProvider>(context);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -147,7 +176,7 @@ class _PromotionScreenState extends State<PromotionScreen> {
         elevation: 0,
         centerTitle: true,
         backgroundColor: Colors.white,
-        title: Text(_lang.translate('promotion'),
+        title: Text(lang.translate('promotion'),
           style: GoogleFonts.robotoCondensed(
             textStyle: const TextStyle(
               color: Colors.black,
@@ -175,12 +204,12 @@ class _PromotionScreenState extends State<PromotionScreen> {
                   children: <Widget>[
                     Hero(
                       tag:
-                          "${ApiService.notiImage}/${_notification.notificationList[widget.index].image}",
+                          "${ApiService.notiImage}/${notification.notificationList[widget.index].image}",
                       child: ClipRRect(
                         // borderRadius: BorderRadius.circular(12.0),
                         child: Image(
                           image: NetworkImage(
-                              "${ApiService.notiImage}/${_notification.notificationList[widget.index].image}"),
+                              "${ApiService.notiImage}/${notification.notificationList[widget.index].image}"),
                           fit: BoxFit.contain,
                         ),
                       ),
@@ -241,7 +270,7 @@ class _PromotionScreenState extends State<PromotionScreen> {
                               width: 5,
                             ),
                             Text(
-                                _notification
+                                notification
                                     .notificationList[widget.index].vote
                                     .toString(),
                                 style: const TextStyle(color: Colors.grey)),

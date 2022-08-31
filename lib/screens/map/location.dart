@@ -128,7 +128,7 @@ class LocationViewState extends State<LocationView> with TickerProviderStateMixi
   @override
   Widget build(BuildContext context) {
     LatLng currentLatLng;
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
     
     // Until currentLocation is initially updated, Widget can locate to 0, 0
     // by default or store previous location value to show.
@@ -144,6 +144,10 @@ class LocationViewState extends State<LocationView> with TickerProviderStateMixi
         height: 50.0,
         point: currentLatLng,
         builder: (ctx) => Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(100.0),
+            color: Colors.blue[100]?.withOpacity(0.7),
+          ),
           child: Column(
             children: const <Widget>[
               IconButton(
@@ -154,10 +158,6 @@ class LocationViewState extends State<LocationView> with TickerProviderStateMixi
                   onPressed: null),
             ],
           ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(100.0),
-            color: Colors.blue[100]?.withOpacity(0.7),
-          ),
         ),
       ),
     ];
@@ -166,7 +166,7 @@ class LocationViewState extends State<LocationView> with TickerProviderStateMixi
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
-        title: Text(_lang.translate('fifi_map'),
+        title: Text(lang.translate('fifi_map'),
           style: GoogleFonts.robotoCondensed(
             textStyle: const TextStyle(
               color: Colors.black,
@@ -202,7 +202,7 @@ class LocationViewState extends State<LocationView> with TickerProviderStateMixi
             // For example purposes. It is recommended to use
             // TileProvider with a caching and retry strategy, like
             // NetworkTileProvider or CachedNetworkTileProvider
-            tileProvider: const NonCachingNetworkTileProvider(),
+            tileProvider: NetworkNoRetryTileProvider(),
           ),
           MarkerLayerOptions(markers: markers),
           MarkerClusterLayerOptions(

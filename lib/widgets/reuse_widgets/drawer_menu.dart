@@ -8,7 +8,7 @@ class SideMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
     return Drawer(
       child: ListView(
         physics: const NeverScrollableScrollPhysics(),
@@ -83,7 +83,7 @@ class SideMenu extends StatelessWidget {
           ),
           DrawerListTile(
             title: "More",
-            iconSrc: Iconsax.menu,
+            iconSrc: Iconsax.menu_1,
             press: () {
               Navigator.pushAndRemoveUntil(
                 context,
@@ -102,10 +102,10 @@ class SideMenu extends StatelessWidget {
             press: () async {
               await Components.dialogSignOut(
                 context,
-                Text(_lang.translate('sign_out_warn'),
+                Text(lang.translate('sign_out_warn'),
                     textAlign: TextAlign.center),
                 Text(
-                  _lang.translate('warning'),
+                  lang.translate('warning'),
                   style: const TextStyle(fontFamily: 'Poppins-Bold'),
                 ),
               );

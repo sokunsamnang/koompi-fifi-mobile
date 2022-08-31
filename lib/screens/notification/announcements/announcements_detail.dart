@@ -8,10 +8,10 @@ class AnnouncementsDetail extends StatefulWidget {
       : super(key: key);
 
   @override
-  _AnnouncementsDetailState createState() => _AnnouncementsDetailState();
+  AnnouncementsDetailState createState() => AnnouncementsDetailState();
 }
 
-class _AnnouncementsDetailState extends State<AnnouncementsDetail> {
+class AnnouncementsDetailState extends State<AnnouncementsDetail> {
   bool isUpVoted = false;
   bool isDownVoted = false;
 
@@ -29,14 +29,13 @@ class _AnnouncementsDetailState extends State<AnnouncementsDetail> {
   }
 
   Future getVoteResult() async {
-    await Provider.of<VoteResultProvider>(context, listen: false)
-        .fetchVoteResult(widget.notification[widget.index].id!);
-    await Provider.of<NotificationProvider>(context, listen: false)
-        .fetchNotification();
+    await Provider.of<VoteResultProvider>(context, listen: false).fetchVoteResult(widget.notification[widget.index].id!);
+    if (!mounted) return;
+    await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
   }
 
   Future<void> _onSubmitUpVoteAdsPost() async {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
 
     dialogLoading(context);
     try {
@@ -49,30 +48,39 @@ class _AnnouncementsDetailState extends State<AnnouncementsDetail> {
             .upVoteAdsPost(widget.notification[widget.index].id.toString());
         var responseJson = json.decode(_backend.response!.body);
         if (_backend.response!.statusCode == 200) {
-          await Provider.of<VoteResultProvider>(context, listen: false)
-              .fetchVoteResult(widget.notification[widget.index].id!);
-          await Provider.of<NotificationProvider>(context, listen: false)
-              .fetchNotification();
+          if (!mounted) return;
+          await Provider.of<VoteResultProvider>(context, listen: false).fetchVoteResult(widget.notification[widget.index].id!);
+          
+          if (!mounted) return;
+          await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
+          
+          if (!mounted) return;
           Navigator.of(context).pop();
         } else {
+          if (!mounted) return;
           await Components.dialog(
-              context,
-              textAlignCenter(text: responseJson['message']),
-              warningTitleDialog());
+            context,
+            textAlignCenter(text: responseJson['message']),
+            warningTitleDialog()
+          );
+
+          if (!mounted) return;
           Navigator.of(context).pop();
         }
       }
     } on SocketException catch (_) {
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('no_internet_message')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('no_internet_message')),
+        warningTitleDialog()
+      );
+      if (!mounted) return;
       Navigator.of(context).pop();
     }
   }
 
   Future<void> _onSubmitDownVoteAdsPost() async {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
 
     dialogLoading(context);
     try {
@@ -85,30 +93,40 @@ class _AnnouncementsDetailState extends State<AnnouncementsDetail> {
             .downVoteAdsPost(widget.notification[widget.index].id.toString());
         var responseJson = json.decode(_backend.response!.body);
         if (_backend.response!.statusCode == 200) {
-          await Provider.of<VoteResultProvider>(context, listen: false)
-              .fetchVoteResult(widget.notification[widget.index].id!);
-          await Provider.of<NotificationProvider>(context, listen: false)
-              .fetchNotification();
+          if (!mounted) return;
+          await Provider.of<VoteResultProvider>(context, listen: false).fetchVoteResult(widget.notification[widget.index].id!);
+          
+          if (!mounted) return;
+          await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
+          
+          if (!mounted) return;
           Navigator.of(context).pop();
         } else {
+          if (!mounted) return;
           await Components.dialog(
-              context,
-              textAlignCenter(text: responseJson['message']),
-              warningTitleDialog());
+            context,
+            textAlignCenter(text: responseJson['message']),
+            warningTitleDialog()
+          );
+
+          if (!mounted) return;
           Navigator.of(context).pop();
         }
       }
     } on SocketException catch (_) {
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('no_internet_message')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('no_internet_message')),
+        warningTitleDialog()
+      );
+
+      if (!mounted) return;
       Navigator.of(context).pop();
     }
   }
 
   Future<void> _onSubmitUnVoteAdsPut() async {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
     dialogLoading(context);
     // dialogLoading(context);
     try {
@@ -121,33 +139,43 @@ class _AnnouncementsDetailState extends State<AnnouncementsDetail> {
             .unVoteAdsPut(widget.notification[widget.index].id.toString());
         var responseJson = json.decode(_backend.response!.body);
         if (_backend.response!.statusCode == 200) {
-          await Provider.of<VoteResultProvider>(context, listen: false)
-              .fetchVoteResult(widget.notification[widget.index].id!);
-          await Provider.of<NotificationProvider>(context, listen: false)
-              .fetchNotification();
+          if (!mounted) return;
+          await Provider.of<VoteResultProvider>(context, listen: false).fetchVoteResult(widget.notification[widget.index].id!);
+          
+          if (!mounted) return;
+          await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
+          
+          if (!mounted) return;
           Navigator.of(context).pop();
         } else {
+          if (!mounted) return;
           await Components.dialog(
-              context,
-              textAlignCenter(text: responseJson['message']),
-              warningTitleDialog());
+            context,
+            textAlignCenter(text: responseJson['message']),
+            warningTitleDialog()
+          );
+
+          if (!mounted) return;
           Navigator.of(context).pop();
         }
       }
     } on SocketException catch (_) {
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('no_internet_message')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('no_internet_message')),
+        warningTitleDialog()
+      );
+
+      if (!mounted) return;
       Navigator.of(context).pop();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
 
-    var _notification = Provider.of<NotificationProvider>(context);
+    var notification = Provider.of<NotificationProvider>(context);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -155,7 +183,7 @@ class _AnnouncementsDetailState extends State<AnnouncementsDetail> {
         elevation: 0,
         centerTitle: true,
         backgroundColor: Colors.white,
-        title: Text(_lang.translate('announcements'),
+        title: Text(lang.translate('announcements'),
           style: GoogleFonts.robotoCondensed(
             textStyle: const TextStyle(
               color: Colors.black,
@@ -238,13 +266,13 @@ class _AnnouncementsDetailState extends State<AnnouncementsDetail> {
                             const SizedBox(
                               width: 5,
                             ),
-                            _notification.notificationList[widget.index].vote == null ?
+                            notification.notificationList[widget.index].vote == null ?
                             const Text(
                               "0",
                               style: TextStyle(color: Colors.grey)
                             ):
                             Text(
-                              _notification.notificationList[widget.index].vote.toString(),
+                              notification.notificationList[widget.index].vote.toString(),
                               style: const TextStyle(color: Colors.grey)
                             ),
                             const SizedBox(
@@ -306,9 +334,9 @@ class _AnnouncementsDetailState extends State<AnnouncementsDetail> {
                               label: const Text('Share'),
                               onPressed: () {
                                 Share.share(
-                                  _notification.notificationList[widget.index].share == null 
+                                  notification.notificationList[widget.index].share == null 
                                   ? 'https://koompi.com'
-                                  : _notification.notificationList[widget.index].share!
+                                  : notification.notificationList[widget.index].share!
                                 );
                               },
                             ),

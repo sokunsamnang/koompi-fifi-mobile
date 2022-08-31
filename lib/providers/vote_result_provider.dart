@@ -16,7 +16,7 @@ class VoteResultProvider with ChangeNotifier {
             Uri.parse('${ApiService.url}/ads/get-voted/$id'),
             headers: <String, String>{
               "accept": "application/json",
-              "authorization": "Bearer " + onValue!,
+              "authorization": "Bearer ${onValue!}",
             });
         if (response.statusCode == 200) {
           var responseBody = json.decode(response.body);

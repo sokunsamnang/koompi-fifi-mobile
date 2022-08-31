@@ -6,10 +6,10 @@ class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  HomePageState createState() => HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class HomePageState extends State<HomePage> {
   GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
 
   // AppUpdateInfo? updateInfo;
@@ -118,13 +118,16 @@ class _HomePageState extends State<HomePage> {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          if(mounted){
-            await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
-            await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
-            await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
-            await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
-            await Provider.of<ContactListProvider>(context, listen: false).fetchContactList();
-          }
+          if (!mounted) return;
+          await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
+          if (!mounted) return;
+          await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+          if (!mounted) return;
+          await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
+          if (!mounted) return;
+          await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
+          if (!mounted) return;
+          await Provider.of<ContactListProvider>(context, listen: false).fetchContactList();
         },
         child: SizedBox(
           height: MediaQuery.of(context).size.height,

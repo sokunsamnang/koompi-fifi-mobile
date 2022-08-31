@@ -11,10 +11,10 @@ class CaptivePortalWeb extends StatefulWidget {
   const CaptivePortalWeb({Key? key}) : super(key: key);
 
   @override
-  _CaptivePortalWebState createState() => _CaptivePortalWebState();
+  CaptivePortalWebState createState() => CaptivePortalWebState();
 }
 
-class _CaptivePortalWebState extends State<CaptivePortalWeb> {
+class CaptivePortalWebState extends State<CaptivePortalWeb> {
   final GlobalKey webViewKey = GlobalKey();
 
 
@@ -48,13 +48,13 @@ class _CaptivePortalWebState extends State<CaptivePortalWeb> {
 
   @override
   Widget build(BuildContext context) {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
         backgroundColor: Colors.white,
-        title: Text(_lang.translate('login_hotspot'),
+        title: Text(lang.translate('login_hotspot'),
           style: GoogleFonts.robotoCondensed(
             textStyle: const TextStyle(
               color: Colors.black,

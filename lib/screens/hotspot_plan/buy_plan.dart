@@ -4,10 +4,10 @@ class HotspotPlan extends StatefulWidget {
   const HotspotPlan({Key? key}) : super(key: key);
 
   @override
-  _HotspotPlanState createState() => _HotspotPlanState();
+  HotspotPlanState createState() => HotspotPlanState();
 }
 
-class _HotspotPlanState extends State<HotspotPlan> {
+class HotspotPlanState extends State<HotspotPlan> {
   Future<bool> redirectNavbar() async {
     Navigator.pushAndRemoveUntil(
       context,
@@ -53,7 +53,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
   }
 
   Future<void> buyHotspot30days(BuildContext context) async {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
 
     dialogLoading(context);
 
@@ -67,8 +67,11 @@ class _HotspotPlanState extends State<HotspotPlan> {
         if (response.statusCode == 200) {
           // await Provider.of<BalanceProvider>(context, listen: false)
           //     .fetchPortfolio();
-          await Provider.of<GetPlanProvider>(context, listen: false)
-              .fetchHotspotPlan();
+
+          if (!mounted) return;
+          await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
+
+          if (!mounted) return;
           Navigator.pushAndRemoveUntil(
             context,
             PageTransition(
@@ -78,26 +81,35 @@ class _HotspotPlanState extends State<HotspotPlan> {
             ModalRoute.withName('/navbar'),
           );
         } else {
+
+          if (!mounted) return;
           await Components.dialog(
-              context,
-              textAlignCenter(text: responseJson['message']),
-              warningTitleDialog());
+            context,
+            textAlignCenter(text: responseJson['message']),
+            warningTitleDialog()
+          );
+
+          if (!mounted) return;
           Navigator.of(context).pop();
           _passwordController.clear();
         }
       }
     } on SocketException catch (_) {
+      if (!mounted) return;
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('no_internet_message')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('no_internet_message')),
+        warningTitleDialog()
+      );
+
+      if (!mounted) return;
       Navigator.of(context).pop();
       _passwordController.clear();
     }
   }
 
   Future<void> buyHotspot365days(BuildContext context) async {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
 
     dialogLoading(context);
 
@@ -111,8 +123,10 @@ class _HotspotPlanState extends State<HotspotPlan> {
         if (response.statusCode == 200) {
           // await Provider.of<BalanceProvider>(context, listen: false)
           //     .fetchPortfolio();
-          await Provider.of<GetPlanProvider>(context, listen: false)
-              .fetchHotspotPlan();
+          if (!mounted) return;
+          await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
+
+          if (!mounted) return;
           Navigator.pushAndRemoveUntil(
             context,
             PageTransition(
@@ -122,19 +136,27 @@ class _HotspotPlanState extends State<HotspotPlan> {
             ModalRoute.withName('/navbar'),
           );
         } else {
+          if (!mounted) return;
           await Components.dialog(
-              context,
-              textAlignCenter(text: responseJson['message']),
-              warningTitleDialog());
+            context,
+            textAlignCenter(text: responseJson['message']),
+            warningTitleDialog()
+          );
+
+          if (!mounted) return;
           Navigator.of(context).pop();
           _passwordController.clear();
         }
       }
     } on SocketException catch (_) {
+      if (!mounted) return;
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('no_internet_message')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('no_internet_message')),
+        warningTitleDialog()
+      );
+      
+      if (!mounted) return;
       Navigator.of(context).pop();
       _passwordController.clear();
     }
@@ -183,6 +205,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
         ),
       ),
       body: WillPopScope(
+          onWillPop: redirectNavbar,
           child: SizedBox(
             height: MediaQuery.of(context).size.height,
             child: SingleChildScrollView(
@@ -193,14 +216,6 @@ class _HotspotPlanState extends State<HotspotPlan> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    // Center(
-                    //   child: Text(
-                    //     _lang.translate('choose_plan'),
-                    //     style: GoogleFonts.nunito(
-                    //     textStyle: TextStyle(color: HexColor('0CACDA'), fontSize: 30, fontWeight: FontWeight.w700)
-                    //     ),
-                    //   ),
-                    // ),
                     const SizedBox(height: 25.0),
                     plan30DaysButton(context),
                     const SizedBox(height: 50.0),
@@ -209,12 +224,11 @@ class _HotspotPlanState extends State<HotspotPlan> {
                 ),
               ),
             ),
-          ),
-          onWillPop: redirectNavbar));
+          )));
   }
 
   Widget plan30DaysButton(BuildContext context) {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
     return Container(
       // width: MediaQuery.of(context).size.width,
       // height: MediaQuery.of(context).size.height * .27,
@@ -258,7 +272,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
                 child: Row(
                   children: [
                     Text(
-                      '${_lang.translate('device')}:',
+                      '${lang.translate('device')}:',
                       style: GoogleFonts.roboto(
                         textStyle: const TextStyle(
                           color: Colors.black,
@@ -269,7 +283,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
                     ),
                     Expanded(child: Container()),
                     Text(
-                      '2 ${_lang.translate('devices')}',
+                      '2 ${lang.translate('devices')}',
                       style: GoogleFonts.robotoCondensed(
                         textStyle: const TextStyle(
                           color: Colors.black,
@@ -287,7 +301,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
                 child: Row(
                   children: [
                     Text(
-                      '${_lang.translate('speed')}:',
+                      '${lang.translate('speed')}:',
                       style: GoogleFonts.roboto(
                         textStyle: const TextStyle(
                           color: Colors.black,
@@ -298,7 +312,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
                     ),
                     Expanded(child: Container()),
                     Text(
-                      '5 ${_lang.translate('mb')}',
+                      '5 ${lang.translate('mb')}',
                       style: GoogleFonts.robotoCondensed(
                         textStyle: const TextStyle(
                           color: Colors.black,
@@ -316,7 +330,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
                 child: Row(
                   children: [
                     Text(
-                      '${_lang.translate('expire')}:',
+                      '${lang.translate('expire')}:',
                       style: GoogleFonts.roboto(
                         textStyle: const TextStyle(
                           color: Colors.black,
@@ -327,7 +341,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
                     ),
                     Expanded(child: Container()),
                     Text(
-                      '30 ${_lang.translate('day')}',
+                      '30 ${lang.translate('day')}',
                       style: GoogleFonts.robotoCondensed(
                         textStyle: const TextStyle(
                           color: Colors.black,
@@ -372,7 +386,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
                         },
                         child: Center(
                           child: Text(
-                            _lang.translate('subscribe'),
+                            lang.translate('subscribe'),
                             style: GoogleFonts.nunito(
                                 textStyle: const TextStyle(
                                     color: Colors.white,
@@ -393,7 +407,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
   }
 
   Widget plan365DaysButton(BuildContext context) {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -434,7 +448,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
                 child: Row(
                   children: [
                     Text(
-                      '${_lang.translate('device')}:',
+                      '${lang.translate('device')}:',
                       style: GoogleFonts.roboto(
                         textStyle: const TextStyle(
                           color: Colors.black,
@@ -445,7 +459,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
                     ),
                     Expanded(child: Container()),
                     Text(
-                      '2 ${_lang.translate('devices')}',
+                      '2 ${lang.translate('devices')}',
                       style: GoogleFonts.robotoCondensed(
                         textStyle: const TextStyle(
                           color: Colors.black,
@@ -463,7 +477,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
                 child: Row(
                   children: [
                     Text(
-                      '${_lang.translate('speed')}:',
+                      '${lang.translate('speed')}:',
                       style: GoogleFonts.roboto(
                         textStyle: const TextStyle(
                             color: Colors.black,
@@ -474,7 +488,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
                     ),
                     Expanded(child: Container()),
                     Text(
-                      '5 ${_lang.translate('mb')}',
+                      '5 ${lang.translate('mb')}',
                       style: GoogleFonts.robotoCondensed(
                         textStyle: const TextStyle(
                           color: Colors.black,
@@ -492,7 +506,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
                 child: Row(
                   children: [
                     Text(
-                      '${_lang.translate('expire')}:',
+                      '${lang.translate('expire')}:',
                       style: GoogleFonts.nunito(
                         textStyle: const TextStyle(
                           color: Colors.black,
@@ -503,7 +517,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
                     ),
                     Expanded(child: Container()),
                     Text(
-                      '365 ${_lang.translate('day')}',
+                      '365 ${lang.translate('day')}',
                       style: GoogleFonts.robotoCondensed(
                         textStyle: const TextStyle(
                           color: Colors.black,
@@ -546,7 +560,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
                         },
                         child: Center(
                           child: Text(
-                            _lang.translate('subscribe'),
+                            lang.translate('subscribe'),
                             style: GoogleFonts.nunito(
                                 textStyle: const TextStyle(
                                     color: Colors.white,
@@ -567,7 +581,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
   }
 
   Future<void> _showDialog30Days(BuildContext context) async {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -590,11 +604,11 @@ class _HotspotPlanState extends State<HotspotPlan> {
                 controller: _passwordController,
                 validator: (val) {
                   if (val!.isEmpty) {
-                    return _lang.translate('password_is_required_validate');
+                    return lang.translate('password_is_required_validate');
                   }
                   // if(val.length < 6) return _lang.translate('password_too_short_validate');
                   if (val.length < 6) {
-                    return _lang.translate('password_is_required_validate');
+                    return lang.translate('password_is_required_validate');
                   }
                   return null;
                 },
@@ -604,7 +618,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
                 decoration: InputDecoration(
                   fillColor: Colors.grey[100],
                   filled: true,
-                  hintText: _lang.translate('password_tf'),
+                  hintText: lang.translate('password_tf'),
                   hintStyle:
                       const TextStyle(color: Colors.black, fontSize: 12.0),
                   focusedBorder: OutlineInputBorder(
@@ -680,7 +694,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
   }
 
   Future<void> _showDialog365Days(BuildContext context) async {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -703,11 +717,11 @@ class _HotspotPlanState extends State<HotspotPlan> {
                 controller: _passwordController,
                 validator: (val) {
                   if (val!.isEmpty) {
-                    return _lang.translate('password_is_required_validate');
+                    return lang.translate('password_is_required_validate');
                   }
                   // if(val.length < 6) return _lang.translate('password_too_short_validate');
                   if (val.length < 6) {
-                    return _lang.translate('password_is_required_validate');
+                    return lang.translate('password_is_required_validate');
                   }
                   return null;
                 },
@@ -717,7 +731,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
                 decoration: InputDecoration(
                   fillColor: Colors.grey[100],
                   filled: true,
-                  hintText: _lang.translate('password_tf'),
+                  hintText: lang.translate('password_tf'),
                   hintStyle:
                       const TextStyle(color: Colors.black, fontSize: 12.0),
                   focusedBorder: OutlineInputBorder(

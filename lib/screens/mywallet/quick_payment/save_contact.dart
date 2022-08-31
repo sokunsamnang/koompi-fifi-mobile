@@ -7,10 +7,10 @@ class SaveContact extends StatefulWidget {
   const SaveContact({Key? key, this.onChanged})
       : super(key: key);
   @override
-  _SaveContactState createState() => _SaveContactState();
+  SaveContactState createState() => SaveContactState();
 }
 
-class _SaveContactState extends State<SaveContact> {
+class SaveContactState extends State<SaveContact> {
 
   TextEditingController usernameController = TextEditingController();
   TextEditingController addressWalletController = TextEditingController();
@@ -41,7 +41,7 @@ class _SaveContactState extends State<SaveContact> {
 
 
   Future<void> _onSubmit() async {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
 
     dialogLoading(context);
     try {
@@ -57,23 +57,33 @@ class _SaveContactState extends State<SaveContact> {
 
         var responseJson = json.decode(_backend.response!.body);
         if (_backend.response!.statusCode == 200) {
+          if (!mounted) return;
           await Provider.of<ContactListProvider>(context, listen: false).fetchContactList();
+
+          if (!mounted) return;
           Navigator.of(context).pop();
           Navigator.of(context).pop();
         } 
         else {
+          if (!mounted) return;
           await Components.dialog(
-              context,
-              textAlignCenter(text: responseJson['message']),
-              warningTitleDialog());
+            context,
+            textAlignCenter(text: responseJson['message']),
+            warningTitleDialog()
+          );
+
+          if (!mounted) return;
           Navigator.of(context).pop();
         }
       }
     } on SocketException catch (_) {
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('no_internet_message')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('no_internet_message')),
+        warningTitleDialog()
+      );
+
+      if (!mounted) return;
       Navigator.of(context).pop();
     }
   }
@@ -226,7 +236,7 @@ class _SaveContactState extends State<SaveContact> {
                           onPressed: () async {
                             try {
 
-                              final _response = await Navigator.push(
+                              final response = await Navigator.push(
                                 context,
                                 PageTransition(
                                   type: PageTransitionType.bottomToTop,
@@ -236,9 +246,9 @@ class _SaveContactState extends State<SaveContact> {
                                 )
                               );
 
-                              if (_response != null) {
-                                addressWalletController.text = _response.toString();
-                                onChanged(_response.toString());
+                              if (response != null) {
+                                addressWalletController.text = response.toString();
+                                onChanged(response.toString());
                               }
                               // ignore: empty_catches
                             } catch (e) {}

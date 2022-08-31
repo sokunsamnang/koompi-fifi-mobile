@@ -4,10 +4,10 @@ class ForgotPassword extends StatefulWidget {
   const ForgotPassword({Key? key}) : super(key: key);
 
   @override
-  _ForgotPasswordState createState() => _ForgotPasswordState();
+  ForgotPasswordState createState() => ForgotPasswordState();
 }
 
-class _ForgotPasswordState extends State<ForgotPassword> {
+class ForgotPasswordState extends State<ForgotPassword> {
   GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
 
   final formKey = GlobalKey<FormState>();
@@ -41,7 +41,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   }
 
   Future<void> _submit() async {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
 
     dialogLoading(context);
     try {
@@ -54,31 +54,46 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         var responseJson = json.decode(response.body);
 
         if (response.statusCode == 200) {
+          if (!mounted) return;
           Navigator.pushReplacement(
-              context,
-              PageTransition(
-                  type: PageTransitionType.rightToLeft,
-                  child: ForgotPasswordVerification(
-                      "+855${StorageServices.removeZero(_phoneController.text)}")));
+            context,
+            PageTransition(
+              type: PageTransitionType.rightToLeft,
+              child: ForgotPasswordVerification(
+                "+855${StorageServices.removeZero(_phoneController.text)}"
+              )
+            )
+          );
         } else if (response.statusCode == 401) {
+          if (!mounted) return;
           await Components.dialog(
-              context,
-              textAlignCenter(text: responseJson['message']),
-              warningTitleDialog());
+            context,
+            textAlignCenter(text: responseJson['message']),
+            warningTitleDialog()
+          );
+          
+          if (!mounted) return;
           Navigator.of(context).pop();
         } else if (response.statusCode >= 500 && response.statusCode < 600) {
+          if (!mounted) return;
           await Components.dialog(
-              context,
-              textAlignCenter(text: responseJson['message']),
-              warningTitleDialog());
+            context,
+            textAlignCenter(text: responseJson['message']),
+            warningTitleDialog()
+          );
+
+          if (!mounted) return;
           Navigator.of(context).pop();
         }
       }
     } on SocketException catch (_) {
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('no_internet_message')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('no_internet_message')),
+        warningTitleDialog()
+      );
+
+      if (!mounted) return;
       Navigator.of(context).pop();
     }
   }

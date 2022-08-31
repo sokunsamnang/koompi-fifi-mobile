@@ -18,7 +18,7 @@ class _ConfirmPasswordState extends State<ConfirmPassword> {
 
   @override
   Widget build(BuildContext context) {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -71,13 +71,13 @@ class _ConfirmPasswordState extends State<ConfirmPassword> {
                 TextFormField(
                   validator: (val) {
                     if (val!.isEmpty) {
-                      return _lang.translate('password_is_required_validate');
+                      return lang.translate('password_is_required_validate');
                     }
                     if (val.length < 6) {
-                      return _lang.translate('password_too_short_validate');
+                      return lang.translate('password_too_short_validate');
                     }
                     if (val != widget.confirmPasswordController!.text) {
-                      return _lang.translate('password_does_not_match_validate');
+                      return lang.translate('password_does_not_match_validate');
                     }
                     return null;
                   },
@@ -115,7 +115,7 @@ class _ConfirmPasswordState extends State<ConfirmPassword> {
                       borderRadius: BorderRadius.circular(12.0),
                       borderSide: const BorderSide(color: Colors.red),
                     ),
-                    hintText: _lang.translate('password_tf'),
+                    hintText: lang.translate('password_tf'),
                     hintStyle: const TextStyle(color: Colors.black, fontSize: 12.0),
                   ),
                 ),

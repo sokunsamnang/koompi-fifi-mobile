@@ -10,11 +10,11 @@ class PinCodeVerificationScreen extends StatefulWidget {
       : super(key: key);
 
   @override
-  _PinCodeVerificationScreenState createState() =>
-      _PinCodeVerificationScreenState();
+  PinCodeVerificationScreenState createState() =>
+      PinCodeVerificationScreenState();
 }
 
-class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
+class PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
   dynamic onTapRecognizer;
 
   TextEditingController textEditingController = TextEditingController();
@@ -50,7 +50,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
 
   //check connection and login
   Future<void> login() async {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
 
     try {
       final result = await InternetAddress.lookup('google.com');
@@ -79,11 +79,25 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
             :
             StorageServices().saveString('phone', StorageServices.removeZero(widget.phone));
             await StorageServices().saveString('password', widget.password);
+
+            if (!mounted) return;
             await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
+
+            if (!mounted) return;
             await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+
+            if (!mounted) return;
+            
+            if (!mounted) return;
             await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
+            
+            if (!mounted) return;
             await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
+            
+            if (!mounted) return;
             await Provider.of<ContactListProvider>(context, listen: false).fetchContactList();
+            
+            if (!mounted) return;
             Navigator.pushAndRemoveUntil(
               context,
               PageTransition(
@@ -93,6 +107,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
               ModalRoute.withName('/navbar'),
             );
           } else {
+            if (!mounted) return;
             Navigator.of(context).pop();
             try {
               messageAlert = responseJson['error']['message'];
@@ -101,16 +116,24 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
             }
           }
         } else if (response.statusCode == 401) {
+          if (!mounted) return;
           await Components.dialog(
-              context,
-              textAlignCenter(text: responseJson['message']),
-              warningTitleDialog());
+            context,
+            textAlignCenter(text: responseJson['message']),
+            warningTitleDialog()
+          );
+
+          if (!mounted) return;
           Navigator.of(context).pop();
         } else if (response.statusCode >= 500 && response.statusCode < 600) {
+          if (!mounted) return;
           await Components.dialog(
-              context,
-              textAlignCenter(text: responseJson['message']),
-              warningTitleDialog());
+            context,
+            textAlignCenter(text: responseJson['message']),
+            warningTitleDialog()
+          );
+          
+          if (!mounted) return;
           Navigator.of(context).pop();
         }
       }
@@ -119,33 +142,42 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
         print('No network socket exception');
       }
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('no_internet_message')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('no_internet_message')),
+        warningTitleDialog()
+      );
+      
+      if (!mounted) return;
       Navigator.of(context).pop();
     } on TimeoutException catch (_) {
       if (kDebugMode) {
         print('Time out exception');
       }
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('request_timeout')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('request_timeout')),
+        warningTitleDialog()
+      );
+
+      if (!mounted) return;
       Navigator.of(context).pop();
     } on FormatException catch (_) {
       if (kDebugMode) {
         print('FormatException');
       }
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('server_error')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('server_error')),
+        warningTitleDialog()
+      );
+
+      if (!mounted) return;
       Navigator.of(context).pop();
     }
   }
   
   Future<void> _submitOtp(String vCode) async {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
 
     dialogLoading(context);
     try {
@@ -168,10 +200,15 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
       if (response.statusCode == 200 && response.body != "Incorrect Code!") {
         await login();
       } else {
+
+        if (!mounted) return;
         await Components.dialog(
-            context,
-            textAlignCenter(text: responseJson['message']),
-            warningTitleDialog());
+          context,
+          textAlignCenter(text: responseJson['message']),
+          warningTitleDialog()
+        );
+
+        if (!mounted) return;
         Navigator.of(context).pop();
         if (kDebugMode) {
           print(response.body);
@@ -182,66 +219,43 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
         print('No network socket exception');
       }
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('no_internet_message')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('no_internet_message')),
+        warningTitleDialog()
+      );
+
+      if (!mounted) return;
       Navigator.of(context).pop();
     } on TimeoutException catch (_) {
       if (kDebugMode) {
         print('Time out exception');
       }
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('request_timeout')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('request_timeout')),
+        warningTitleDialog()
+      );
+
+      if (!mounted) return;
       Navigator.of(context).pop();
     } on FormatException catch (_) {
       if (kDebugMode) {
         print('FormatException');
       }
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('server_error')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('server_error')),
+        warningTitleDialog()
+      );
+
+      if (!mounted) return;
       Navigator.of(context).pop();
     }
   }
 
-  // showErrorDialog(BuildContext context) async {
-  //   var _lang = AppLocalizeService.of(context);
-  //   return showDialog(
-  //     context: context,
-  //     barrierDismissible: false,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         title: Row(
-  //           children: [
-  //             Icon(Icons.warning, color: Colors.yellow),
-  //             Text(_lang.translate('warning'), style: TextStyle(fontFamily: 'Poppins-Bold')),
-  //           ],
-  //         ),
-  //         content: SingleChildScrollView(
-  //           child: ListBody(
-  //             children: <Widget>[
-  //               Text(_lang.translate('wrong_code')),
-  //             ],
-  //           ),
-  //         ),
-  //         actions: <Widget>[
-  //           FlatButton(
-  //             child: Text(_lang.translate('ok')),
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //             },
-  //           ),
-  //         ],
-  //       );
-  //     });
-  // }
-
   @override
   Widget build(BuildContext context) {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
     return Scaffold(
       backgroundColor: Colors.blue.shade50,
       key: scaffoldKey,
@@ -265,7 +279,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(
-                  _lang.translate('phone_number_verification'),
+                  lang.translate('phone_number_verification'),
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 22,
@@ -278,7 +292,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                     const EdgeInsets.symmetric(horizontal: 30.0, vertical: 8),
                 child: RichText(
                   text: TextSpan(
-                      text: _lang.translate('enter_the_code_sent_to'),
+                      text: lang.translate('enter_the_code_sent_to'),
                       children: [
                         TextSpan(
                             text: widget.phone,
@@ -311,7 +325,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                       animationType: AnimationType.fade,
                       validator: (v) {
                         if (v!.length < 6) {
-                          return _lang.translate('verify_validate');
+                          return lang.translate('verify_validate');
                         } else {
                           return null;
                         }
@@ -352,7 +366,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Text(
                   hasError
-                      ? _lang.translate(
+                      ? lang.translate(
                           'please_fill_up_all_the_cells_properly_validate')
                       : "",
                   style: const TextStyle(
@@ -362,29 +376,15 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                 ),
               ),
               const SizedBox(
-                height: 20,
-              ),
-              // RichText(
-              //   textAlign: TextAlign.center,
-              //   text: TextSpan(
-              //       text: "Didn't receive the code? ",
-              //       style: TextStyle(color: Colors.black54, fontSize: 15),
-              //       children: [
-              //         TextSpan(
-              //             text: " RESEND",
-              //             recognizer: onTapRecognizer,
-              //             style: TextStyle(
-              //                 color: Color(0xFF91D3B3),
-              //                 fontWeight: FontWeight.bold,
-              //                 fontSize: 16))
-              //       ]),
-              // ),
-              const SizedBox(
-                height: 14,
+                height: 34,
               ),
               Container(
                 margin:
                     const EdgeInsets.symmetric(vertical: 16.0, horizontal: 30),
+                decoration: BoxDecoration(
+                  color: primaryColor,
+                  borderRadius: BorderRadius.circular(5),
+                ),
                 child: ButtonTheme(
                   height: 50,
                   child: TextButton(
@@ -403,7 +403,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                     },
                     child: Center(
                         child: Text(
-                      _lang.translate('verify_bt'),
+                      lang.translate('verify_bt'),
                       style: const TextStyle(
                           color: Colors.white,
                           fontSize: 18,
@@ -411,31 +411,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                     )),
                   ),
                 ),
-                decoration: BoxDecoration(
-                  color: primaryColor,
-                  borderRadius: BorderRadius.circular(5),
-                ),
               ),
-              // SizedBox(
-              //   height: 16,
-              // ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: <Widget>[
-              //     FlatButton(
-              //       child: Text("Clear"),
-              //       onPressed: () {
-              //         textEditingController.clear();
-              //       },
-              //     ),
-              //     // FlatButton(
-              //     //   child: Text("Set Text"),
-              //     //   onPressed: () {
-              //     //     textEditingController.text = "123456";
-              //     //   },
-              //     // ),
-              //   ],
-              // )
             ],
           ),
         ),

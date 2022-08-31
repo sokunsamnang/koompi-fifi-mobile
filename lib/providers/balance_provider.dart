@@ -6,18 +6,18 @@ class BalanceProvider with ChangeNotifier {
   List<BalanceModel> balanceList = [];
   
   Future<void> fetchPortfolio() async {
-    StorageServices _prefService = StorageServices();
+    StorageServices prefService = StorageServices();
     _backend = Backend();
     
     balanceList = [];
 
     try {
-      await _prefService.read('token').then((onValue) async {
+      await prefService.read('token').then((onValue) async {
         http.Response response = await http.get(
             Uri.parse('${ApiService.url}/selendra/portfolio'),
             headers: <String, String>{
               "accept": "application/json",
-              "authorization": "Bearer " + onValue!,
+              "authorization": "Bearer ${onValue!}",
             });
 
         if (response.statusCode == 200) {

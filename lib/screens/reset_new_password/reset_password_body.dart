@@ -3,16 +3,16 @@ import 'package:koompi_hotspot/all_export.dart';
 @override
 Widget resetNewPasswordBody(
     BuildContext context,
-    TextEditingController _passwordController,
-    TextEditingController _confirmPasswordController,
-    bool _obscureText,
-    Function _toggle,
-    bool _obscureText2,
-    Function _toggle2,
-    Function _submit,
+    TextEditingController passwordController,
+    TextEditingController confirmPasswordController,
+    bool obscureText,
+    Function toggle,
+    bool obscureText2,
+    Function toggle2,
+    Function submit,
     GlobalKey<FormState> formKey,
-    bool _autoValidate) {
-  var _lang = AppLocalizeService.of(context);
+    bool autoValidate) {
+  var lang = AppLocalizeService.of(context);
   return Scaffold(
     backgroundColor: Colors.white,
     resizeToAvoidBottomInset: true,
@@ -46,7 +46,7 @@ Widget resetNewPasswordBody(
                     ),
                     Center(
                       child: Text(
-                        _lang.translate('new_password_tx'),
+                        lang.translate('new_password_tx'),
                         style: TextStyle(
                             color: primaryColor,
                             fontFamily: 'Medium',
@@ -60,15 +60,15 @@ Widget resetNewPasswordBody(
                 ),
                 formCardNewPassword(
                     context,
-                    _passwordController,
-                    _confirmPasswordController,
-                    _obscureText,
-                    _toggle,
-                    _obscureText2,
-                    _toggle2,
-                    _submit,
+                    passwordController,
+                    confirmPasswordController,
+                    obscureText,
+                    toggle,
+                    obscureText2,
+                    toggle2,
+                    submit,
                     formKey,
-                    _autoValidate),
+                    autoValidate),
                 const SizedBox(height: 20),
                 Center(
                   child: InkWell(
@@ -90,10 +90,10 @@ Widget resetNewPasswordBody(
                           highlightColor: Colors.transparent,
                           splashColor: Colors.transparent,
                           onTap: () {
-                            _submit();
+                            submit();
                           },
                           child: Center(
-                            child: Text(_lang.translate('change_password_bt'),
+                            child: Text(lang.translate('change_password_bt'),
                                 style: const TextStyle(
                                     color: Colors.white,
                                     fontFamily: "Poppins-Bold",

@@ -15,7 +15,7 @@ class GetPlanProvider with ChangeNotifier {
             Uri.parse('${ApiService.url}/hotspot/get-plan'),
             headers: <String, String>{
               "accept": "application/json",
-              "authorization": "Bearer " + onValue!,
+              "authorization": "Bearer ${onValue!}",
             });
         if (response.statusCode == 200) {
           var responseBody = json.decode(response.body);

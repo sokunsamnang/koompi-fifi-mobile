@@ -36,9 +36,6 @@ export 'package:page_transition/page_transition.dart';
 // Storage
 export 'package:shared_preferences/shared_preferences.dart';
 
-// Http
-export 'package:http_parser/http_parser.dart';
-
 // Connection and Wi-Fi
 export 'package:connectivity_plus/connectivity_plus.dart';
 export 'package:koompi_hotspot/utils/connection.dart';

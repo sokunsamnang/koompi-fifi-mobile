@@ -5,10 +5,10 @@ class CompletePayment extends StatefulWidget {
   const CompletePayment({Key? key}) : super(key: key);
 
   @override
-  _CompletePaymentState createState() => _CompletePaymentState();
+  CompletePaymentState createState() => CompletePaymentState();
 }
 
-class _CompletePaymentState extends State<CompletePayment> {
+class CompletePaymentState extends State<CompletePayment> {
   Future<bool> redirectNavbar() async {
     Navigator.pushAndRemoveUntil(
       context,
@@ -23,13 +23,13 @@ class _CompletePaymentState extends State<CompletePayment> {
 
   @override
   Widget build(BuildContext context) {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: Text(_lang.translate('complete'),
+        title: Text(lang.translate('complete'),
           style: GoogleFonts.robotoCondensed(
             textStyle: const TextStyle(
               color: Colors.black,
@@ -42,6 +42,7 @@ class _CompletePaymentState extends State<CompletePayment> {
       ),
       backgroundColor: Colors.white,
       body: WillPopScope(
+        onWillPop: redirectNavbar,
         child: SafeArea(
           child: SingleChildScrollView(
             child: Column(
@@ -59,7 +60,7 @@ class _CompletePaymentState extends State<CompletePayment> {
                     ),
                     Center(
                       child: Text(
-                        _lang.translate('payment_complete'),
+                        lang.translate('payment_complete'),
                         style: const TextStyle(
                             fontFamily: 'Medium',
                             fontWeight: FontWeight.bold,
@@ -96,6 +97,8 @@ class _CompletePaymentState extends State<CompletePayment> {
                               onTap: () async {
                                 dialogLoading(context);
                                 await Provider.of<BalanceProvider>(context,listen: false).fetchPortfolio();
+
+                                if (!mounted) return;
                                 await Provider.of<TrxHistoryProvider>(context,listen: false).fetchTrxHistory();
                                 Timer(
                                     const Duration(milliseconds: 1),
@@ -110,7 +113,7 @@ class _CompletePaymentState extends State<CompletePayment> {
                                         ));
                               },
                               child: Center(
-                                child: Text(_lang.translate('home'),
+                                child: Text(lang.translate('home'),
                                     style: const TextStyle(
                                         color: Colors.white,
                                         fontFamily: "Poppins-Bold",
@@ -128,7 +131,6 @@ class _CompletePaymentState extends State<CompletePayment> {
             ),
           ),
         ),
-        onWillPop: redirectNavbar,
       ),
     );
   }

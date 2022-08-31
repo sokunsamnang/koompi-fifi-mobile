@@ -27,11 +27,11 @@ class ValidateMixin {
 
   /* ----------User Sign Up Next Step---------- */
   String? validatePassword(String value, BuildContext context) {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
     if (value.isEmpty) {
-      return _lang.translate('password_is_required_validate');
+      return lang.translate('password_is_required_validate');
     } else if (value.length < 6) {
-      return _lang.translate('password_too_short_validate');
+      return lang.translate('password_too_short_validate');
     }
     return null;
   }

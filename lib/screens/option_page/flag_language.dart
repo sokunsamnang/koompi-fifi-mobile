@@ -4,10 +4,10 @@ class LanguageView extends StatefulWidget {
   const LanguageView({Key? key}) : super(key: key);
 
   @override
-  _LanguageViewState createState() => _LanguageViewState();
+  LanguageViewState createState() => LanguageViewState();
 }
 
-class _LanguageViewState extends State<LanguageView>{
+class LanguageViewState extends State<LanguageView>{
 
   @override
   void initState() {
@@ -22,14 +22,14 @@ class _LanguageViewState extends State<LanguageView>{
   @override
   Widget build(BuildContext context) {
     var data = Provider.of<LangProvider>(context);
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
         backgroundColor: Colors.white,
-        title: Text(_lang.translate('language'),
+        title: Text(lang.translate('language'),
           style: GoogleFonts.robotoCondensed(
             textStyle: const TextStyle(
               color: Colors.black,
@@ -69,7 +69,7 @@ class _LanguageViewState extends State<LanguageView>{
                         height: 50,
                         width: 50,
                       ),
-                      title: Text(_lang.translate('khmer')),
+                      title: Text(lang.translate('khmer')),
                       trailing: Consumer<LangProvider>(
                         builder: (context, value, child) => value.lang == 'KH'
                             ? Icon(
@@ -104,7 +104,7 @@ class _LanguageViewState extends State<LanguageView>{
                                       color: Colors.transparent,
                                     ),
                         ),
-                        title: Text(_lang.translate('english')),
+                        title: Text(lang.translate('english')),
                         onTap: () async {
                           data.setLocal('EN', context);
                         }),

@@ -6,17 +6,17 @@ Widget formCardPhoneNumbers(
     TextEditingController phoneController,
     TextEditingController passwordController,
     TextEditingController confirmPasswordController,
-    bool _obscureText,
-    Function _toggle,
-    bool _obscureText2,
-    Function _toggle2,
-    String? _phone,
-    String? _password,
-    String? _confirmPassword,
+    bool obscureText,
+    Function toggle,
+    bool obscureText2,
+    Function toggle2,
+    String? phone,
+    String? password,
+    String? confirmPassword,
     GlobalKey<State<StatefulWidget>> formKey,
-    Function _submit) {
+    Function submit) {
   PhoneNumber number = PhoneNumber(isoCode: 'KH');
-  var _lang = AppLocalizeService.of(context);
+  var lang = AppLocalizeService.of(context);
   return Container(
     width: double.infinity,
     padding: const EdgeInsets.only(bottom: 1),
@@ -29,14 +29,14 @@ Widget formCardPhoneNumbers(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Center(
-              child: Text(_lang.translate('create_account'),
+              child: Text(lang.translate('create_account'),
                   style: const TextStyle(
                       fontSize: 24,
                       fontFamily: "Poppins-Bold",
                       letterSpacing: .6)),
             ),
             Center(
-              child: Text(_lang.translate('create_a_new_account'),
+              child: Text(lang.translate('create_a_new_account'),
                   style: const TextStyle(letterSpacing: .6)),
             ),
             const SizedBox(
@@ -48,7 +48,7 @@ Widget formCardPhoneNumbers(
               },
               onInputValidated: (bool value) {
               },
-              errorMessage: _lang.translate('invalid_phone_number_validate'),
+              errorMessage: lang.translate('invalid_phone_number_validate'),
               ignoreBlank: false,
               autoValidateMode: AutovalidateMode.onUserInteraction,
               selectorTextStyle: const TextStyle(color: Colors.black),
@@ -59,7 +59,7 @@ Widget formCardPhoneNumbers(
               inputDecoration: InputDecoration(
                 fillColor: Colors.grey[100],
                 filled: true,
-                hintText: _lang.translate('phone_number_tf'),
+                hintText: lang.translate('phone_number_tf'),
                 hintStyle: const TextStyle(color: Colors.black, fontSize: 12.0),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.0),
@@ -92,20 +92,20 @@ Widget formCardPhoneNumbers(
             TextFormField(
               validator: (val) {
                 if (val!.isEmpty) {
-                  return _lang.translate('password_is_required_validate');
+                  return lang.translate('password_is_required_validate');
                 }
                 if (val.length < 6) {
-                  return _lang.translate('password_too_short_validate');
+                  return lang.translate('password_too_short_validate');
                 }
                 if (val != confirmPasswordController.text) {
-                  return _lang.translate('password_does_not_match_validate');
+                  return lang.translate('password_does_not_match_validate');
                 }
                 return null;
               },
-              onSaved: (val) => _password = val!,
+              onSaved: (val) => password = val!,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               controller: passwordController,
-              obscureText: _obscureText,
+              obscureText: obscureText,
               keyboardType: TextInputType.visiblePassword,
               decoration: InputDecoration(
                 fillColor: Colors.grey[100],
@@ -113,10 +113,10 @@ Widget formCardPhoneNumbers(
                 prefixIcon: Icon(Icons.vpn_key_sharp, color: primaryColor),
                 suffixIcon: GestureDetector(
                   onTap: () {
-                    _toggle();
+                    toggle();
                   },
                   child: Icon(
-                    _obscureText ? Icons.visibility_off : Icons.visibility,
+                    obscureText ? Icons.visibility_off : Icons.visibility,
                     color: primaryColor,
                   ),
                 ),
@@ -140,7 +140,7 @@ Widget formCardPhoneNumbers(
                   borderRadius: BorderRadius.circular(12.0),
                   borderSide: const BorderSide(color: Colors.red),
                 ),
-                hintText: _lang.translate('password_tf'),
+                hintText: lang.translate('password_tf'),
                 hintStyle: const TextStyle(color: Colors.black, fontSize: 12.0),
               ),
             ),
@@ -150,17 +150,17 @@ Widget formCardPhoneNumbers(
             TextFormField(
               validator: (val) {
                 if (val!.isEmpty) {
-                  return _lang.translate('password_is_required_validate');
+                  return lang.translate('password_is_required_validate');
                 }
                 if (val != passwordController.text) {
-                  return _lang.translate('password_does_not_match_validate');
+                  return lang.translate('password_does_not_match_validate');
                 }
                 return null;
               },
-              onSaved: (val) => _confirmPassword = val!,
+              onSaved: (val) => confirmPassword = val!,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               controller: confirmPasswordController,
-              obscureText: _obscureText2,
+              obscureText: obscureText2,
               keyboardType: TextInputType.visiblePassword,
               decoration: InputDecoration(
                 fillColor: Colors.grey[100],
@@ -168,10 +168,10 @@ Widget formCardPhoneNumbers(
                 prefixIcon: Icon(Icons.vpn_key_sharp, color: primaryColor),
                 suffixIcon: GestureDetector(
                   onTap: () {
-                    _toggle2();
+                    toggle2();
                   },
                   child: Icon(
-                    _obscureText2 ? Icons.visibility_off : Icons.visibility,
+                    obscureText2 ? Icons.visibility_off : Icons.visibility,
                     color: primaryColor,
                   ),
                 ),
@@ -195,7 +195,7 @@ Widget formCardPhoneNumbers(
                   borderRadius: BorderRadius.circular(12.0),
                   borderSide: const BorderSide(color: Colors.red),
                 ),
-                hintText: _lang.translate('confirm_password_tf'),
+                hintText: lang.translate('confirm_password_tf'),
                 hintStyle: const TextStyle(color: Colors.black, fontSize: 12.0),
               ),
             ),
@@ -223,10 +223,10 @@ Widget formCardPhoneNumbers(
                       borderRadius: BorderRadius.circular(12),
                     ),
                     onTap: () {
-                      _submit();
+                      submit();
                     },
                     child: Center(
-                      child: Text(_lang.translate('sign_up_bt'),
+                      child: Text(lang.translate('sign_up_bt'),
                           style: const TextStyle(
                               color: Colors.white,
                               fontFamily: "Poppins-Bold",
@@ -247,7 +247,7 @@ Widget formCardPhoneNumbers(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    _lang.translate('already_have_an_account'),
+                    lang.translate('already_have_an_account'),
                     style: const TextStyle(
                       fontFamily: "Poppins-Medium",
                     ),
@@ -272,7 +272,7 @@ Widget formCardPhoneNumbers(
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     child: Text(
-                      _lang.translate('sign_in_bt'),
+                      lang.translate('sign_in_bt'),
                       style: const TextStyle(
                           color: Color(0xfff79c4f), fontFamily: "Poppins-Bold"),
                     ),

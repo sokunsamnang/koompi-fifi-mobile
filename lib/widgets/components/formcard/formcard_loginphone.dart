@@ -5,14 +5,14 @@ Widget formLoginPhone(
     BuildContext context,
     TextEditingController phoneController,
     TextEditingController passwordController,
-    bool _obscureText,
-    Function _toggle,
-    String _email,
-    String _password,
+    bool obscureText,
+    Function toggle,
+    String email,
+    String password,
     GlobalKey<State<StatefulWidget>> formKey,
-    Function _submitLogin) {
+    Function submitLogin) {
   PhoneNumber number = PhoneNumber(isoCode: 'KH');
-  var _lang = AppLocalizeService.of(context);
+  var lang = AppLocalizeService.of(context);
   return Container(
     width: double.infinity,
     padding: const EdgeInsets.only(bottom: 1),
@@ -26,14 +26,14 @@ Widget formLoginPhone(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Center(
-                child: Text(_lang.translate('welcome'),
+                child: Text(lang.translate('welcome'),
                     style: const TextStyle(
                         fontSize: 24,
                         fontFamily: "Poppins-Bold",
                         letterSpacing: .6)),
               ),
               Center(
-                child: Text(_lang.translate('sign_in_to_continue'),
+                child: Text(lang.translate('sign_in_to_continue'),
                     style: const TextStyle(letterSpacing: .6)),
               ),
               const SizedBox(
@@ -47,7 +47,7 @@ Widget formLoginPhone(
                 onInputValidated: (bool value) {
                   
                 },
-                errorMessage: _lang.translate('invalid_phone_number_validate'),
+                errorMessage: lang.translate('invalid_phone_number_validate'),
                 // selectorConfig: SelectorConfig(
                 //   selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
                 // ),
@@ -61,7 +61,7 @@ Widget formLoginPhone(
                 inputDecoration: InputDecoration(
                   fillColor: Colors.grey[100],
                   filled: true,
-                  hintText: _lang.translate('phone_number_tf'),
+                  hintText: lang.translate('phone_number_tf'),
                   hintStyle:
                       const TextStyle(color: Colors.black, fontSize: 12.0),
                   focusedBorder: OutlineInputBorder(
@@ -134,29 +134,29 @@ Widget formLoginPhone(
                 controller: passwordController,
                 validator: (val) {
                   if (val!.isEmpty) {
-                    return _lang.translate('password_is_required_validate');
+                    return lang.translate('password_is_required_validate');
                   }
                   if (val.length < 6) {
-                    return _lang.translate('password_too_short_validate');
+                    return lang.translate('password_too_short_validate');
                   }
                   return null;
                 },
                 autovalidateMode: AutovalidateMode.onUserInteraction,
-                onSaved: (val) => _password = val!,
+                onSaved: (val) => password = val!,
                 keyboardType: TextInputType.visiblePassword,
                 decoration: InputDecoration(
                   fillColor: Colors.grey[100],
                   filled: true,
-                  hintText: _lang.translate('password_tf'),
+                  hintText: lang.translate('password_tf'),
                   hintStyle:
                       const TextStyle(color: Colors.black, fontSize: 12.0),
                   prefixIcon: Icon(Icons.vpn_key_sharp, color: primaryColor),
                   suffixIcon: GestureDetector(
                     onTap: () {
-                      _toggle();
+                      toggle();
                     },
                     child: Icon(
-                      _obscureText ? Icons.visibility_off : Icons.visibility,
+                      obscureText ? Icons.visibility_off : Icons.visibility,
                       color: primaryColor,
                     ),
                   ),
@@ -181,7 +181,7 @@ Widget formLoginPhone(
                     borderSide: const BorderSide(color: Colors.red),
                   ),
                 ),
-                obscureText: _obscureText,
+                obscureText: obscureText,
               ),
               const SizedBox(
                 height: 20,
@@ -202,7 +202,7 @@ Widget formLoginPhone(
                       });
                     },
                     child: Text(
-                      _lang.translate('forgot_password_bt'),
+                      lang.translate('forgot_password_bt'),
                       style: const TextStyle(
                         color: Color(0xFF5d74e3),
                         fontFamily: "Poppins-Bold",
@@ -233,10 +233,10 @@ Widget formLoginPhone(
                         borderRadius: BorderRadius.circular(12),
                       ),
                       onTap: () async {
-                        _submitLogin();
+                        submitLogin();
                       },
                       child: Center(
-                        child: Text(_lang.translate('sign_in_bt'),
+                        child: Text(lang.translate('sign_in_bt'),
                             style: const TextStyle(
                                 color: Colors.white,
                                 fontFamily: "Poppins-Bold",
@@ -254,7 +254,7 @@ Widget formLoginPhone(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    _lang.translate('dont_have_an_account'),
+                    lang.translate('dont_have_an_account'),
                     style: const TextStyle(fontFamily: "Poppins-Medium"),
                   ),
                   InkWell(
@@ -271,7 +271,7 @@ Widget formLoginPhone(
                         passwordController.clear();
                       });
                     },
-                    child: Text(_lang.translate('sign_up_bt'),
+                    child: Text(lang.translate('sign_up_bt'),
                         style: const TextStyle(
                             color: Color(0xFF5d74e3),
                             fontFamily: "Poppins-Bold")),

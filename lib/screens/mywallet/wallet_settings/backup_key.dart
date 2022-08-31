@@ -82,13 +82,13 @@ class _BackUpKeyState extends State<BackUpKey> {
               color: Colors.white,
             ),
             child: Container(
+              padding: const EdgeInsets.all(12),
               child: const MyText(
                 text: "Seed Phrase is the ONLY way to recover your funds if you lose access to your wallet.",
                 color: '#777777',
                 fontSize: 14,
                 textAlign: TextAlign.start,
               ),
-              padding: const EdgeInsets.all(12),
             ),
           )
         ],

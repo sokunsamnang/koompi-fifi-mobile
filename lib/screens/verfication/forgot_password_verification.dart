@@ -8,11 +8,11 @@ class ForgotPasswordVerification extends StatefulWidget {
   const ForgotPasswordVerification(this.phone, {Key? key}) : super(key: key);
 
   @override
-  _ForgotPasswordVerificationState createState() =>
-      _ForgotPasswordVerificationState();
+  ForgotPasswordVerificationState createState() =>
+      ForgotPasswordVerificationState();
 }
 
-class _ForgotPasswordVerificationState
+class ForgotPasswordVerificationState
     extends State<ForgotPasswordVerification> {
   dynamic onTapRecognizer;
 
@@ -45,7 +45,7 @@ class _ForgotPasswordVerificationState
   }
 
   Future<void> _submitOtp(String vCode) async {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
 
     dialogLoading(context);
     try {
@@ -67,6 +67,8 @@ class _ForgotPasswordVerificationState
         if (kDebugMode) {
           print(response.body);
         }
+
+        if (!mounted) return;
         Navigator.pushReplacement(
           context,
           PageTransition(
@@ -75,10 +77,15 @@ class _ForgotPasswordVerificationState
           ),
         );
       } else {
+
+        if (!mounted) return;
         await Components.dialog(
-            context,
-            textAlignCenter(text: responseJson['message']),
-            warningTitleDialog());
+          context,
+          textAlignCenter(text: responseJson['message']),
+          warningTitleDialog()
+        );
+
+        if (!mounted) return;
         Navigator.of(context).pop();
       }
     } on SocketException catch (_) {
@@ -86,34 +93,43 @@ class _ForgotPasswordVerificationState
         print('No network socket exception');
       }
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('no_internet_message')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('no_internet_message')),
+        warningTitleDialog()
+      );
+
+      if (!mounted) return;
       Navigator.of(context).pop();
     } on TimeoutException catch (_) {
       if (kDebugMode) {
         print('Time out exception');
       }
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('request_timeout')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('request_timeout')),
+        warningTitleDialog()
+      );
+
+      if (!mounted) return;
       Navigator.of(context).pop();
     } on FormatException catch (_) {
       if (kDebugMode) {
         print('FormatException');
       }
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('server_error')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('server_error')),
+        warningTitleDialog()
+      );
+
+      if (!mounted) return;
       Navigator.of(context).pop();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
     return Scaffold(
       backgroundColor: Colors.blue.shade50,
       key: scaffoldKey,
@@ -137,7 +153,7 @@ class _ForgotPasswordVerificationState
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(
-                  _lang.translate('phone_number_verification'),
+                  lang.translate('phone_number_verification'),
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 22,
@@ -150,7 +166,7 @@ class _ForgotPasswordVerificationState
                     const EdgeInsets.symmetric(horizontal: 30.0, vertical: 8),
                 child: RichText(
                   text: TextSpan(
-                      text: _lang.translate('enter_the_code_sent_to'),
+                      text: lang.translate('enter_the_code_sent_to'),
                       children: [
                         TextSpan(
                             text: widget.phone,
@@ -183,7 +199,7 @@ class _ForgotPasswordVerificationState
                       animationType: AnimationType.fade,
                       validator: (v) {
                         if (v!.length < 6) {
-                          return _lang.translate('verify_validate');
+                          return lang.translate('verify_validate');
                         } else {
                           return null;
                         }
@@ -228,7 +244,7 @@ class _ForgotPasswordVerificationState
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Text(
                   hasError
-                      ? _lang.translate(
+                      ? lang.translate(
                           'please_fill_up_all_the_cells_properly_validate')
                       : "",
                   style: const TextStyle(
@@ -240,27 +256,16 @@ class _ForgotPasswordVerificationState
               const SizedBox(
                 height: 20,
               ),
-              // RichText(
-              //   textAlign: TextAlign.center,
-              //   text: TextSpan(
-              //       text: "Didn't receive the code? ",
-              //       style: TextStyle(color: Colors.black54, fontSize: 15),
-              //       children: [
-              //         TextSpan(
-              //             text: " RESEND",
-              //             recognizer: onTapRecognizer,
-              //             style: TextStyle(
-              //                 color: Color(0xFF91D3B3),
-              //                 fontWeight: FontWeight.bold,
-              //                 fontSize: 16))
-              //       ]),
-              // ),
               const SizedBox(
                 height: 14,
               ),
               Container(
                 margin:
                     const EdgeInsets.symmetric(vertical: 16.0, horizontal: 30),
+                decoration: BoxDecoration(
+                  color: primaryColor,
+                  borderRadius: BorderRadius.circular(5),
+                ),
                 child: ButtonTheme(
                   height: 50,
                   child: TextButton(
@@ -275,19 +280,11 @@ class _ForgotPasswordVerificationState
                         });
                       } else {
                         await _submitOtp(currentText);
-                        // await _submitOtp(currentText);
-                        // setState(() {
-                        //   hasError = false;
-                        //   scaffoldKey.currentState.showSnackBar(SnackBar(
-                        //     content: Text("Aye!!"),
-                        //     duration: Duration(seconds: 2),
-                        //   ));
-                        // });
                       }
                     },
                     child: Center(
                         child: Text(
-                      _lang.translate('verify_bt'),
+                      lang.translate('verify_bt'),
                       style: const TextStyle(
                           color: Colors.white,
                           fontSize: 18,
@@ -295,31 +292,7 @@ class _ForgotPasswordVerificationState
                     )),
                   ),
                 ),
-                decoration: BoxDecoration(
-                  color: primaryColor,
-                  borderRadius: BorderRadius.circular(5),
-                ),
               ),
-              // SizedBox(
-              //   height: 16,
-              // ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: <Widget>[
-              //     FlatButton(
-              //       child: Text("Clear"),
-              //       onPressed: () {
-              //         textEditingController.clear();
-              //       },
-              //     ),
-              //     // FlatButton(
-              //     //   child: Text("Set Text"),
-              //     //   onPressed: () {
-              //     //     textEditingController.text = "123456";
-              //     //   },
-              //     // ),
-              //   ],
-              // )
             ],
           ),
         ),

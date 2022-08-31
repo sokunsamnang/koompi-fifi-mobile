@@ -92,6 +92,7 @@ class _WalletSettingsPageState extends State<WalletSettingsPage> {
                   color: primaryColor.withOpacity(0.8),
                   borderRadius: const BorderRadius.only(topRight: Radius.circular(10), topLeft: Radius.circular(10))
                 ),
+                padding: const EdgeInsets.all(12),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: const [
@@ -106,16 +107,15 @@ class _WalletSettingsPageState extends State<WalletSettingsPage> {
                     ),
                   ],
                 ),
-                padding: const EdgeInsets.all(12),
               ),
               Container(
+                padding: const EdgeInsets.all(12),
                 child: const MyText(
                   text: "Your 12-word/24-word Seed Phrase is the ONLY way to recover your funds if you lose access to your wallet.",
                   color: '#777777',
                   fontSize: 14,
                   textAlign: TextAlign.start,
                 ),
-                padding: const EdgeInsets.all(12),
               )
             ],
           ),
@@ -151,6 +151,7 @@ class _WalletSettingsPageState extends State<WalletSettingsPage> {
                   color: primaryColor.withOpacity(0.8),
                   borderRadius: const BorderRadius.only(topRight: Radius.circular(10), topLeft: Radius.circular(10))
                 ),
+                padding: const EdgeInsets.all(12),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: const [
@@ -165,16 +166,15 @@ class _WalletSettingsPageState extends State<WalletSettingsPage> {
                       ),
                   ],
                 ),
-                padding: const EdgeInsets.all(12),
               ),
               Container(
+                padding: const EdgeInsets.all(12),
                 child: const MyText(
                   text: "Overwrite your current Mobile wallet using a Seed Phrase.",
                   color: '#777777',
                   fontSize: 14,
                   textAlign: TextAlign.start,
                 ),
-                padding: const EdgeInsets.all(12),
               )
             ],
           ),

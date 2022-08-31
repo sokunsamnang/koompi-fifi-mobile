@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/providers/contact_list_provider.dart';
@@ -8,10 +10,10 @@ class ContactListScreen extends StatefulWidget {
   const ContactListScreen({Key? key}) : super(key: key);
 
   @override
-  _ContactListScreenState createState() => _ContactListScreenState();
+  ContactListScreenState createState() => ContactListScreenState();
 }
 
-class _ContactListScreenState extends State<ContactListScreen> {
+class ContactListScreenState extends State<ContactListScreen> {
 
   bool _showFab = true;
 
@@ -263,8 +265,8 @@ class MenuItems {
     var contact =  Provider.of<ContactListProvider>(context, listen: false);
 
     Future<void> deleteContact() async {
-      var _lang = AppLocalizeService.of(context);
-      final Backend _backend = Backend();
+      var lang = AppLocalizeService.of(context);
+      final Backend backend = Backend();
 
       dialogLoading(context);
       try {
@@ -273,12 +275,12 @@ class MenuItems {
           if (kDebugMode) {
             print('Internet connected');
           }
-          _backend.response = await PostRequest().deleteContactAddress(
+          backend.response = await PostRequest().deleteContactAddress(
             contact.contactList[index].id!,
           );
 
-          var responseJson = json.decode(_backend.response!.body);
-          if (_backend.response!.statusCode == 200) {
+          var responseJson = json.decode(backend.response!.body);
+          if (backend.response!.statusCode == 200) {
             await Provider.of<ContactListProvider>(context, listen: false).fetchContactList();
             Navigator.of(context).pop();
           } 
@@ -293,7 +295,7 @@ class MenuItems {
       } on SocketException catch (_) {
         await Components.dialog(
             context,
-            textAlignCenter(text: _lang.translate('no_internet_message')),
+            textAlignCenter(text: lang.translate('no_internet_message')),
             warningTitleDialog());
         Navigator.of(context).pop();
       }

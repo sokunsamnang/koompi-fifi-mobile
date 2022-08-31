@@ -4,16 +4,16 @@ class ChangeHotspotPlan extends StatefulWidget {
   const ChangeHotspotPlan({Key? key}) : super(key: key);
 
   @override
-  _ChangeHotspotPlanState createState() => _ChangeHotspotPlanState();
+  ChangeHotspotPlanState createState() => ChangeHotspotPlanState();
 }
 
-class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
+class ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
   final TextEditingController _passwordController = TextEditingController();
 
   GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
 
   Future<void> buyHotspot30days(BuildContext context) async {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
 
     try {
       var response = await PostRequest().changePlanHotspot(
@@ -25,8 +25,10 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         if (response.statusCode == 200) {
-          await Provider.of<GetPlanProvider>(context, listen: false)
-              .fetchHotspotPlan();
+          if (!mounted) return;
+          await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
+
+          if (!mounted) return;
           Navigator.pushAndRemoveUntil(
             context,
             PageTransition(
@@ -37,46 +39,60 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
           );
         } else {
           _passwordController.clear();
+
+          if (!mounted) return;
           await Components.dialog(
-              context,
-              textAlignCenter(text: responseJson['message']),
-              warningTitleDialog());
+            context,
+            textAlignCenter(text: responseJson['message']),
+            warningTitleDialog()
+          );
           _passwordController.clear();
+
+          if (!mounted) return;
           Navigator.of(context).pop();
         }
       }
     } on SocketException catch (_) {
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('no_internet_message')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('no_internet_message')),
+        warningTitleDialog()
+      );
       _passwordController.clear();
+
+      if (!mounted) return;
       Navigator.of(context).pop();
     } on FormatException catch (_) {
       if (kDebugMode) {
         print('FormatException');
       }
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('server_error')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('server_error')),
+        warningTitleDialog()
+      );
       _passwordController.clear();
+
+      if (!mounted) return;
       Navigator.of(context).pop();
     } on TimeoutException catch (_) {
       if (kDebugMode) {
         print('Time out exception');
       }
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('request_timeout')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('request_timeout')),
+        warningTitleDialog()
+      );
       _passwordController.clear();
+
+      if (!mounted) return;
       Navigator.of(context).pop();
     }
   }
 
   Future<void> buyHotspot365days(BuildContext context) async {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
 
     try {
       var response = await PostRequest().changePlanHotspot(
@@ -91,6 +107,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
           print('Internet connected');
         }
         if (response.statusCode == 200) {
+          if (!mounted) return;
           Navigator.pushAndRemoveUntil(
             context,
             PageTransition(
@@ -100,41 +117,52 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
             ModalRoute.withName('/navbar'),
           );
         } else {
-          _passwordController.clear();
+          if (!mounted) return;
           await Components.dialog(
               context,
               textAlignCenter(text: responseJson['message']),
               warningTitleDialog());
           _passwordController.clear();
+
+          if (!mounted) return;
           Navigator.of(context).pop();
         }
       }
     } on SocketException catch (_) {
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('no_internet_message')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('no_internet_message')),
+        warningTitleDialog()
+      );
       _passwordController.clear();
+
+      if (!mounted) return;
       Navigator.of(context).pop();
     } on FormatException catch (_) {
       if (kDebugMode) {
         print('FormatException');
       }
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('server_error')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('server_error')),
+        warningTitleDialog()
+      );
       _passwordController.clear();
+
+      if (!mounted) return;
       Navigator.of(context).pop();
     } on TimeoutException catch (_) {
       if (kDebugMode) {
         print('Time out exception');
       }
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('request_timeout')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('request_timeout')),
+        warningTitleDialog()
+      );
       _passwordController.clear();
+
+      if (!mounted) return;
       Navigator.of(context).pop();
     }
   }
@@ -208,7 +236,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
   }
 
   Widget plan30DaysButton(BuildContext context) {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
     return Container(
       decoration: const BoxDecoration(
         color: Colors.white,
@@ -256,7 +284,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
                 child: Row(
                   children: [
                     Text(
-                      '${_lang.translate('device')}:',
+                      '${lang.translate('device')}:',
                       style: GoogleFonts.nunito(
                           textStyle: const TextStyle(
                               color: Colors.black,
@@ -265,7 +293,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
                     ),
                     Expanded(child: Container()),
                     Text(
-                      '2 ${_lang.translate('devices')}',
+                      '2 ${lang.translate('devices')}',
                       style: GoogleFonts.nunito(
                           textStyle: const TextStyle(
                               color: Colors.black,
@@ -281,7 +309,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
                 child: Row(
                   children: [
                     Text(
-                      '${_lang.translate('speed')}:',
+                      '${lang.translate('speed')}:',
                       style: GoogleFonts.nunito(
                           textStyle: const TextStyle(
                               color: Colors.black,
@@ -290,7 +318,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
                     ),
                     Expanded(child: Container()),
                     Text(
-                      '5 ${_lang.translate('mb')}',
+                      '5 ${lang.translate('mb')}',
                       style: GoogleFonts.nunito(
                           textStyle: const TextStyle(
                               color: Colors.black,
@@ -306,7 +334,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
                 child: Row(
                   children: [
                     Text(
-                      '${_lang.translate('expire')}:',
+                      '${lang.translate('expire')}:',
                       style: GoogleFonts.nunito(
                           textStyle: const TextStyle(
                               color: Colors.black,
@@ -315,7 +343,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
                     ),
                     Expanded(child: Container()),
                     Text(
-                      '30 ${_lang.translate('day')}',
+                      '30 ${lang.translate('day')}',
                       style: GoogleFonts.nunito(
                           textStyle: const TextStyle(
                               color: Colors.black,
@@ -362,14 +390,14 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
                                 : await Components.dialog(
                                     context,
                                     textAlignCenter(
-                                        text: _lang.translate('in_use_plan')),
+                                        text: lang.translate('in_use_plan')),
                                     warningTitleDialog());
                           }
                         },
                         child: Center(
                           child: mPlan.plan == '30'
                               ? Text(
-                                  _lang.translate('in_use'),
+                                  lang.translate('in_use'),
                                   style: GoogleFonts.nunito(
                                       textStyle: const TextStyle(
                                           color: Colors.white,
@@ -377,7 +405,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
                                           fontWeight: FontWeight.w700)),
                                 )
                               : Text(
-                                  _lang.translate('subscribe'),
+                                  lang.translate('subscribe'),
                                   style: GoogleFonts.nunito(
                                       textStyle: const TextStyle(
                                           color: Colors.white,
@@ -398,7 +426,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
   }
 
   Widget plan365DaysButton(BuildContext context) {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
     return Container(
       // width: MediaQuery.of(context).size.width,
       // height: MediaQuery.of(context).size.height * .27,
@@ -449,7 +477,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
                 child: Row(
                   children: [
                     Text(
-                      '${_lang.translate('device')}:',
+                      '${lang.translate('device')}:',
                       style: GoogleFonts.nunito(
                           textStyle: const TextStyle(
                               color: Colors.black,
@@ -458,7 +486,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
                     ),
                     Expanded(child: Container()),
                     Text(
-                      '2 ${_lang.translate('devices')}',
+                      '2 ${lang.translate('devices')}',
                       style: GoogleFonts.nunito(
                           textStyle: const TextStyle(
                               color: Colors.black,
@@ -474,7 +502,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
                 child: Row(
                   children: [
                     Text(
-                      '${_lang.translate('speed')}:',
+                      '${lang.translate('speed')}:',
                       style: GoogleFonts.nunito(
                           textStyle: const TextStyle(
                               color: Colors.black,
@@ -483,7 +511,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
                     ),
                     Expanded(child: Container()),
                     Text(
-                      '5 ${_lang.translate('mb')}',
+                      '5 ${lang.translate('mb')}',
                       style: GoogleFonts.nunito(
                           textStyle: const TextStyle(
                               color: Colors.black,
@@ -499,7 +527,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
                 child: Row(
                   children: [
                     Text(
-                      '${_lang.translate('expire')}:',
+                      '${lang.translate('expire')}:',
                       style: GoogleFonts.nunito(
                           textStyle: const TextStyle(
                               color: Colors.black,
@@ -508,7 +536,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
                     ),
                     Expanded(child: Container()),
                     Text(
-                      '365 ${_lang.translate('day')}',
+                      '365 ${lang.translate('day')}',
                       style: GoogleFonts.nunito(
                           textStyle: const TextStyle(
                               color: Colors.black,
@@ -554,14 +582,14 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
                                 : await Components.dialog(
                                     context,
                                     textAlignCenter(
-                                        text: _lang.translate('in_use_plan')),
+                                        text: lang.translate('in_use_plan')),
                                     warningTitleDialog());
                           }
                         },
                         child: Center(
                           child: mPlan.plan == '365'
                               ? Text(
-                                  _lang.translate('in_use'),
+                                  lang.translate('in_use'),
                                   style: GoogleFonts.nunito(
                                       textStyle: const TextStyle(
                                           color: Colors.white,
@@ -569,7 +597,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
                                           fontWeight: FontWeight.w700)),
                                 )
                               : Text(
-                                  _lang.translate('subscribe'),
+                                  lang.translate('subscribe'),
                                   style: GoogleFonts.nunito(
                                       textStyle: const TextStyle(
                                           color: Colors.white,
@@ -590,7 +618,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
   }
 
   Future<void> _showDialog30Days(BuildContext context) async {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -614,7 +642,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
               decoration: InputDecoration(
                 fillColor: Colors.grey[100],
                 filled: true,
-                hintText: _lang.translate('password_tf'),
+                hintText: lang.translate('password_tf'),
                 hintStyle: const TextStyle(color: Colors.black, fontSize: 12.0),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.0),
@@ -689,7 +717,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
   }
 
   Future<void> _showDialog365Days(BuildContext context) async {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -713,7 +741,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
               decoration: InputDecoration(
                 fillColor: Colors.grey[100],
                 filled: true,
-                hintText: _lang.translate('password_tf'),
+                hintText: lang.translate('password_tf'),
                 hintStyle: const TextStyle(color: Colors.black, fontSize: 12.0),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.0),

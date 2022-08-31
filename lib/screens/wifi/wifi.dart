@@ -7,10 +7,10 @@ class WifiConnect extends StatefulWidget {
   const WifiConnect({Key? key}) : super(key: key);
 
   @override
-  _WifiConnectState createState() => _WifiConnectState();
+  WifiConnectState createState() => WifiConnectState();
 }
 
-class _WifiConnectState extends State<WifiConnect> {
+class WifiConnectState extends State<WifiConnect> {
   final Geolocator geolocator = Geolocator();
   final TextEditingController _passwordController = TextEditingController();
   Timer? timer;
@@ -33,94 +33,12 @@ class _WifiConnectState extends State<WifiConnect> {
     super.dispose();
   }
 
-  // void _wifiOptionBottomSheet(context, String ssid) {
-  //   var _lang = AppLocalizeService.of(context);
-
-  //   showModalBottomSheet(
-  //       shape: RoundedRectangleBorder(
-  //         borderRadius: BorderRadius.only(
-  //             topLeft: Radius.circular(12), topRight: Radius.circular(12)),
-  //       ),
-  //       isScrollControlled: true,
-  //       context: context,
-  //       builder: (BuildContext context) {
-  //         return Container(
-  //           height: 153,
-  //           decoration: BoxDecoration(
-  //             color: Colors.white,
-  //             borderRadius: BorderRadius.only(
-  //                 topLeft: Radius.circular(12), topRight: Radius.circular(12)),
-  //           ),
-  //           child: new Column(
-  //             children: <Widget>[
-  //               Align(
-  //                 alignment: Alignment.center,
-  //                 child: MyText(
-  //                   top: 20,
-  //                   bottom: 20,
-  //                   text: ssid,
-  //                   color: '#000000',
-  //                 ),
-  //               ),
-  //               Row(
-  //                 children: [
-  //                   Expanded(
-  //                     child: GestureDetector(
-  //                       onTap: () async {
-  //                         await WiFiForIoTPlugin.removeWifiNetwork(ssid);
-  //                         Navigator.of(context).pop();
-  //                       },
-  //                       child: Column(
-  //                         children: [
-  //                           Icon(Icons.delete_outline_outlined,
-  //                               size: 35, color: primaryColor),
-  //                           MyText(
-  //                             top: 6,
-  //                             text: _lang.translate('forget_network'),
-  //                             fontSize: 12,
-  //                             color: '#000000',
-  //                           )
-  //                         ],
-  //                       ),
-  //                     ),
-  //                   ),
-  //                   Expanded(
-  //                     child: GestureDetector(
-  //                       onTap: () async {
-  //                         await WiFiForIoTPlugin.forceWifiUsage(false);
-  //                         await WiFiForIoTPlugin.disconnect();
-  //                         Navigator.of(context).pop();
-  //                       },
-  //                       child: Column(
-  //                         children: [
-  //                           Icon(Icons.wifi_off_outlined,
-  //                               size: 35, color: primaryColor),
-  //                           MyText(
-  //                             top: 6,
-  //                             text: _lang.translate('disconnect_network'),
-  //                             fontSize: 12,
-  //                             color: '#000000',
-  //                           )
-  //                         ],
-  //                       ),
-  //                     ),
-  //                   ),
-  //                 ],
-  //               ),
-  //             ],
-  //           ),
-  //         );
-  //       });
-  // }
-
   Future<void> connectWifiHotpot(BuildContext context, String ssid) async {
     dialogLoading(context);
     await WiFiForIoTPlugin.forceWifiUsage(true);
-    await WiFiForIoTPlugin.connect(ssid,
-        joinOnce: false, security: NetworkSecurity.NONE, withInternet: true);
-    // await WifiConnector.connectToWifi(
-    //   ssid: ssid,
-    // );
+    await WiFiForIoTPlugin.connect(ssid, joinOnce: false, security: NetworkSecurity.NONE, withInternet: true);
+
+    if (!mounted) return;
     Navigator.of(context).pop();
   }
 
@@ -128,7 +46,7 @@ class _WifiConnectState extends State<WifiConnect> {
     BuildContext context,
     String ssid,
   ) {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
 
     return showDialog(
       context: context,
@@ -154,7 +72,7 @@ class _WifiConnectState extends State<WifiConnect> {
               decoration: InputDecoration(
                 fillColor: Colors.grey[100],
                 filled: true,
-                hintText: _lang.translate('password_tf'),
+                hintText: lang.translate('password_tf'),
                 hintStyle: const TextStyle(color: Colors.black, fontSize: 12.0),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.0),
@@ -227,6 +145,8 @@ class _WifiConnectState extends State<WifiConnect> {
                         //     ssid: ssid,
                         //     password: _passwordController.text,
                         //     isWEP: true);
+
+                        if (!mounted) return;
                         Navigator.of(context).pop();
                         Navigator.of(context).pop();
                         _passwordController.clear();
@@ -268,7 +188,7 @@ class _WifiConnectState extends State<WifiConnect> {
   }
 
   Widget isConnected() {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
 
     return FutureBuilder(
         future: WiFiForIoTPlugin.getSSID(),
@@ -286,7 +206,7 @@ class _WifiConnectState extends State<WifiConnect> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            _lang.translate('connected'),
+                            lang.translate('connected'),
                             style: const TextStyle(color: Colors.green),
                           ),
                           // SizedBox(width: 10),
@@ -310,7 +230,7 @@ class _WifiConnectState extends State<WifiConnect> {
 
   @override
   Widget build(BuildContext context) {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -321,7 +241,7 @@ class _WifiConnectState extends State<WifiConnect> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              _lang.translate('wifi'),
+              lang.translate('wifi'),
               style: GoogleFonts.robotoCondensed(
                 textStyle: const TextStyle(
                   color: Colors.black,
@@ -338,7 +258,7 @@ class _WifiConnectState extends State<WifiConnect> {
                 });
               },
               icon: Icon(Icons.search, color: primaryColor),
-              label: Text(_lang.translate('scan'),
+              label: Text(lang.translate('scan'),
                   style: TextStyle(color: primaryColor)),
             ),
           ],
@@ -395,7 +315,7 @@ class _WifiConnectState extends State<WifiConnect> {
   }
 
   Widget gpsTurnOff(BuildContext context) {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -414,7 +334,7 @@ class _WifiConnectState extends State<WifiConnect> {
           child: Padding(
             padding: const EdgeInsets.fromLTRB(30.0, 20, 30, 20),
             child: Text(
-              _lang.translate('wifi_no_gps_warning'),
+              lang.translate('wifi_no_gps_warning'),
               textAlign: TextAlign.center,
             ),
           ),
@@ -431,7 +351,7 @@ class _WifiConnectState extends State<WifiConnect> {
               padding: MaterialStateProperty.all(
                   const EdgeInsets.symmetric(vertical: 10, horizontal: 35)),
             ),
-            child: Text(_lang.translate('enable_gps')),
+            child: Text(lang.translate('enable_gps')),
             onPressed: () {
               loc.Location locationR = loc.Location();
               locationR.requestService();

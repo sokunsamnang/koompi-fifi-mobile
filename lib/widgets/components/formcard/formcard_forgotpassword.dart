@@ -3,13 +3,13 @@ import 'package:koompi_hotspot/all_export.dart';
 @override
 Widget formCardForgotPasswordPhone(
     BuildContext context,
-    TextEditingController _phoneController,
-    String _phone,
-    Function _submit,
+    TextEditingController phoneController,
+    String phone,
+    Function submit,
     GlobalKey<State<StatefulWidget>> formKey,
-    bool _autoValidate) {
+    bool autoValidate) {
   PhoneNumber number = PhoneNumber(isoCode: 'KH');
-  var _lang = AppLocalizeService.of(context);
+  var lang = AppLocalizeService.of(context);
   return SizedBox(
     width: double.infinity,
     child: Padding(
@@ -28,18 +28,18 @@ Widget formCardForgotPasswordPhone(
                 onInputValidated: (bool value) {
                   
                 },
-                errorMessage: _lang.translate('invalid_phone_number_validate'),
+                errorMessage: lang.translate('invalid_phone_number_validate'),
                 ignoreBlank: false,
                 autoValidateMode: AutovalidateMode.onUserInteraction,
                 selectorTextStyle: const TextStyle(color: Colors.black),
                 initialValue: number,
-                textFieldController: _phoneController,
+                textFieldController: phoneController,
                 formatInput: false,
                 keyboardType: TextInputType.number,
                 inputDecoration: InputDecoration(
                   fillColor: Colors.grey[100],
                   filled: true,
-                  hintText: _lang.translate('phone_number_tf'),
+                  hintText: lang.translate('phone_number_tf'),
                   hintStyle:
                       const TextStyle(color: Colors.black, fontSize: 12.0),
                   focusedBorder: OutlineInputBorder(

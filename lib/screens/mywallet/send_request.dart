@@ -7,10 +7,10 @@ class SendRequest extends StatefulWidget {
   const SendRequest(this.walletKey, this.assetName, this.amount, {Key? key})
       : super(key: key);
   @override
-  _SendRequestState createState() => _SendRequestState();
+  SendRequestState createState() => SendRequestState();
 }
 
-class _SendRequestState extends State<SendRequest> {
+class SendRequestState extends State<SendRequest> {
   TextEditingController? recieveWallet;
   String asset = "";
   TextEditingController? amount;
@@ -80,7 +80,7 @@ class _SendRequestState extends State<SendRequest> {
   }
 
   Future<void> _onSubmit() async {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
 
     dialogLoading(context);
     try {
@@ -98,6 +98,8 @@ class _SendRequestState extends State<SendRequest> {
         );
         var responseJson = json.decode(_backend.response!.body);
         if (_backend.response!.statusCode == 200) {
+
+          if (!mounted) return;
           Navigator.pushAndRemoveUntil(
             context,
             PageTransition(
@@ -107,33 +109,44 @@ class _SendRequestState extends State<SendRequest> {
             ModalRoute.withName('/navbar'),
           );
         } else if (_backend.response!.statusCode == 500) {
+          if (!mounted) return;
           await Components.dialog(
-              context,
-              textAlignCenter(text: 'Something went wrong. Please try again.'),
-              warningTitleDialog());
+            context,
+            textAlignCenter(text: 'Something went wrong. Please try again.'),
+            warningTitleDialog()
+          );
+
+          if (!mounted) return;
           Navigator.of(context).pop();
           _passwordController.clear();
         } else {
+          if (!mounted) return;
           await Components.dialog(
-              context,
-              textAlignCenter(text: responseJson['message']),
-              warningTitleDialog());
+            context,
+            textAlignCenter(text: responseJson['message']),
+            warningTitleDialog()
+          );
+
+          if (!mounted) return;
           Navigator.of(context).pop();
           _passwordController.clear();
         }
       }
     } on SocketException catch (_) {
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('no_internet_message')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('no_internet_message')),
+        warningTitleDialog()
+      );
+
+      if (!mounted) return;
       Navigator.of(context).pop();
       _passwordController.clear();
     }
   }
 
   Future _showDialogPassword(BuildContext context) {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -158,7 +171,7 @@ class _SendRequestState extends State<SendRequest> {
               decoration: InputDecoration(
                 fillColor: Colors.grey[100],
                 filled: true,
-                hintText: _lang.translate('password_tf'),
+                hintText: lang.translate('password_tf'),
                 hintStyle: const TextStyle(color: Colors.black, fontSize: 12.0),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.0),
@@ -269,7 +282,7 @@ class _SendRequestState extends State<SendRequest> {
 
   @override
   Widget build(BuildContext context) {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
       key: globalKey,
@@ -286,7 +299,7 @@ class _SendRequestState extends State<SendRequest> {
           color: Colors.black, //change your color here
         ),
         title: Text(
-          _lang.translate('send_request'),
+          lang.translate('send_request'),
           style: GoogleFonts.robotoCondensed(
             textStyle: const TextStyle(
               color: Colors.black,
@@ -322,7 +335,7 @@ class _SendRequestState extends State<SendRequest> {
                     const SizedBox(height: 10.0),
                     TextFormField(
                       validator: (val) => val!.isEmpty
-                          ? _lang.translate('receive_address_validate')
+                          ? lang.translate('receive_address_validate')
                           : null,
                       onSaved: (val) => recieveWallet!.text = val!,
                       autovalidateMode: AutovalidateMode.always,
@@ -331,7 +344,7 @@ class _SendRequestState extends State<SendRequest> {
                       decoration: InputDecoration(
                         prefixIcon:
                             Icon(Icons.contact_page, color: HexColor('0CACDA')),
-                        hintText: _lang.translate('receive_address'),
+                        hintText: lang.translate('receive_address'),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
                           borderSide: BorderSide(
@@ -368,7 +381,7 @@ class _SendRequestState extends State<SendRequest> {
                     const SizedBox(height: 10.0),
                     TextFormField(
                       validator: (val) => val!.isEmpty
-                          ? _lang.translate('amount_validate')
+                          ? lang.translate('amount_validate')
                           : null,
                       onSaved: (val) => amount!.text = val!,
                       autovalidateMode: AutovalidateMode.always,
@@ -387,7 +400,7 @@ class _SendRequestState extends State<SendRequest> {
                           Icons.attach_money,
                           color: primaryColor,
                         ),
-                        hintText: _lang.translate('amount'),
+                        hintText: lang.translate('amount'),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
                           borderSide: BorderSide(
@@ -470,7 +483,7 @@ class _SendRequestState extends State<SendRequest> {
                                 _submitValidate();
                               },
                               child: Center(
-                                child: Text(_lang.translate('send'),
+                                child: Text(lang.translate('send'),
                                     style: const TextStyle(
                                         color: Colors.white,
                                         fontFamily: "Poppins-Bold",

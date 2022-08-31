@@ -9,7 +9,7 @@ class ProgressBar {
       lineHeight: 24.0,
       percent: displayPer / 100.0,
       center: Text(
-        displayPer.toStringAsFixed(1) + "%",
+        "${displayPer.toStringAsFixed(1)}%",
         style: TextStyle(
           fontSize: 14.0,
           color: txtCol,

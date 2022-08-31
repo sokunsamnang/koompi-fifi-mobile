@@ -4,10 +4,10 @@ class ChooseOption extends StatefulWidget {
   const ChooseOption({Key? key}) : super(key: key);
 
   @override
-  _ChooseOptionState createState() => _ChooseOptionState();
+  ChooseOptionState createState() => ChooseOptionState();
 }
 
-class _ChooseOptionState extends State<ChooseOption>
+class ChooseOptionState extends State<ChooseOption>
     with SingleTickerProviderStateMixin {
   AnimationController? _controller;
   GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
@@ -35,7 +35,7 @@ class _ChooseOptionState extends State<ChooseOption>
   }
 
   Future<void> renewPlanOption() async {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
 
     dialogLoading(context);
     var response = await PostRequest().renewOption(
@@ -60,25 +60,32 @@ class _ChooseOptionState extends State<ChooseOption>
                   ModalRoute.withName('/navbar'),
                 ));
         } else {
+          if (!mounted) return;
           await Components.dialog(
-              context,
-              textAlignCenter(text: responseJson['message']),
-              warningTitleDialog());
+            context,
+            textAlignCenter(text: responseJson['message']),
+            warningTitleDialog()
+          );
+          if (!mounted) return;
           Navigator.of(context).pop();
         }
       }
     } on SocketException catch (_) {
+      if (!mounted) return;
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('no_internet_message')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('no_internet_message')),
+        warningTitleDialog()
+      );
+
+      if (!mounted) return;
       Navigator.of(context).pop();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
       key: globalKey,
@@ -86,7 +93,7 @@ class _ChooseOptionState extends State<ChooseOption>
         elevation: 0,
         centerTitle: true,
         backgroundColor: Colors.white,
-        title: Text(_lang.translate('renew_option'),
+        title: Text(lang.translate('renew_option'),
           style: GoogleFonts.robotoCondensed(
             textStyle: const TextStyle(
               color: Colors.black,
@@ -133,7 +140,7 @@ class _ChooseOptionState extends State<ChooseOption>
                       onTap: () => setState(() => changeIndex(true)),
                       child: ListTile(
                           leading: Icon(Icons.autorenew, color: primaryColor),
-                          title: Text(_lang.translate('auto')),
+                          title: Text(lang.translate('auto')),
                           trailing: renewOption == true
                               ? Icon(
                                   Icons.check_circle,
@@ -171,7 +178,7 @@ class _ChooseOptionState extends State<ChooseOption>
                                     Icons.check_circle,
                                     color: Colors.transparent,
                                   ),
-                            title: Text(_lang.translate('manual')),
+                            title: Text(lang.translate('manual')),
                             onTap: () {
                               setState(() => changeIndex(false));
                               changeIndex(false) == false

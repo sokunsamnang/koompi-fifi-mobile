@@ -3,12 +3,12 @@ import 'package:koompi_hotspot/all_export.dart';
 @override
 Widget forgetPasswordBody(
     BuildContext context,
-    String _phone,
-    TextEditingController _phoneController,
-    Function _submitValidate,
+    String phone,
+    TextEditingController phoneController,
+    Function submitValidate,
     GlobalKey<FormState> formKey,
-    bool _autoValidate) {
-  var _lang = AppLocalizeService.of(context);
+    bool autoValidate) {
+  var lang = AppLocalizeService.of(context);
   return Scaffold(
     backgroundColor: Colors.white,
     resizeToAvoidBottomInset: true,
@@ -42,7 +42,7 @@ Widget forgetPasswordBody(
                     ),
                     Center(
                       child: Text(
-                        _lang.translate('forgot_password'),
+                        lang.translate('forgot_password'),
                         style: TextStyle(
                             color: primaryColor,
                             fontFamily: 'Medium',
@@ -51,7 +51,7 @@ Widget forgetPasswordBody(
                     ),
                     Center(
                       child: Text(
-                        _lang.translate('forgot_password_tx'),
+                        lang.translate('forgot_password_tx'),
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           color: Colors.black,
@@ -65,8 +65,8 @@ Widget forgetPasswordBody(
                 const SizedBox(
                   height: 25,
                 ),
-                formCardForgotPasswordPhone(context, _phoneController, _phone,
-                    _submitValidate, formKey, _autoValidate),
+                formCardForgotPasswordPhone(context, phoneController, phone,
+                    submitValidate, formKey, autoValidate),
                 // const SizedBox(height: 20),
                 Center(
                     child: InkWell(
@@ -89,10 +89,10 @@ Widget forgetPasswordBody(
                           borderRadius: BorderRadius.circular(12),
                         ),
                         onTap: () async {
-                          _submitValidate();
+                          submitValidate();
                         },
                         child: Center(
-                          child: Text(_lang.translate('reset_password_bt'),
+                          child: Text(lang.translate('reset_password_bt'),
                               style: const TextStyle(
                                   color: Colors.white,
                                   fontFamily: "Poppins-Bold",
@@ -110,7 +110,7 @@ Widget forgetPasswordBody(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        _lang.translate('back_to_login'),
+                        lang.translate('back_to_login'),
                         style: const TextStyle(fontFamily: "Poppins-Medium"),
                       ),
                       InkWell(
@@ -122,7 +122,7 @@ Widget forgetPasswordBody(
                         },
                         splashColor: Colors.transparent,
                         highlightColor: Colors.transparent,
-                        child: Text(_lang.translate('sign_in_bt'),
+                        child: Text(lang.translate('sign_in_bt'),
                             style: const TextStyle(
                                 color: Color(0xfff79c4f),
                                 fontFamily: "Poppins-Bold")),

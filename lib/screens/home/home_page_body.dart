@@ -1,7 +1,7 @@
 import 'package:koompi_hotspot/all_export.dart';
 
 Widget bodyPage(BuildContext context) {
-  var _lang = AppLocalizeService.of(context);
+  var lang = AppLocalizeService.of(context);
 
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -11,7 +11,7 @@ Widget bodyPage(BuildContext context) {
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Text(
-          _lang.translate('my_plan').toUpperCase(),
+          lang.translate('my_plan').toUpperCase(),
           style: GoogleFonts.nunito(
               textStyle: const TextStyle(
                   color: Colors.black,
@@ -42,7 +42,7 @@ Widget bodyPage(BuildContext context) {
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Text(
-          _lang.translate('whats_hots').toUpperCase(),
+          lang.translate('whats_hots').toUpperCase(),
           style: GoogleFonts.nunito(
               textStyle: const TextStyle(
                   color: Colors.black,
@@ -57,7 +57,7 @@ Widget bodyPage(BuildContext context) {
 }
 
 Widget startGetWallet(context) {
-  var _lang = AppLocalizeService.of(context);
+  var lang = AppLocalizeService.of(context);
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 15),
     child: ClipRRect(
@@ -113,7 +113,7 @@ Widget startGetWallet(context) {
                                 ),
                                 const SizedBox(width: 5),
                                 Text(
-                                  _lang.translate('get_wallet'),
+                                  lang.translate('get_wallet'),
                                   style: const TextStyle(
                                       fontFamily: "Medium",
                                       color: Colors.white),
@@ -168,7 +168,7 @@ Widget startGetWallet(context) {
 }
 
 Widget noPlanView(BuildContext context) {
-  var _lang = AppLocalizeService.of(context);
+  var lang = AppLocalizeService.of(context);
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 15),
     child: Column(
@@ -190,7 +190,7 @@ Widget noPlanView(BuildContext context) {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                _lang.translate('buy_hotspot_plan'),
+                lang.translate('buy_hotspot_plan'),
                 style: GoogleFonts.roboto(
                   textStyle: const TextStyle(
                     color: Colors.black,
@@ -256,7 +256,7 @@ Widget noPlanView(BuildContext context) {
 }
 
 Widget _planViewButton(context) {
-  var _lang = AppLocalizeService.of(context);
+  var lang = AppLocalizeService.of(context);
   return mPlan.status == true
       ? Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -299,7 +299,7 @@ Widget _planViewButton(context) {
                                         width: 30),
                                     const SizedBox(width: 10),
                                     Text(
-                                      _lang.translate('hotspot'),
+                                      lang.translate('hotspot'),
                                       style: GoogleFonts.roboto(
                                           textStyle: TextStyle(
                                               color: HexColor('0CACDA'),
@@ -336,7 +336,7 @@ Widget _planViewButton(context) {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        '${_lang.translate('device')}:',
+                                        '${lang.translate('device')}:',
                                         style: GoogleFonts.roboto(
                                           textStyle: const TextStyle(
                                             color: Colors.black,
@@ -346,7 +346,7 @@ Widget _planViewButton(context) {
                                         ),
                                       ),
                                       Text(
-                                        '${mPlan.device} ${_lang.translate('devices')}',
+                                        '${mPlan.device} ${lang.translate('devices')}',
                                         style: GoogleFonts.robotoCondensed(
                                           textStyle: const TextStyle(
                                             color: Colors.black,
@@ -367,7 +367,7 @@ Widget _planViewButton(context) {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        '${_lang.translate('speed')}:',
+                                        '${lang.translate('speed')}:',
                                         style: GoogleFonts.roboto(
                                           textStyle: const TextStyle(
                                             color: Colors.black,
@@ -377,7 +377,7 @@ Widget _planViewButton(context) {
                                         ),
                                       ),
                                       Text(
-                                        '5 ${_lang.translate('mb')}',
+                                        '5 ${lang.translate('mb')}',
                                         style: GoogleFonts.robotoCondensed(
                                           textStyle: const TextStyle(
                                             color: Colors.black,
@@ -398,7 +398,7 @@ Widget _planViewButton(context) {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        '${_lang.translate('plan')}:',
+                                        '${lang.translate('plan')}:',
                                         style: GoogleFonts.roboto(
                                           textStyle: const TextStyle(
                                             color: Colors.black,
@@ -408,7 +408,7 @@ Widget _planViewButton(context) {
                                         ),
                                       ),
                                       Text(
-                                        '${mPlan.plan} ${_lang.translate('day')}',
+                                        '${mPlan.plan} ${lang.translate('day')}',
                                         style: GoogleFonts.robotoCondensed(
                                           textStyle: const TextStyle(
                                             color: Colors.black,
@@ -429,7 +429,7 @@ Widget _planViewButton(context) {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        '${_lang.translate('valid_until')}:',
+                                        '${lang.translate('valid_until')}:',
                                         style: GoogleFonts.roboto(
                                           textStyle: const TextStyle(
                                             color: Colors.black,

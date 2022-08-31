@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:koompi_hotspot/all_export.dart';
 
 Widget announcementsList(BuildContext context) {
@@ -62,10 +64,9 @@ Widget announcementsList(BuildContext context) {
                     child: ListTile(
                       onTap: () async {
                         dialogLoading(context);
-                        await Provider.of<VoteResultProvider>(context,
-                                listen: false)
-                            .fetchVoteResult(
-                                notification.notificationList[index].id!);
+                        await Provider.of<VoteResultProvider>(context,listen: false).fetchVoteResult(notification.notificationList[index].id!);
+
+                        
                         Navigator.of(context).pop();
                         Navigator.push(
                             context,

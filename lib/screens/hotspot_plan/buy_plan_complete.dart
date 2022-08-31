@@ -5,19 +5,19 @@ class CompletePlan extends StatefulWidget {
   const CompletePlan({Key? key}) : super(key: key);
 
   @override
-  _CompletePlanState createState() => _CompletePlanState();
+  CompletePlanState createState() => CompletePlanState();
 }
 
-class _CompletePlanState extends State<CompletePlan> {
+class CompletePlanState extends State<CompletePlan> {
   @override
   Widget build(BuildContext context) {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: Text(_lang.translate('complete'),
+        title: Text(lang.translate('complete'),
           style: GoogleFonts.robotoCondensed(
             textStyle: const TextStyle(
               color: Colors.black,
@@ -30,6 +30,7 @@ class _CompletePlanState extends State<CompletePlan> {
       ),
       backgroundColor: Colors.white,
       body: WillPopScope(
+          onWillPop: redirectNavbar,
           child: SafeArea(
             child: SingleChildScrollView(
               child: Column(
@@ -47,7 +48,7 @@ class _CompletePlanState extends State<CompletePlan> {
                       ),
                       Center(
                         child: Text(
-                          _lang.translate('subscribe_complete'),
+                          lang.translate('subscribe_complete'),
                           style: const TextStyle(
                               fontFamily: 'Medium',
                               fontWeight: FontWeight.bold,
@@ -83,15 +84,13 @@ class _CompletePlanState extends State<CompletePlan> {
                                 ),
                                 onTap: () async {
                                   dialogLoading(context);
-                                  await Provider.of<BalanceProvider>(context,
-                                          listen: false)
-                                      .fetchPortfolio();
-                                  await Provider.of<TrxHistoryProvider>(context,
-                                          listen: false)
-                                      .fetchTrxHistory();
-                                  await Provider.of<GetPlanProvider>(context,
-                                          listen: false)
-                                      .fetchHotspotPlan();
+                                  await Provider.of<BalanceProvider>(context,listen: false).fetchPortfolio();
+
+                                  if (!mounted) return;
+                                  await Provider.of<TrxHistoryProvider>(context,listen: false).fetchTrxHistory();
+
+                                  if (!mounted) return;
+                                  await Provider.of<GetPlanProvider>(context,listen: false).fetchHotspotPlan();
                                   Timer(
                                     const Duration(milliseconds: 1),
                                     () => Navigator.pushAndRemoveUntil(
@@ -105,7 +104,7 @@ class _CompletePlanState extends State<CompletePlan> {
                                         ));
                                 },
                                 child: Center(
-                                  child: Text(_lang.translate('home'),
+                                  child: Text(lang.translate('home'),
                                       style: const TextStyle(
                                           color: Colors.white,
                                           fontFamily: "Poppins-Bold",
@@ -122,8 +121,7 @@ class _CompletePlanState extends State<CompletePlan> {
                 ],
               ),
             ),
-          ),
-          onWillPop: redirectNavbar),
+          )),
     );
   }
 

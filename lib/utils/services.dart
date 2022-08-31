@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/providers/contact_list_provider.dart';
@@ -20,7 +22,7 @@ class StorageServices {
   // }
 
   checkUser(BuildContext context) async {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
 
     const storage = FlutterSecureStorage();
     final String? token = await storage.read(key: "token");
@@ -28,6 +30,7 @@ class StorageServices {
     if (JwtDecoder.isExpired(token) == true || token == '') {
       // clearToken('token');
       deleteAllKeys();
+      
       Navigator.pushAndRemoveUntil(
         context,
         PageTransition(
@@ -61,7 +64,7 @@ class StorageServices {
         }
         await Components.dialogNoOption(
             context,
-            textAlignCenter(text: _lang.translate('request_timeout')),
+            textAlignCenter(text: lang.translate('request_timeout')),
             warningTitleDialog());
       } on FormatException catch (_) {
         if (kDebugMode) {
@@ -69,7 +72,7 @@ class StorageServices {
         }
         await Components.dialogNoOption(
             context,
-            textAlignCenter(text: _lang.translate('server_error')),
+            textAlignCenter(text: lang.translate('server_error')),
             warningTitleDialog());
       }
 
@@ -96,9 +99,9 @@ class StorageServices {
   void updateUserData(BuildContext context) {
     read('token').then(
       (value) async {
-        String? _token = value;
-        if (_token != null) {
-          await GetRequest().getUserProfile(_token);
+        String? token = value;
+        if (token != null) {
+          await GetRequest().getUserProfile(token);
 
           Navigator.pushAndRemoveUntil(
             context,

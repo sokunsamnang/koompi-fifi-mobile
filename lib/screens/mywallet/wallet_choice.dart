@@ -10,10 +10,10 @@ class WalletChoice extends StatefulWidget {
   // WalletChoice(this.onGetWallet, this.showAlertDialog);
 
   @override
-  _WalletChoiceState createState() => _WalletChoiceState();
+  WalletChoiceState createState() => WalletChoiceState();
 }
 
-class _WalletChoiceState extends State<WalletChoice> {
+class WalletChoiceState extends State<WalletChoice> {
   String? alertText;
 
   @override

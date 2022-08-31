@@ -4,10 +4,10 @@ class Notifications extends StatefulWidget {
   const Notifications({Key? key}) : super(key: key);
 
   @override
-  _NotificationsState createState() => _NotificationsState();
+  NotificationsState createState() => NotificationsState();
 }
 
-class _NotificationsState extends State<Notifications>
+class NotificationsState extends State<Notifications>
     with SingleTickerProviderStateMixin {
   TabController? _tabController;
 
@@ -19,7 +19,7 @@ class _NotificationsState extends State<Notifications>
 
   @override
   Widget build(BuildContext context) {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -34,7 +34,7 @@ class _NotificationsState extends State<Notifications>
         centerTitle: true,
         backgroundColor: Colors.white,
         title: Text(
-          _lang.translate('notifications'),
+          lang.translate('notifications'),
           style: GoogleFonts.robotoCondensed(
             textStyle: const TextStyle(
               color: Colors.black,
@@ -52,12 +52,12 @@ class _NotificationsState extends State<Notifications>
           labelColor: primaryColor,
           tabs: [
             Tab(
-              child: Text(_lang.translate('transactions'),
+              child: Text(lang.translate('transactions'),
                   style: GoogleFonts.nunito(
                       fontSize: 14, fontWeight: FontWeight.w600)),
             ),
             Tab(
-              child: Text(_lang.translate('announcements'),
+              child: Text(lang.translate('announcements'),
                   style: GoogleFonts.nunito(
                       fontSize: 14, fontWeight: FontWeight.w600)),
             ),
@@ -69,11 +69,11 @@ class _NotificationsState extends State<Notifications>
         bottomOpacity: 1,
       ),
       body: TabBarView(
+        controller: _tabController,
         children: [
           Center(child: transaction(context)),
           const Center(child: AnnouncementsScreen()),
         ],
-        controller: _tabController,
       ),
     );
   }

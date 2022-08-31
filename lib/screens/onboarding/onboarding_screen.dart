@@ -103,16 +103,17 @@ class IntroScreenState extends State<IntroScreen> {
                 )
               ),
               Container(
+                margin: const EdgeInsets.only(top: 20.0),
                 child: Text(
                   currentSlide.title!,
                   style: currentSlide.styleTitle,
                   textAlign: TextAlign.center,
                 ),
-                margin: const EdgeInsets.only(top: 20.0),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Container(
+                  margin: const EdgeInsets.only(top: 20.0),
                   child: Text(
                     currentSlide.description!,
                     style: currentSlide.styleDescription,
@@ -120,7 +121,6 @@ class IntroScreenState extends State<IntroScreen> {
                     maxLines: 5,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  margin: const EdgeInsets.only(top: 20.0),
                 ),
               ),
             ],

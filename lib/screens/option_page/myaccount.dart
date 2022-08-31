@@ -6,10 +6,10 @@ class MyAccount extends StatefulWidget {
   const MyAccount({Key? key}) : super(key: key);
 
   @override
-  _MyAccountState createState() => _MyAccountState();
+  MyAccountState createState() => MyAccountState();
 }
 
-class _MyAccountState extends State<MyAccount>
+class MyAccountState extends State<MyAccount>
     with SingleTickerProviderStateMixin {
   AnimationController? _controller;
 
@@ -41,7 +41,7 @@ class _MyAccountState extends State<MyAccount>
   }
 
   Future<void> _onSubmit() async {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
 
     dialogLoading(context);
     try {
@@ -68,18 +68,26 @@ class _MyAccountState extends State<MyAccount>
           if (kDebugMode) {
             print('update info not Successful');
           }
+
+          if (!mounted) return;
           await Components.dialog(
-              context,
-              textAlignCenter(text: _lang.translate('update_info_error')),
-              warningTitleDialog());
+            context,
+            textAlignCenter(text: lang.translate('update_info_error')),
+            warningTitleDialog()
+          );
+          
+          if (!mounted) return;
           Navigator.of(context).pop();
         }
       }
     } on SocketException catch (_) {
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('no_internet_message')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('no_internet_message')),
+        warningTitleDialog()
+      );
+
+      if (!mounted) return;
       Navigator.of(context).pop();
     }
   }
@@ -166,14 +174,14 @@ class _MyAccountState extends State<MyAccount>
 
   @override
   Widget build(BuildContext context) {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
         backgroundColor: Colors.white,
-        title: Text(_lang.translate('edit_account'),
+        title: Text(lang.translate('edit_account'),
           style: GoogleFonts.robotoCondensed(
             textStyle: const TextStyle(
               color: Colors.black,
@@ -264,7 +272,7 @@ class _MyAccountState extends State<MyAccount>
                     ),
                     Center(
                       child: TextButton(
-                        child: Text(_lang.translate('edit_profile_picture'),
+                        child: Text(lang.translate('edit_profile_picture'),
                             style: TextStyle(
                                 color: primaryColor,
                                 fontSize: 20.0,
@@ -277,7 +285,7 @@ class _MyAccountState extends State<MyAccount>
                     const SizedBox(height: 10.0),
                     TextFormField(
                       validator: (val) => val!.length < 3
-                          ? _lang.translate('fullname_validate')
+                          ? lang.translate('fullname_validate')
                           : null,
                       onSaved: (val) => fullnameController.text = val!,
                       autovalidateMode: AutovalidateMode.always,
@@ -287,7 +295,7 @@ class _MyAccountState extends State<MyAccount>
                           Iconsax.user,
                           color: primaryColor,
                         ),
-                        hintText: _lang.translate('fullname'),
+                        hintText: lang.translate('fullname'),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
                           borderSide: BorderSide(
@@ -321,7 +329,7 @@ class _MyAccountState extends State<MyAccount>
                           Iconsax.call,
                           color: primaryColor,
                         ),
-                        hintText: _lang.translate('phone_number_tf'),
+                        hintText: lang.translate('phone_number_tf'),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
                           borderSide: BorderSide(
@@ -377,7 +385,7 @@ class _MyAccountState extends State<MyAccount>
                                 child: Row(
                                   children: [
                                     const Icon(Iconsax.man),
-                                    Text(_lang.translate('male'),
+                                    Text(lang.translate('male'),
                                         style: TextStyle(
                                             fontFamily: "Medium",
                                             color: gender == 'Male'
@@ -408,7 +416,7 @@ class _MyAccountState extends State<MyAccount>
                                 child: Row(
                                   children: [
                                     const Icon(Iconsax.woman),
-                                    Text(_lang.translate('female'),
+                                    Text(lang.translate('female'),
                                         style: TextStyle(
                                             fontFamily: "Medium",
                                             color: gender == 'Female'
@@ -465,11 +473,11 @@ class _MyAccountState extends State<MyAccount>
     );
   }
 
-  Widget dateOfbirth(DateTime selectedDate, _selectDate, dateFormart, context) {
+  Widget dateOfbirth(DateTime selectedDate, selectDate, dateFormart, context) {
     return DateDropdown(
       valueText: birthdate ?? 'Select Date of Birth',
       onPressed: () {
-        _selectDate(context);
+        selectDate(context);
       },
     );
   }

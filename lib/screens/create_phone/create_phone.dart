@@ -4,10 +4,10 @@ class CreatePhone extends StatefulWidget {
   const CreatePhone({Key? key}) : super(key: key);
 
   @override
-  _CreatePhoneState createState() => _CreatePhoneState();
+  CreatePhoneState createState() => CreatePhoneState();
 }
 
-class _CreatePhoneState extends State<CreatePhone> {
+class CreatePhoneState extends State<CreatePhone> {
   GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
 
   final formKey = GlobalKey<FormState>();
@@ -62,7 +62,7 @@ class _CreatePhoneState extends State<CreatePhone> {
   }
 
   Future<void> onSignUpByPhone() async {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
 
     dialogLoading(context);
     try {
@@ -75,6 +75,7 @@ class _CreatePhoneState extends State<CreatePhone> {
         var responseJson = json.decode(response.body);
 
         if (response.statusCode == 200) {
+          if (!mounted) return;
           Navigator.pushReplacement(
               context,
               PageTransition(
@@ -83,24 +84,34 @@ class _CreatePhoneState extends State<CreatePhone> {
                       "+855${StorageServices.removeZero(phoneController.text)}",
                       passwordController.text)));
         } else if (response.statusCode == 401) {
+          if (!mounted) return;
           await Components.dialog(
-              context,
-              textAlignCenter(text: responseJson['message']),
-              warningTitleDialog());
+            context,
+            textAlignCenter(text: responseJson['message']),
+            warningTitleDialog()
+          );
+
+          if (!mounted) return;
           Navigator.of(context).pop();
         } else if (response.statusCode >= 500 && response.statusCode < 600) {
+          if (!mounted) return;
           await Components.dialog(
-              context,
-              textAlignCenter(text: responseJson['message']),
-              warningTitleDialog());
+            context,
+            textAlignCenter(text: responseJson['message']),
+            warningTitleDialog()
+          );
+
+          if (!mounted) return;
           Navigator.of(context).pop();
         }
       }
     } on SocketException catch (_) {
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('no_internet_message')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('no_internet_message')),
+        warningTitleDialog()
+      );
+      if (!mounted) return;
       Navigator.of(context).pop();
     }
   }

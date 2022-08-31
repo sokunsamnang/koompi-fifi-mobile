@@ -11,10 +11,10 @@ class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);
 
   @override
-  _AppState createState() => _AppState();
+  AppState createState() => AppState();
 }
 
-class _AppState extends State<App> {
+class AppState extends State<App> {
   @override
   Widget build(context) {
     SystemChrome.setPreferredOrientations([
@@ -93,10 +93,10 @@ class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
 
   @override
-  _SplashState createState() => _SplashState();
+  SplashState createState() => SplashState();
 }
 
-class _SplashState extends State<Splash> {
+class SplashState extends State<Splash> {
   startTime() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool? firstTime = prefs.getBool('first_time');
@@ -128,23 +128,22 @@ class _SplashState extends State<Splash> {
   }
 
   void setDefaultLang() {
-    var _lang = Provider.of<LangProvider>(context, listen: false);
+    var lang = Provider.of<LangProvider>(context, listen: false);
     StorageServices().read('lang').then(
       (value) {
-        print("value $value");
         if (value == null) {
           setState(() {
-            _lang.setLocal("EN", context);
+            lang.setLocal("EN", context);
           });
         }
         else if(value == 'EN') {
           setState(() {
-            _lang.setLocal("EN", context);
+            lang.setLocal("EN", context);
           });
         }
         else if(value == 'KH') {
           setState(() {
-            _lang.setLocal("KH", context);
+            lang.setLocal("KH", context);
           });
         }
       },
@@ -190,18 +189,7 @@ class _SplashState extends State<Splash> {
     if (deepLink != null) {
       handleDynamicLink(deepLink);
     }
-    FirebaseDynamicLinks.instance.onLink(
-        onSuccess: (PendingDynamicLinkData? dynamicLink) async {
-      final Uri? deepLink = dynamicLink?.link;
-
-      if (deepLink != null) {
-        handleDynamicLink(deepLink);
-      }
-    }, onError: (OnLinkErrorException e) async {
-      if (kDebugMode) {
-        print(e.message);
-      }
-    });
+    FirebaseDynamicLinks.instance.onLink;
   }
 
   handleDynamicLink(Uri url) {

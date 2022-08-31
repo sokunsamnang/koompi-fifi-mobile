@@ -3,16 +3,16 @@ import 'package:koompi_hotspot/all_export.dart';
 @override
 Widget formCardNewPassword(
     BuildContext context,
-    TextEditingController _passwordController,
-    TextEditingController _confirmPasswordController,
-    bool _obscureText,
-    Function _toggle,
-    bool _obscureText2,
-    Function _toggle2,
-    Function _submit,
+    TextEditingController passwordController,
+    TextEditingController confirmPasswordController,
+    bool obscureText,
+    Function toggle,
+    bool obscureText2,
+    Function toggle2,
+    Function submit,
     GlobalKey<State<StatefulWidget>> formKey,
-    bool _autoValidate) {
-  var _lang = AppLocalizeService.of(context);
+    bool autoValidate) {
+  var lang = AppLocalizeService.of(context);
   return Container(
     width: double.infinity,
 //      height: ScreenUtil.getInstance().setHeight(500),
@@ -27,20 +27,20 @@ Widget formCardNewPassword(
               TextFormField(
                 validator: (val) {
                   if (val!.isEmpty) {
-                    return _lang.translate('password_is_required_validate');
+                    return lang.translate('password_is_required_validate');
                   }
                   if (val.length < 6) {
-                    return _lang.translate('password_too_short_validate');
+                    return lang.translate('password_too_short_validate');
                   }
-                  if (val != _confirmPasswordController.text) {
-                    return _lang.translate('password_does_not_match_validate');
+                  if (val != confirmPasswordController.text) {
+                    return lang.translate('password_does_not_match_validate');
                   }
                   return null;
                 },
-                onSaved: (val) => _passwordController.text = val!,
+                onSaved: (val) => passwordController.text = val!,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
-                controller: _passwordController,
-                obscureText: _obscureText,
+                controller: passwordController,
+                obscureText: obscureText,
                 keyboardType: TextInputType.visiblePassword,
                 decoration: InputDecoration(
                   fillColor: Colors.grey[100],
@@ -51,13 +51,13 @@ Widget formCardNewPassword(
                   ),
                   suffixIcon: GestureDetector(
                     onTap: () {
-                      _toggle();
+                      toggle();
                     },
                     child: Icon(
-                        _obscureText ? Icons.visibility_off : Icons.visibility,
+                        obscureText ? Icons.visibility_off : Icons.visibility,
                         color: primaryColor),
                   ),
-                  hintText: _lang.translate('new_password_tf'),
+                  hintText: lang.translate('new_password_tf'),
                   hintStyle:
                       const TextStyle(color: Colors.black, fontSize: 12.0),
                   focusedBorder: OutlineInputBorder(
@@ -86,20 +86,20 @@ Widget formCardNewPassword(
               TextFormField(
                 validator: (val) {
                   if (val!.isEmpty) {
-                    return _lang.translate('password_is_required_validate');
+                    return lang.translate('password_is_required_validate');
                   }
                   if (val.length < 6) {
-                    return _lang.translate('password_too_short_validate');
+                    return lang.translate('password_too_short_validate');
                   }
-                  if (val != _passwordController.text) {
-                    return _lang.translate('password_does_not_match_validate');
+                  if (val != passwordController.text) {
+                    return lang.translate('password_does_not_match_validate');
                   }
                   return null;
                 },
-                onSaved: (val) => _passwordController.text = val!,
+                onSaved: (val) => passwordController.text = val!,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
-                controller: _confirmPasswordController,
-                obscureText: _obscureText2,
+                controller: confirmPasswordController,
+                obscureText: obscureText2,
                 keyboardType: TextInputType.visiblePassword,
                 decoration: InputDecoration(
                   fillColor: Colors.grey[100],
@@ -107,13 +107,13 @@ Widget formCardNewPassword(
                   prefixIcon: Icon(Icons.vpn_key_sharp, color: primaryColor),
                   suffixIcon: GestureDetector(
                     onTap: () {
-                      _toggle2();
+                      toggle2();
                     },
                     child: Icon(
-                        _obscureText2 ? Icons.visibility_off : Icons.visibility,
+                        obscureText2 ? Icons.visibility_off : Icons.visibility,
                         color: primaryColor),
                   ),
-                  hintText: _lang.translate('new_confirm_password_tf'),
+                  hintText: lang.translate('new_confirm_password_tf'),
                   hintStyle:
                       const TextStyle(color: Colors.black, fontSize: 12.0),
                   focusedBorder: OutlineInputBorder(

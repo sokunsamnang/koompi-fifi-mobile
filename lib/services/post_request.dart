@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:http_parser/http_parser.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:http/http.dart' as http;
 
@@ -367,13 +368,13 @@ class PostRequest with ChangeNotifier {
   }
 
   // Upload Fil Image To Get Url Image
-  Future<String> upLoadImage(File _image) async {
+  Future<String> upLoadImage(File image) async {
     await _prefService.read('token').then((value) {
       _backend.token = Map<String, dynamic>.from({'token': value});
     });
     /* Compress image file */
     Uint8List? compressImage = await FlutterImageCompress.compressWithFile(
-      _image.path,
+      image.path,
       minHeight: 900,
       minWidth: 600,
       quality: 100,

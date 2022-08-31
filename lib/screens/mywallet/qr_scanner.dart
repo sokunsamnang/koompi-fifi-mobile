@@ -31,7 +31,7 @@ class QrScannerState extends State<QrScanner> {
 
   @override
   Widget build(BuildContext context) {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -42,7 +42,7 @@ class QrScannerState extends State<QrScanner> {
         ),
         elevation: 0,
         centerTitle: true,
-        title: Text(_lang.translate('qr_scanner'),
+        title: Text(lang.translate('qr_scanner'),
           style: GoogleFonts.robotoCondensed(
             textStyle: const TextStyle(
               color: Colors.black,

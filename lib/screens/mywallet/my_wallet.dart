@@ -12,10 +12,10 @@ class MyWallet extends StatefulWidget {
   const MyWallet({Key? key, required this.walletKey}) : super(key: key);
 
   @override
-  _MyWalletState createState() => _MyWalletState();
+  MyWalletState createState() => MyWalletState();
 }
 
-class _MyWalletState extends State<MyWallet> {
+class MyWalletState extends State<MyWallet> {
   Future<bool> redirectNavbar() async {
     Navigator.pushAndRemoveUntil(
       context,
@@ -49,10 +49,10 @@ class _MyWalletState extends State<MyWallet> {
     ));
   }
 
-  void copyWallet(String _wallet) {
+  void copyWallet(String wallet) {
     Clipboard.setData(
       ClipboardData(
-        text: _wallet,
+        text: wallet,
       ),
     );
   }
@@ -70,17 +70,10 @@ class _MyWalletState extends State<MyWallet> {
   void dispose() {
     super.dispose();
   }
-
-
-  Future<void> fetchWallet() async {
-    await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
-    await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
-    await Provider.of<ContactListProvider>(context, listen: false).fetchContactList();
-  }
-
+  
   @override
   Widget build(BuildContext context) {
-    var _balance = Provider.of<BalanceProvider>(context);
+    var balance = Provider.of<BalanceProvider>(context);
     AppBar appBar = AppBar();
     appBarheight = appBar.preferredSize.height;
 
@@ -126,15 +119,14 @@ class _MyWalletState extends State<MyWallet> {
         onRefresh: () async{
           if(!mounted) return;
           await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
+
+          if (!mounted) return;
           await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+
+          if (!mounted) return;
           await Provider.of<ContactListProvider>(context, listen: false).fetchContactList();
-          // if(mounted){
-          //   await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
-          //   await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
-          //   await Provider.of<ContactListProvider>(context, listen: false).fetchContactList();
-          // }
         },
-        child: _balance.balanceList.isNotEmpty ? SizedBox(
+        child: balance.balanceList.isNotEmpty ? SizedBox(
           height: MediaQuery.of(context).size.height,
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
@@ -183,7 +175,7 @@ class _MyWalletState extends State<MyWallet> {
   }
 
   Widget myBalance(BuildContext context, Function showSnackBar, Function copyAddress) {
-    var _balance = Provider.of<BalanceProvider>(context);
+    var balance = Provider.of<BalanceProvider>(context);
     return Container(
       decoration: BoxDecoration(
         color: primaryColor.withOpacity(0.8),
@@ -200,7 +192,7 @@ class _MyWalletState extends State<MyWallet> {
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: Text(
-              '${_balance.balanceList[0].token!} ${_balance.balanceList[0].symbol!}' ,
+              '${balance.balanceList[0].token!} ${balance.balanceList[0].symbol!}' ,
               style: GoogleFonts.robotoCondensed(
                 fontSize: 36,
                 fontWeight: FontWeight.w700,
@@ -261,12 +253,12 @@ class _MyWalletState extends State<MyWallet> {
                       onPressed: () async {
                         _qrBottomSheet(context, showSnackBar, copyWallet);
                       },
-                      child: Image.asset('assets/images/recieve.png', scale: 2),
                       style: ButtonStyle(
                         shape: MaterialStateProperty.all(const CircleBorder()),
                         padding: MaterialStateProperty.all(const EdgeInsets.all(10)),
                         backgroundColor: MaterialStateProperty.all(Colors.white),
-                      )
+                      ),
+                      child: Image.asset('assets/images/recieve.png', scale: 2)
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -286,12 +278,12 @@ class _MyWalletState extends State<MyWallet> {
                       onPressed: () {
                         _sendWalletBottomSheet(context, widget.walletKey);
                       },
-                      child: Image.asset('assets/images/transfer.png', scale: 2),
                       style: ButtonStyle(
                         shape: MaterialStateProperty.all(const CircleBorder()),
                         padding: MaterialStateProperty.all(const EdgeInsets.all(10)),
                         backgroundColor: MaterialStateProperty.all(Colors.white),
                       ),
+                      child: Image.asset('assets/images/transfer.png', scale: 2),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -318,12 +310,12 @@ class _MyWalletState extends State<MyWallet> {
                         //     )
                         // );
                       },
-                      child: Image.asset('assets/images/swap.png', scale: 2),
                       style: ButtonStyle(
                         shape: MaterialStateProperty.all(const CircleBorder()),
                         padding: MaterialStateProperty.all(const EdgeInsets.all(10)),
                         backgroundColor: MaterialStateProperty.all(Colors.white),
                       ),
+                      child: Image.asset('assets/images/swap.png', scale: 2),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -346,7 +338,7 @@ class _MyWalletState extends State<MyWallet> {
   }
 
   Widget walletAccount(BuildContext context) {
-    var _balance = Provider.of<BalanceProvider>(context);
+    var balance = Provider.of<BalanceProvider>(context);
 
     return Padding(
       padding: const EdgeInsets.all(15.0),
@@ -379,7 +371,7 @@ class _MyWalletState extends State<MyWallet> {
                   ),
                   leading: Image.asset('assets/images/sel-coin-icon.png', width: 40, height: 40,),
                   title: Text(
-                    _balance.balanceList[0].symbol!,
+                    balance.balanceList[0].symbol!,
                     style: GoogleFonts.roboto(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
@@ -387,7 +379,7 @@ class _MyWalletState extends State<MyWallet> {
                     ),
                   ),
                   trailing: Text(
-                    _balance.balanceList[0].token!,
+                    balance.balanceList[0].token!,
                     style: GoogleFonts.roboto(
                       fontSize: 20,
                       fontStyle: FontStyle.italic,
@@ -413,7 +405,7 @@ class _MyWalletState extends State<MyWallet> {
                   ),
                   leading: Image.asset('assets/images/Luy-coin.png', width: 40, height: 40,),
                   title: Text(
-                    _balance.balanceList[1].symbol!,
+                    balance.balanceList[1].symbol!,
                     style: GoogleFonts.roboto(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
@@ -421,7 +413,7 @@ class _MyWalletState extends State<MyWallet> {
                     ),
                   ),
                   trailing: Text(
-                    _balance.balanceList[1].token!,
+                    balance.balanceList[1].token!,
                     style: GoogleFonts.roboto(
                       fontSize: 20,
                       fontStyle: FontStyle.italic,
@@ -441,7 +433,7 @@ class _MyWalletState extends State<MyWallet> {
                   ),
                   leading: Image.asset('assets/images/KSD-coin.png', width: 40, height: 40,),
                   title: Text(
-                    _balance.balanceList[2].symbol!,
+                    balance.balanceList[2].symbol!,
                     style: GoogleFonts.roboto(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
@@ -449,7 +441,7 @@ class _MyWalletState extends State<MyWallet> {
                     ),
                   ),
                   trailing: Text(
-                    _balance.balanceList[2].token!,
+                    balance.balanceList[2].token!,
                     style: GoogleFonts.roboto(
                       fontSize: 20,
                       fontStyle: FontStyle.italic,
@@ -479,11 +471,11 @@ class _MyWalletState extends State<MyWallet> {
 
   void _qrBottomSheet(BuildContext context, Function showSnackBar, Function copyWallet) {
 
-    final GlobalKey<ScaffoldState> _modelScaffoldKey = GlobalKey<ScaffoldState>();
+    final GlobalKey<ScaffoldState> modelScaffoldKey = GlobalKey<ScaffoldState>();
     // final GlobalKey _keyQrShare = GlobalKey();
 
 
-    void qrShare(GlobalKey globalKey, String _wallet) async {
+    void qrShare(GlobalKey globalKey, String wallet) async {
       try {
         RenderRepaintBoundary? boundary = globalKey.currentContext
             ?.findRenderObject() as RenderRepaintBoundary?;
@@ -493,7 +485,7 @@ class _MyWalletState extends State<MyWallet> {
         final tempDir = await getTemporaryDirectory();
         final file = await File("${tempDir.path}/KOOMPI_HOTSPOT.png").create();
         await file.writeAsBytes(pngBytes!);
-        Share.shareFiles([(file.path)], text: _wallet);
+        Share.shareFiles([(file.path)], text: wallet);
       } catch (e) {
         if (kDebugMode) {
           print(e.toString());
@@ -509,9 +501,9 @@ class _MyWalletState extends State<MyWallet> {
       isScrollControlled: true,
       context: context,
       builder: (_) {
-        var _lang = AppLocalizeService.of(context);
+        var lang = AppLocalizeService.of(context);
         return Container(
-          key: _modelScaffoldKey,
+          key: modelScaffoldKey,
           padding: const EdgeInsets.all(20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -626,7 +618,7 @@ class _MyWalletState extends State<MyWallet> {
                         },
                         child: Center(
                           child: Text(
-                            _lang.translate('copy'),
+                            lang.translate('copy'),
                             style: GoogleFonts.nunito(
                                 textStyle: const TextStyle(
                               color: Colors.white,
@@ -655,13 +647,13 @@ class _MyWalletState extends State<MyWallet> {
                     ),
                   ),
                   onPressed: () {
-                    qrShare(_modelScaffoldKey, mData.wallet!);
+                    qrShare(modelScaffoldKey, mData.wallet!);
                   },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 30, vertical: 15),
                     child: Text(
-                      _lang.translate('share'),
+                      lang.translate('share'),
                       style: GoogleFonts.nunito(
                           textStyle: const TextStyle(
                         fontWeight: FontWeight.w700,
@@ -686,7 +678,7 @@ class _MyWalletState extends State<MyWallet> {
         isScrollControlled: true,
         context: context,
         builder: (BuildContext context) {
-          var _lang = AppLocalizeService.of(context);
+          var lang = AppLocalizeService.of(context);
           return Container(
             height: 153,
             decoration: const BoxDecoration(
@@ -701,7 +693,7 @@ class _MyWalletState extends State<MyWallet> {
                   child: MyText(
                     top: 20,
                     bottom: 20,
-                    text: _lang.translate('transaction_options'),
+                    text: lang.translate('transaction_options'),
                     color: '#000000',
                   ),
                 ),
@@ -722,7 +714,7 @@ class _MyWalletState extends State<MyWallet> {
                                 size: 35, color: primaryColor),
                             MyText(
                               top: 6,
-                              text: _lang.translate('scan_qr'),
+                              text: lang.translate('scan_qr'),
                               fontSize: 12,
                               color: '#000000',
                             )
@@ -745,7 +737,7 @@ class _MyWalletState extends State<MyWallet> {
                                 size: 35, color: primaryColor),
                             MyText(
                                 top: 6,
-                                text: _lang.translate('fill_address'),
+                                text: lang.translate('fill_address'),
                                 fontSize: 12,
                                 color: '#000000')
                           ],

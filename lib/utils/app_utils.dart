@@ -61,14 +61,14 @@ class AppUtils {
 
   static int convertHexaColor(String colorhexcode) {
     /* Convert Hexa Color */
-    String colornew = '0xff' + colorhexcode;
+    String colornew = '0xff$colorhexcode';
     colornew = colornew.replaceAll('#', '');
     int colorint = int.parse(colornew);
     return colorint;
   }
 
-  static int versionConverter(String _version) {
-    String convert = _version.replaceAll(".", '');
+  static int versionConverter(String version) {
+    String convert = version.replaceAll(".", '');
     convert = convert.replaceAll('+', '');
     int parse = int.parse(convert);
     return parse;

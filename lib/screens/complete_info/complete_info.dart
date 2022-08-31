@@ -6,10 +6,10 @@ class CompleteInfo extends StatefulWidget {
   const CompleteInfo(this.phone, {Key? key}) : super(key: key);
 
   @override
-  _CompleteInfoState createState() => _CompleteInfoState();
+  CompleteInfoState createState() => CompleteInfoState();
 }
 
-class _CompleteInfoState extends State<CompleteInfo> {
+class CompleteInfoState extends State<CompleteInfo> {
   final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   String lastChoiceChipSelection = '';
@@ -92,7 +92,7 @@ class _CompleteInfoState extends State<CompleteInfo> {
   }
 
   Future<void> _submit() async {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
 
     // _submit(context);
     dialogLoading(context);
@@ -107,6 +107,7 @@ class _CompleteInfoState extends State<CompleteInfo> {
             _address);
 
         if (response.statusCode == 200) {
+          if (!mounted) return;
           Navigator.pushAndRemoveUntil(
             context,
             PageTransition(
@@ -116,32 +117,38 @@ class _CompleteInfoState extends State<CompleteInfo> {
             ModalRoute.withName('/loginPhone'),
           );
         } else {
+          if (!mounted) return;
           await Components.dialog(
-              context,
-              textAlignCenter(text: _lang.translate('register_error')),
-              warningTitleDialog());
+            context,
+            textAlignCenter(text: lang.translate('register_error')),
+            warningTitleDialog()
+          );
+
+          if (!mounted) return;
           Navigator.of(context).pop();
         }
       }
     } on SocketException catch (_) {
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('no_internet_message')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('no_internet_message')),
+        warningTitleDialog()
+      );
+      if (!mounted) return;
       Navigator.of(context).pop();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
         backgroundColor: Colors.white,
-        title: Text(_lang.translate('complete_profile_appbar'),
+        title: Text(lang.translate('complete_profile_appbar'),
             style: GoogleFonts.robotoCondensed(
             textStyle: const TextStyle(
               color: Colors.black,
@@ -187,18 +194,18 @@ class _CompleteInfoState extends State<CompleteInfo> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     const SizedBox(height: 36.0),
-                    Text(_lang.translate('fullname')),
+                    Text(lang.translate('fullname')),
                     const SizedBox(height: 10.0),
                     TextFormField(
                       controller: _usernameController,
                       validator: (val) => val!.length < 3
-                          ? _lang.translate('fullname_validate')
+                          ? lang.translate('fullname_validate')
                           : null,
                       onSaved: (val) => _usernameController.text = val!,
                       autovalidateMode: AutovalidateMode.always,
                       decoration: InputDecoration(
                           prefixIcon: Icon(Iconsax.user, color: primaryColor),
-                          hintText: _lang.translate('fullname'),
+                          hintText: lang.translate('fullname'),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12.0),
                             borderSide: BorderSide(
@@ -222,14 +229,14 @@ class _CompleteInfoState extends State<CompleteInfo> {
                     ),
                     const SizedBox(height: 16.0),
                     Text(
-                      _lang.translate('phone_number_tf'),
+                      lang.translate('phone_number_tf'),
                     ),
                     const SizedBox(height: 10.0),
                     TextFormField(
                       controller: _phoneController,
                       readOnly: true,
                       decoration: InputDecoration(
-                          hintText: _lang.translate('phone_number_tf'),
+                          hintText: lang.translate('phone_number_tf'),
                           prefixIcon: Icon(Iconsax.call, color: primaryColor),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12.0),
@@ -254,14 +261,14 @@ class _CompleteInfoState extends State<CompleteInfo> {
                     ),
                     const SizedBox(height: 16.0),
                     Text(
-                      _lang.translate('dateofbirth'),
+                      lang.translate('dateofbirth'),
                     ),
                     const SizedBox(height: 10.0),
                     dateOfbirth(
                         selectedDate, _selectDate, dateFormart, context),
                     const SizedBox(height: 16.0),
                     Text(
-                      _lang.translate('locaton'),
+                      lang.translate('locaton'),
                     ),
                     const SizedBox(height: 10.0),
                     locationPicker(context),
@@ -334,11 +341,11 @@ class _CompleteInfoState extends State<CompleteInfo> {
     );
   }
 
-  Widget dateOfbirth(DateTime selectedDate, _selectDate, dateFormart, context) {
+  Widget dateOfbirth(DateTime selectedDate, selectDate, dateFormart, context) {
     return DateDropdown(
       valueText: _birthdate,
       onPressed: () {
-        _selectDate(context);
+        selectDate(context);
       },
     );
   }

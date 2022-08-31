@@ -4,10 +4,10 @@ class SwapToken extends StatefulWidget {
   const SwapToken({Key? key}) : super(key: key);
 
   @override
-  _SwapTokenState createState() => _SwapTokenState();
+  SwapTokenState createState() => SwapTokenState();
 }
 
-class _SwapTokenState extends State<SwapToken> {
+class SwapTokenState extends State<SwapToken> {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 

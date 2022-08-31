@@ -1,15 +1,16 @@
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
+import 'package:koompi_hotspot/screens/device_session/device_session.dart';
 import 'package:koompi_hotspot/screens/map/location.dart';
 
 class MorePage extends StatefulWidget {
   const MorePage({Key? key}) : super(key: key);
 
   @override
-  _MorePageState createState() => _MorePageState();
+  MorePageState createState() => MorePageState();
 }
 
-class _MorePageState extends State<MorePage> {
+class MorePageState extends State<MorePage> {
   GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
   final GlobalKey<ExpansionTileCardState> cardAccountSettings = GlobalKey();
   final GlobalKey<ExpansionTileCardState> cardFiFi = GlobalKey();
@@ -51,7 +52,7 @@ class _MorePageState extends State<MorePage> {
 
   @override
   Widget build(BuildContext context) {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
       key: globalKey,
@@ -126,7 +127,7 @@ class _MorePageState extends State<MorePage> {
                           //   borderRadius: const BorderRadius.all(Radius.circular(12.0)),
                           // ),
                           leading: Icon(Iconsax.key, color: primaryColor),
-                          title: Text(_lang.translate('change_password')),
+                          title: Text(lang.translate('change_password')),
                           trailing: const Icon(Iconsax.arrow_right_3),
                           onTap: () async {
                             Navigator.push(
@@ -144,7 +145,7 @@ class _MorePageState extends State<MorePage> {
                           //   borderRadius: const BorderRadius.all(Radius.circular(12.0)),
                           // ),
                           leading: Icon(Iconsax.language_square, color: primaryColor),
-                          title: Text(_lang.translate('language')),
+                          title: Text(lang.translate('language')),
                           trailing: const Icon(Iconsax.arrow_right_3),
                           onTap: () async {
                             Navigator.push(
@@ -179,7 +180,7 @@ class _MorePageState extends State<MorePage> {
                       children: <Widget>[
                         ListTile(
                           leading: Icon(Iconsax.wifi_square, color: primaryColor),
-                          title: Text(_lang.translate('login_hotspot')),
+                          title: Text(lang.translate('login_hotspot')),
                           trailing: const Icon(Iconsax.arrow_right_3),
                           onTap: () async {
                             Navigator.push(
@@ -190,21 +191,19 @@ class _MorePageState extends State<MorePage> {
                             );
                           },
                         ),
-                        // Padding(
-                        //   padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, right: 10.0, left: 10.0),
-                        //   child: ListTile(
-                        //     shape: RoundedRectangleBorder(
-                        //       side: BorderSide(color: primaryColor.withOpacity(0.8), width: 1.5),
-                        //       borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-                        //     ),
-                        //     leading: Icon(Icons.devices_outlined, color: primaryColor),
-                        //     title: Text('Devices'),
-                        //     trailing: const Icon(LineIcons.angleRight),
-                        //     onTap: () async {
-
-                        //     },
-                        //   ),
-                        // ),
+                        ListTile(
+                          leading: Icon(Icons.devices, color: primaryColor),
+                          title: const Text('Devices'),
+                          trailing: const Icon(Iconsax.arrow_right_3),
+                          onTap: () async {
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                  type: PageTransitionType.rightToLeft,
+                                  child: const DeviceSession()),
+                            );
+                          },
+                        ),
                         ListTile(
                           leading: Icon(Iconsax.map, color: primaryColor),
                           title: const Text('Fi-Fi Map'),
@@ -290,15 +289,15 @@ class _MorePageState extends State<MorePage> {
                               onPressed: () async {
                                 await Components.dialogSignOut(
                                   context,
-                                  Text(_lang.translate('sign_out_warn'),
+                                  Text(lang.translate('sign_out_warn'),
                                       textAlign: TextAlign.center),
                                   Text(
-                                    _lang.translate('warning'),
+                                    lang.translate('warning'),
                                     style: const TextStyle(fontFamily: 'Poppins-Bold'),
                                   ),
                                 );
                               },
-                              child: Text(_lang.translate('sign_out'),
+                              child: Text(lang.translate('sign_out'),
                                 style: GoogleFonts.roboto(
                                   fontSize: 20.0,
                                   color: Colors.red,

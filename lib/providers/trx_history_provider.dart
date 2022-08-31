@@ -7,18 +7,18 @@ class TrxHistoryProvider with ChangeNotifier {
   List<TrxHistoryModel> trxHistoryList = [];
 
   Future<void> fetchTrxHistory() async {
-    StorageServices _prefService = StorageServices();
+    StorageServices prefService = StorageServices();
 
     _backend = Backend();
     trxHistoryList = [];
 
     try {
-      await _prefService.read('token').then((onValue) async {
+      await prefService.read('token').then((onValue) async {
         http.Response response = await http.get(
             Uri.parse('${ApiService.url}/selendra/history'),
             headers: <String, String>{
               "accept": "application/json",
-              "authorization": "Bearer " + onValue!,
+              "authorization": "Bearer ${onValue!}",
             });
 
         if (response.statusCode == 200) {

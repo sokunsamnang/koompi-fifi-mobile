@@ -6,10 +6,10 @@ class LoginPhone extends StatefulWidget {
   const LoginPhone({Key? key}) : super(key: key);
 
   @override
-  _LoginPhoneState createState() => _LoginPhoneState();
+  LoginPhoneState createState() => LoginPhoneState();
 }
 
-class _LoginPhoneState extends State<LoginPhone> {
+class LoginPhoneState extends State<LoginPhone> {
   final formKey = GlobalKey<FormState>();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
@@ -72,7 +72,7 @@ class _LoginPhoneState extends State<LoginPhone> {
 
   //check connection and login
   Future<void> login() async {
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
     dialogLoading(context);
     try {
       final result = await InternetAddress.lookup('google.com');
@@ -97,11 +97,23 @@ class _LoginPhoneState extends State<LoginPhone> {
             await StorageServices().saveString('token', token);
             await StorageServices().saveString('phone', '0${StorageServices.removeZero(phoneController.text)}');
             await StorageServices().saveString('password', passwordController.text);
+            
+            if (!mounted) return;
             await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
+
+            if (!mounted) return;
             await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+
+            if (!mounted) return;
             await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
+
+            if (!mounted) return;
             await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
+
+            if (!mounted) return;
             await Provider.of<ContactListProvider>(context, listen: false).fetchContactList();
+
+            if (!mounted) return;
             Navigator.pushAndRemoveUntil(
               context,
               PageTransition(
@@ -111,6 +123,7 @@ class _LoginPhoneState extends State<LoginPhone> {
               ModalRoute.withName('/navbar'),
             );
           } else {
+            if (!mounted) return;
             Navigator.of(context).pop();
             try {
               messageAlert = responseJson['error']['message'];
@@ -119,16 +132,24 @@ class _LoginPhoneState extends State<LoginPhone> {
             }
           }
         } else if (response.statusCode == 401) {
+          if (!mounted) return;
           await Components.dialog(
-              context,
-              textAlignCenter(text: responseJson['message']),
-              warningTitleDialog());
+            context,
+            textAlignCenter(text: responseJson['message']),
+            warningTitleDialog()
+          );
+
+          if (!mounted) return;
           Navigator.of(context).pop();
         } else if (response.statusCode >= 500 && response.statusCode < 600) {
+          if (!mounted) return;
           await Components.dialog(
-              context,
-              textAlignCenter(text: responseJson['message']),
-              warningTitleDialog());
+            context,
+            textAlignCenter(text: responseJson['message']),
+            warningTitleDialog()
+          );
+
+          if (!mounted) return;
           Navigator.of(context).pop();
         }
       }
@@ -137,27 +158,36 @@ class _LoginPhoneState extends State<LoginPhone> {
         print('No network socket exception');
       }
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('no_internet_message')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('no_internet_message')),
+        warningTitleDialog()
+      );
+
+      if (!mounted) return;
       Navigator.of(context).pop();
     } on TimeoutException catch (_) {
       if (kDebugMode) {
         print('Time out exception');
       }
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('request_timeout')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('request_timeout')),
+        warningTitleDialog()
+      );
+      
+      if (!mounted) return;
       Navigator.of(context).pop();
     } on FormatException catch (_) {
       if (kDebugMode) {
         print('FormatException');
       }
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('server_error')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('server_error')),
+        warningTitleDialog()
+      );
+
+      if (!mounted) return;
       Navigator.of(context).pop();
     }
   }

@@ -7,10 +7,10 @@ class ResetNewPassword extends StatefulWidget {
   const ResetNewPassword(this.phone, {Key? key}) : super(key: key);
 
   @override
-  _ResetNewPasswordState createState() => _ResetNewPasswordState();
+  ResetNewPasswordState createState() => ResetNewPasswordState();
 }
 
-class _ResetNewPasswordState extends State<ResetNewPassword> {
+class ResetNewPasswordState extends State<ResetNewPassword> {
   GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
 
   bool isLoading = false;
@@ -53,7 +53,7 @@ class _ResetNewPasswordState extends State<ResetNewPassword> {
 
   Future<void> _resetPassword() async {
     dialogLoading(context);
-    var _lang = AppLocalizeService.of(context);
+    var lang = AppLocalizeService.of(context);
     try {
       String apiUrl = '${ApiService.url}/reset-password-phone';
       setState(() {
@@ -73,24 +73,30 @@ class _ResetNewPasswordState extends State<ResetNewPassword> {
 
       if (response.statusCode == 200) {
         await StorageServices().deleteAllKeys();
-        // await StorageServices().clearToken('token');
-        // await StorageServices().clearToken('phone');
-        // await StorageServices().clearToken('password');
+        
+        if (!mounted) return;
         await Components.dialogResetPw(
           context,
-          Text(_lang.translate('tf_reset_password'),
+          Text(lang.translate('tf_reset_password'),
               textAlign: TextAlign.center),
           Text(
-            _lang.translate('complete'),
+            lang.translate('complete'),
             style: const TextStyle(fontFamily: 'Poppins-Bold'),
           ),
         );
+
+        if (!mounted) return;
         Navigator.pop(context);
       } else {
+
+        if (!mounted) return;
         await Components.dialog(
-            context,
-            textAlignCenter(text: responseJson['message']),
-            warningTitleDialog());
+          context,
+          textAlignCenter(text: responseJson['message']),
+          warningTitleDialog()
+        );
+
+        if (!mounted) return;
         Navigator.of(context).pop();
       }
     } on SocketException catch (_) {
@@ -98,27 +104,36 @@ class _ResetNewPasswordState extends State<ResetNewPassword> {
         print('No network socket exception');
       }
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('no_internet_message')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('no_internet_message')),
+        warningTitleDialog()
+      );
+
+      if (!mounted) return;
       Navigator.of(context).pop();
     } on TimeoutException catch (_) {
       if (kDebugMode) {
         print('Time out exception');
       }
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('request_timeout')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('request_timeout')),
+        warningTitleDialog()
+      );
+
+      if (!mounted) return;
       Navigator.of(context).pop();
     } on FormatException catch (_) {
       if (kDebugMode) {
         print('FormatException');
       }
       await Components.dialog(
-          context,
-          textAlignCenter(text: _lang.translate('server_error')),
-          warningTitleDialog());
+        context,
+        textAlignCenter(text: lang.translate('server_error')),
+        warningTitleDialog()
+      );
+
+      if (!mounted) return;
       Navigator.of(context).pop();
     }
   }

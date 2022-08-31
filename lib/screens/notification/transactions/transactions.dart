@@ -1,7 +1,7 @@
 import 'package:koompi_hotspot/all_export.dart';
 
 Widget transaction(BuildContext context) {
-  var _lang = AppLocalizeService.of(context);
+  var lang = AppLocalizeService.of(context);
   List<Widget> _buildList(
       List<TrxHistoryModel> history, BuildContext context, String userWallet) {
     List<Widget> listItems = [];
@@ -89,8 +89,8 @@ Widget transaction(BuildContext context) {
                                   )
                                 : Text(
                                     userWallet == history[i].destination
-                                        ? _lang.translate('recieved')
-                                        : _lang.translate('sent'),
+                                        ? lang.translate('recieved')
+                                        : lang.translate('sent'),
                                     style: GoogleFonts.nunito(
                                         textStyle: const TextStyle(
                                             color: Colors.black,
