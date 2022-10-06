@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:http/http.dart' as http;
@@ -10,6 +11,24 @@ class PostRequest with ChangeNotifier {
   ModelUserData get mUser => _mUser;
   String? alertText;
   final StorageServices _prefService = StorageServices();
+
+  Future<http.Response> loginUnifyController() async {
+
+    _backend.bodyEncode = json.encode({
+      /* Convert to Json String */
+      "username": dotenv.get("username"),
+      "password": dotenv.get("password"),
+      "remember": true
+    });
+
+    _backend.response = await http.post(
+      Uri.parse(dotenv.get("url")),
+      body: _backend.bodyEncode
+    );
+
+    print("login unify response${_backend.response!.body}");
+    return _backend.response!;
+  }
 
   // Add contact address
   Future<http.Response> postContactAddress(String username, String address) async {

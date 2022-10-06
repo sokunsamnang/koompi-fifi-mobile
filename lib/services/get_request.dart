@@ -1,3 +1,4 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:koompi_hotspot/all_export.dart';
 
@@ -34,6 +35,16 @@ class GetRequest with ChangeNotifier {
             "authorization", "Bearer ${_backend.token['token']}"));
     return _backend.response!;
   }
+
+  Future<http.Response> getListGuestLogin() async {
+    _backend.response = await http.get(
+      Uri.parse(dotenv.get("urlGetGuestLogin")),
+    );
+
+    print("get list guest login: ${_backend.response!.body}");
+    return _backend.response!;
+  }
+
 
   Future<http.Response> getTrxHistory() async {
     /* Expired Token In Welcome Screen */

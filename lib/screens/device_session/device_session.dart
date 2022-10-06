@@ -19,6 +19,13 @@ class _DeviceSessionState extends State<DeviceSession> {
     super.initState();
     initPlatformState();
 
+    PostRequest().loginUnifyController().then((value) => {
+      GetRequest().getListGuestLogin(),
+    });
+    Future.delayed(const Duration(seconds: 3), () {
+      GetRequest().getListGuestLogin();
+    });
+
     print("_platformVersion $_platformVersion");
   }
 

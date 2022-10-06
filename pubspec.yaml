@@ -40,6 +40,7 @@ dependencies:
   expansion_tile_card: ^2.0.0
   firebase_core: ^1.21.1
   firebase_dynamic_links: ^4.3.6
+  flutter_dotenv: ^5.0.2
   flutter:
     sdk: flutter
   flutter_form_builder: ^7.3.1
@@ -133,6 +134,7 @@ flutter:
     - assets/images/
     - assets/animations/
     - assets/lang/
+    - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
